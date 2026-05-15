@@ -1,0 +1,15 @@
+<template>
+    <div class="flex justify-center items-center h-screen bg-linear-to-r" style="background-color: #000;">
+        <div class="text-center">
+            <div class="flex space-x-2 mb-4">
+                <div class="w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+                <div class="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                <div class="w-3 h-3 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                <div class="w-3 h-3 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.3s"></div>
+            </div>
+        </div>
+    </div>
+</template>
+<script setup>
+
+</script>

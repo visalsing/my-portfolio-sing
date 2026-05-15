@@ -1,0 +1,698 @@
+/* Google Fonts import */
+/* @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;700&family=Freehand&display=swap'); */
+@import url("https://fonts.googleapis.com/css2?family=Hanuman:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Lao+Looped:wght@100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tagalog&display=swap');
+
+@import "tailwindcss";
+
+/* Default font — applies to everything */
+:root {
+  --font-body: "", sans-serif;
+}
+
+* {
+  font-family: var(--font-body);
+}
+
+/* Khmer override — only when <html data-lang="km"> */
+:root[data-lang="km"] {
+  --font-body: "Hanuman", sans-serif;
+}
+
+/* English override — only when <html data-lang="en"> */
+:root[data-lang="en"] {
+  --font-body: "Inter", sans-serif;
+}
+
+/* Chinese override — only when <html data-lang="zh"> */
+:root[data-lang="zh"] {
+  --font-body: "Noto Sans SC", sans-serif;
+}
+
+/* Chinese override — only when <html data-lang="zh"> */
+:root[data-lang="lo"] {
+  --font-body: "Noto Sans Lao Looped", sans-serif;
+}
+
+:root[data-lang="ph"] {
+  --font-body: "Noto Sans Tagalog", sans-serif;
+}
+
+/* Latin text inside Khmer pages stays unaffected
+   because 'Kantumruy Pro' only has glyphs for Khmer —
+   Latin chars automatically fall back to the next font */
+
+/* Define the Khmer Class */
+/* .font-khmer, .font-khmer * {
+  font-family: "Kantumruy Pro";
+} */
+
+/* Define the Chinese Class */
+/* .font-chinese, .font-chinese * {
+  font-family: "Noto Sans SC" !important;;
+} */
+
+/* .font-sans, .font-sans * {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+} */
+
+/* Color Scheme */
+/* Default: Blue-Cyan */
+/* ============================================================
+   THEME CSS VARIABLES
+   Applied via a class on <html> (e.g. class="theme-blue-cyan")
+   ============================================================ */
+
+/* ── Blue-Cyan (default) ── */
+:root,
+.theme-blue-cyan {
+  --accent-from: #60a5fa; /* blue-400   */
+  --accent-to: #22d3ee; /* cyan-400   */
+  --accent-mid: #3b82f6; /* blue-500   */
+  --accent-text: #60a5fa;
+  --accent-text-muted: #93c5fd; /* blue-300   */
+  --accent-bg: rgba(96, 165, 250, 0.1);
+  --accent-bg-hover: rgba(96, 165, 250, 0.2);
+  --accent-border: rgba(96, 165, 250, 0.2);
+  --accent-border-hover: rgba(96, 165, 250, 0.6);
+  --accent-shadow: rgba(59, 130, 246, 0.25);
+  --accent-shadow-lg: rgba(59, 130, 246, 0.4);
+  --nav-btn-bg: rgba(30, 58, 95, 0.5); /* blue-800/50  */
+  --nav-btn-border: rgba(96, 165, 250, 0.2);
+  --nav-btn-hover: rgba(29, 78, 216, 0.5); /* blue-700/50  */
+  --section-grad-to: rgba(30, 58, 138, 0.2); /* blue-900/20  */
+  --section-border: rgba(59, 130, 246, 0.2); /* blue-500/20  */
+  --icon-accent: #60a5fa;
+  --icon-accent-2: #22d3ee;
+  --icon-accent-3: #818cf8; /* indigo-400  */
+  --icon-bg: rgba(96, 165, 250, 0.2);
+  --icon-bg-2: rgba(34, 211, 238, 0.2);
+  --icon-bg-3: rgba(129, 140, 248, 0.2);
+  --cta-gradient: linear-gradient(to right, #3b82f6, #06b6d4);
+  --logo-gradient: linear-gradient(to right, #60a5fa, #22d3ee);
+
+  /* Specific to Navbar.vue */
+  --navbar-bg-color: rgba(17, 24, 39, 0.8);
+  --navbar-bg: rgba(17, 24, 39, 0.8);
+
+  /* Specific to BackToTop.vue */
+  --back-to-top-bg: linear-gradient(to right, #2563eb, #0891b2);
+
+  /* Specific to About.vue */
+  --accent-mid-dark: #2563eb; /* blue-600  */
+  --accent-to-mid: #06b6d4; /* cyan-500  */
+  --accent-to-dark: #0891b2; /* cyan-600  */
+
+  /* Specific to ExperienceSkills.vue */
+  --accent-border-2: rgba(6, 182, 212, 0.3); /* cyan-500/30 */
+  --accent-border-2-soft: rgba(6, 182, 212, 0.2); /* cyan-500/20 */
+  --accent-to-bg: rgba(34, 211, 238, 0.2); /* cyan-400/20 */
+  --accent-to-bg-hover: rgba(34, 211, 238, 0.3); /* cyan-400/30 */
+
+  /* Specific to Services.vue */
+  --accent-glow: rgba(59, 130, 246, 0.03); /* blue-500/5 — card hover glow */
+
+  /* Specific to Projects.vue */
+  --accent-text-light: #93c5fd; /* blue-300  — link hover color  */
+  --accent-to-light: #67e8f9; /* cyan-300  — link hover color  */
+  --accent-to-pill-txt: #a5f3fc; /* cyan-200  — tech pill text    */
+
+  /* Specific to Testimonials.vue */
+  --accent-star: #facc15; /* yellow-400 — star rating (stays yellow across ALL themes, it's semantic) */
+  --accent-text-soft: #93c5fd; /* blue-300   — position text */
+
+  /* Specific to ServiceDetail.vue */
+  --accent-line: rgba(
+    59,
+    130,
+    246,
+    0.4
+  ); /* blue-500/40 — center timeline line */
+  --accent-line-glow: rgba(
+    59,
+    130,
+    246,
+    0.2
+  ); /* blue-500/20 — line shadow          */
+  --accent-node-bg: #0a0f1d; /* fixed dark bg for number nodes     */
+
+  /* Specific to Footer.vue */
+  --footer-bg-color: rgba(17, 24, 39, 0.8);
+
+  /* Speicific to Conact.vue */
+  /* Same across ALL themes — these are brand identity colors */
+  --social-indigo: #818cf8; /* indigo-400  — Facebook  */
+  --social-indigo-bg: rgba(99, 102, 241, 0.2); /* indigo-500/20 */
+  --social-indigo-bd: rgba(129, 140, 248, 0.3); /* indigo-400/30 */
+  --social-indigo-hover: rgba(99, 102, 241, 0.3); /* indigo-500/30 */
+
+  --social-sky: #38bdf8; /* sky-400     — Telegram  */
+  --social-sky-bg: rgba(14, 165, 233, 0.2); /* sky-500/20 */
+  --social-sky-bd: rgba(56, 189, 248, 0.3); /* sky-400/30 */
+  --social-sky-hover: rgba(14, 165, 233, 0.3); /* sky-500/30 */
+
+  --social-slate: #94a3b8; /* slate-400   — X/Twitter */
+  --social-slate-bg: rgba(100, 116, 139, 0.2); /* slate-500/20 */
+  --social-slate-bd: rgba(148, 163, 184, 0.3); /* slate-400/30 */
+  --social-slate-hover: rgba(100, 116, 139, 0.3); /* slate-500/30 */
+
+  --social-teal: #2dd4bf; /* slate-400   — TikTok */
+  --social-teal-bg: rgba(20, 184, 166, 0.2); /* slate-500/20 */
+  --social-teal-bd: rgba(45, 212, 191, 0.3); /* slate-400/30 */
+  --social-teal-hover: rgba(20, 184, 166, 0.3); /* slate-500/30 */
+
+  --social-emerald: #34d399; /* emerald-400 — Instagram */
+  --social-emerald-bg: rgba(16, 185, 129, 0.2); /* emerald-500/20 */
+  --social-emerald-bd: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
+  --social-emerald-hover: rgba(16, 185, 129, 0.3); /* emerald-500/30 */
+
+  --social-zinc: #a1a1aa; /* zinc-400    — GitHub    */
+  --social-zinc-bg: rgba(113, 113, 122, 0.2); /* zinc-500/20 */
+  --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
+  --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
+}
+
+/* ── Red-Scarlet ── */
+.theme-red-scarlet {
+  --accent-from: #f87171; /* red-400    */
+  --accent-to: #fb923c; /* orange-400 */
+  --accent-mid: #ef4444; /* red-500    */
+  --accent-text: #f87171;
+  --accent-text-muted: #fca5a5; /* red-300    */
+  --accent-bg: rgba(248, 113, 113, 0.1);
+  --accent-bg-hover: rgba(248, 113, 113, 0.2);
+  --accent-border: rgba(248, 113, 113, 0.2);
+  --accent-border-hover: rgba(248, 113, 113, 0.6);
+  --accent-shadow: rgba(239, 68, 68, 0.25);
+  --accent-shadow-lg: rgba(239, 68, 68, 0.4);
+  --nav-btn-bg: rgba(76, 29, 29, 0.5);
+  --nav-btn-border: rgba(248, 113, 113, 0.2);
+  --nav-btn-hover: rgba(127, 29, 29, 0.5);
+  --section-grad-to: rgba(127, 29, 29, 0.2);
+  --section-border: rgba(239, 68, 68, 0.2);
+  --icon-accent: #f87171;
+  --icon-accent-2: #fb923c;
+  --icon-accent-3: #f472b6; /* pink-400   */
+  --icon-bg: rgba(248, 113, 113, 0.2);
+  --icon-bg-2: rgba(251, 146, 60, 0.2);
+  --icon-bg-3: rgba(244, 114, 182, 0.2);
+  --cta-gradient: linear-gradient(to right, #ef4444, #f97316);
+  --logo-gradient: linear-gradient(to right, #f87171, #fb923c);
+
+  /* Specific to Navbar.vue */
+  --navbar-bg-color: rgba(22, 10, 10, 0.8);
+  --navbar-bg: rgba(22, 10, 10, 0.8);
+
+  /* Specific to BackToTop.vue */
+  --back-to-top-bg: linear-gradient(to right, #dc2626, #991b1b);
+
+  /* Specific to About.vue */
+  --accent-mid-dark: #dc2626; /* red-600   */
+  --accent-to-mid: #f97316; /* orange-500*/
+  --accent-to-dark: #ea580c; /* orange-600*/
+
+  /* Specific to ExperienceSkills.vue */
+  --accent-border-2: rgba(249, 115, 22, 0.3); /* orange-500/30 */
+  --accent-border-2-soft: rgba(249, 115, 22, 0.2); /* orange-500/20 */
+  --accent-to-bg: rgba(251, 146, 60, 0.2); /* orange-400/20 */
+  --accent-to-bg-hover: rgba(251, 146, 60, 0.3); /* orange-400/30 */
+
+  /* Specific to Services.vue */
+  --accent-glow: rgba(239, 68, 68, 0.03); /* red-500/5 — card hover glow */
+
+  /* Specific to Projects.vue */
+  --accent-text-light: #fca5a5; /* red-300    */
+  --accent-to-light: #fdba74; /* orange-300 */
+  --accent-to-pill-txt: #fed7aa; /* orange-200 */
+
+  /* Specific to Testimonials.vue */
+  --accent-star: #facc15; /* yellow-400 — star rating (stays yellow across ALL themes, it's semantic) */
+  --accent-text-soft: #fca5a5; /* blue-300   — position text */
+
+  /* Specific to ServiceDetail.vue */
+  --accent-line: rgba(
+    239,
+    68,
+    68,
+    0.4
+  ); /* blue-500/40 — center timeline line */
+  --accent-line-glow: rgba(
+    239,
+    68,
+    68,
+    0.2
+  ); /* blue-500/20 — line shadow          */
+  --accent-node-bg: #0a0f1d; /* fixed dark bg for number nodes     */
+
+  /* Specific to Footer.vue */
+  --footer-bg-color: rgba(22, 10, 10, 0.8);
+
+  /* Speicific to Conact.vue */
+  /* Same across ALL themes — these are brand identity colors */
+  --social-indigo: #818cf8; /* indigo-400  — Facebook  */
+  --social-indigo-bg: rgba(99, 102, 241, 0.2); /* indigo-500/20 */
+  --social-indigo-bd: rgba(129, 140, 248, 0.3); /* indigo-400/30 */
+  --social-indigo-hover: rgba(99, 102, 241, 0.3); /* indigo-500/30 */
+
+  --social-sky: #38bdf8; /* sky-400     — Telegram  */
+  --social-sky-bg: rgba(14, 165, 233, 0.2); /* sky-500/20 */
+  --social-sky-bd: rgba(56, 189, 248, 0.3); /* sky-400/30 */
+  --social-sky-hover: rgba(14, 165, 233, 0.3); /* sky-500/30 */
+
+  --social-slate: #94a3b8; /* slate-400   — X/Twitter */
+  --social-slate-bg: rgba(100, 116, 139, 0.2); /* slate-500/20 */
+  --social-slate-bd: rgba(148, 163, 184, 0.3); /* slate-400/30 */
+  --social-slate-hover: rgba(100, 116, 139, 0.3); /* slate-500/30 */
+
+  --social-teal: #2dd4bf; /* slate-400   — TikTok */
+  --social-teal-bg: rgba(20, 184, 166, 0.2); /* slate-500/20 */
+  --social-teal-bd: rgba(45, 212, 191, 0.3); /* slate-400/30 */
+  --social-teal-hover: rgba(20, 184, 166, 0.3); /* slate-500/30 */
+
+  --social-emerald: #34d399; /* emerald-400 — Instagram */
+  --social-emerald-bg: rgba(16, 185, 129, 0.2); /* emerald-500/20 */
+  --social-emerald-bd: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
+  --social-emerald-hover: rgba(16, 185, 129, 0.3); /* emerald-500/30 */
+
+  --social-zinc: #a1a1aa; /* zinc-400    — GitHub    */
+  --social-zinc-bg: rgba(113, 113, 122, 0.2); /* zinc-500/20 */
+  --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
+  --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
+}
+
+/* ── Purple-Pink ── */
+.theme-purple-pink {
+  --accent-from: #a855f7; /* purple-500 */
+  --accent-to: #ec4899; /* pink-500   */
+  --accent-mid: #9333ea; /* purple-600 */
+  --accent-text: #c084fc; /* purple-400 */
+  --accent-text-muted: #d8b4fe; /* purple-300 */
+  --accent-bg: rgba(168, 85, 247, 0.1);
+  --accent-bg-hover: rgba(168, 85, 247, 0.2);
+  --accent-border: rgba(168, 85, 247, 0.2);
+  --accent-border-hover: rgba(168, 85, 247, 0.6);
+  --accent-shadow: rgba(147, 51, 234, 0.25);
+  --accent-shadow-lg: rgba(147, 51, 234, 0.4);
+  --nav-btn-bg: rgba(46, 26, 74, 0.5);
+  --nav-btn-border: rgba(168, 85, 247, 0.2);
+  --nav-btn-hover: rgba(76, 29, 149, 0.5);
+  --section-grad-to: rgba(88, 28, 135, 0.2);
+  --section-border: rgba(147, 51, 234, 0.2);
+  --icon-accent: #c084fc;
+  --icon-accent-2: #f472b6; /* pink-400   */
+  --icon-accent-3: #818cf8; /* indigo-400 */
+  --icon-bg: rgba(192, 132, 252, 0.2);
+  --icon-bg-2: rgba(244, 114, 182, 0.2);
+  --icon-bg-3: rgba(129, 140, 248, 0.2);
+  --cta-gradient: linear-gradient(to right, #9333ea, #ec4899);
+  --logo-gradient: linear-gradient(to right, #a855f7, #ec4899);
+
+  /* Specific to Navbar.vue */
+  --navbar-bg-color: rgba(18, 10, 22, 0.8);
+  --navbar-bg: rgba(18, 10, 22, 0.8);
+
+  /* Specific to BackToTop.vue */
+  --back-to-top-bg: linear-gradient(to right, #9333ea, #db2777);
+
+  /* Specific to About.vue */
+  --accent-mid-dark: #7c3aed; /* purple-700*/
+  --accent-to-mid: #ec4899; /* pink-500  */
+  --accent-to-dark: #db2777; /* pink-600  */
+
+  /* Specific to ExperienceSkills.vue */
+  --accent-border-2: rgba(236, 72, 153, 0.3); /* pink-500/30 */
+  --accent-border-2-soft: rgba(236, 72, 153, 0.2); /* pink-500/20 */
+  --accent-to-bg: rgba(244, 114, 182, 0.2); /* pink-400/20 */
+  --accent-to-bg-hover: rgba(244, 114, 182, 0.3); /* pink-400/30 */
+
+  /* Specific to Services.vue */
+  --accent-glow: rgba(147, 51, 234, 0.03); /* purple-500/5 — card hover glow */
+
+  /* Specific to Projects.vue */
+  --accent-text-light: #d8b4fe; /* purple-300 */
+  --accent-to-light: #f9a8d4; /* pink-300   */
+  --accent-to-pill-txt: #fbcfe8; /* pink-200   */
+
+  /* Specific to Testimonials.vue */
+  --accent-star: #facc15; /* yellow-400 — star rating (stays yellow across ALL themes, it's semantic) */
+  --accent-text-soft: #d8b4fe; /* blue-300   — position text */
+
+  /* Specific to ServiceDetail.vue */
+  --accent-line: rgba(
+    147,
+    51,
+    234,
+    0.4
+  ); /* blue-500/40 — center timeline line */
+  --accent-line-glow: rgba(
+    147,
+    51,
+    234,
+    0.2
+  ); /* blue-500/20 — line shadow          */
+  --accent-node-bg: #0a0f1d; /* fixed dark bg for number nodes     */
+
+  /* Specific to Footer.vue */
+  --footer-bg-color: rgba(18, 10, 22, 0.8);
+
+  /* Speicific to Conact.vue */
+  /* Same across ALL themes — these are brand identity colors */
+  --social-indigo: #818cf8; /* indigo-400  — Facebook  */
+  --social-indigo-bg: rgba(99, 102, 241, 0.2); /* indigo-500/20 */
+  --social-indigo-bd: rgba(129, 140, 248, 0.3); /* indigo-400/30 */
+  --social-indigo-hover: rgba(99, 102, 241, 0.3); /* indigo-500/30 */
+
+  --social-sky: #38bdf8; /* sky-400     — Telegram  */
+  --social-sky-bg: rgba(14, 165, 233, 0.2); /* sky-500/20 */
+  --social-sky-bd: rgba(56, 189, 248, 0.3); /* sky-400/30 */
+  --social-sky-hover: rgba(14, 165, 233, 0.3); /* sky-500/30 */
+
+  --social-slate: #94a3b8; /* slate-400   — X/Twitter */
+  --social-slate-bg: rgba(100, 116, 139, 0.2); /* slate-500/20 */
+  --social-slate-bd: rgba(148, 163, 184, 0.3); /* slate-400/30 */
+  --social-slate-hover: rgba(100, 116, 139, 0.3); /* slate-500/30 */
+
+  --social-teal: #2dd4bf; /* slate-400   — TikTok */
+  --social-teal-bg: rgba(20, 184, 166, 0.2); /* slate-500/20 */
+  --social-teal-bd: rgba(45, 212, 191, 0.3); /* slate-400/30 */
+  --social-teal-hover: rgba(20, 184, 166, 0.3); /* slate-500/30 */
+
+  --social-emerald: #34d399; /* emerald-400 — Instagram */
+  --social-emerald-bg: rgba(16, 185, 129, 0.2); /* emerald-500/20 */
+  --social-emerald-bd: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
+  --social-emerald-hover: rgba(16, 185, 129, 0.3); /* emerald-500/30 */
+
+  --social-zinc: #a1a1aa; /* zinc-400    — GitHub    */
+  --social-zinc-bg: rgba(113, 113, 122, 0.2); /* zinc-500/20 */
+  --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
+  --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
+}
+
+/* ── Green-Dark ── */
+.theme-green-dark {
+  --accent-from: #4ade80; /* green-400  */
+  --accent-to: #059669; /* emerald-600*/
+  --accent-mid: #22c55e; /* green-500  */
+  --accent-text: #4ade80;
+  --accent-text-muted: #86efac; /* green-300  */
+  --accent-bg: rgba(74, 222, 128, 0.1);
+  --accent-bg-hover: rgba(74, 222, 128, 0.2);
+  --accent-border: rgba(74, 222, 128, 0.2);
+  --accent-border-hover: rgba(74, 222, 128, 0.6);
+  --accent-shadow: rgba(34, 197, 94, 0.25);
+  --accent-shadow-lg: rgba(34, 197, 94, 0.4);
+  --nav-btn-bg: rgba(20, 41, 30, 0.5);
+  --nav-btn-border: rgba(74, 222, 128, 0.2);
+  --nav-btn-hover: rgba(20, 83, 45, 0.5);
+  --section-grad-to: rgba(6, 78, 59, 0.2);
+  --section-border: rgba(34, 197, 94, 0.2);
+  --icon-accent: #4ade80;
+  --icon-accent-2: #34d399; /* emerald-400*/
+  --icon-accent-3: #a3e635; /* lime-400   */
+  --icon-bg: rgba(74, 222, 128, 0.2);
+  --icon-bg-2: rgba(52, 211, 153, 0.2);
+  --icon-bg-3: rgba(163, 230, 53, 0.2);
+  --cta-gradient: linear-gradient(to right, #22c55e, #059669);
+  --logo-gradient: linear-gradient(to right, #4ade80, #059669);
+
+  /* Specific to Navbar.vue */
+  --navbar-bg-color: rgba(10, 22, 15, 0.8);
+  --navbar-bg: rgba(10, 22, 15, 0.8);
+
+  /* Specific to BackToTop.vue */
+  --back-to-top-bg: linear-gradient(to right, #16a34a, #065f46);
+
+  /* Specific to About.vue */
+  --accent-mid-dark: #16a34a; /* green-600 */
+  --accent-to-mid: #10b981; /* emerald-500*/
+  --accent-to-dark: #059669; /* emerald-600*/
+
+  /* Specific to ExperienceSkills.vue */
+  --accent-border-2: rgba(16, 185, 129, 0.3); /* emerald-500/30 */
+  --accent-border-2-soft: rgba(16, 185, 129, 0.2); /* emerald-500/20 */
+  --accent-to-bg: rgba(52, 211, 153, 0.2); /* emerald-400/20 */
+  --accent-to-bg-hover: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
+
+  /* Specific to Services.vue */
+  --accent-glow: rgba(34, 197, 94, 0.03); /* green-500/5 — card hover glow */
+
+  /* Specific to Projects.vue */
+  --accent-text-light: #86efac; /* green-300  */
+  --accent-to-light: #6ee7b7; /* emerald-300*/
+  --accent-to-pill-txt: #a7f3d0; /* emerald-200*/
+
+  /* Specific to Testimonials.vue */
+  --accent-star: #facc15; /* yellow-400 — star rating (stays yellow across ALL themes, it's semantic) */
+  --accent-text-soft: #86efac; /* blue-300   — position text */
+
+  /* Specific to ServiceDetail.vue */
+  --accent-line: rgba(
+    34,
+    197,
+    94,
+    0.4
+  ); /* blue-500/40 — center timeline line */
+  --accent-line-glow: rgba(
+    34,
+    197,
+    94,
+    0.2
+  ); /* blue-500/20 — line shadow          */
+  --accent-node-bg: #0a0f1d; /* fixed dark bg for number nodes     */
+
+  /* Specific to Footer.vue */
+  --footer-bg-color: rgba(10, 22, 15, 0.8);
+
+  /* Speicific to Conact.vue */
+  /* Same across ALL themes — these are brand identity colors */
+  --social-indigo: #818cf8; /* indigo-400  — Facebook  */
+  --social-indigo-bg: rgba(99, 102, 241, 0.2); /* indigo-500/20 */
+  --social-indigo-bd: rgba(129, 140, 248, 0.3); /* indigo-400/30 */
+  --social-indigo-hover: rgba(99, 102, 241, 0.3); /* indigo-500/30 */
+
+  --social-sky: #38bdf8; /* sky-400     — Telegram  */
+  --social-sky-bg: rgba(14, 165, 233, 0.2); /* sky-500/20 */
+  --social-sky-bd: rgba(56, 189, 248, 0.3); /* sky-400/30 */
+  --social-sky-hover: rgba(14, 165, 233, 0.3); /* sky-500/30 */
+
+  --social-slate: #94a3b8; /* slate-400   — X/Twitter */
+  --social-slate-bg: rgba(100, 116, 139, 0.2); /* slate-500/20 */
+  --social-slate-bd: rgba(148, 163, 184, 0.3); /* slate-400/30 */
+  --social-slate-hover: rgba(100, 116, 139, 0.3); /* slate-500/30 */
+
+  --social-teal: #2dd4bf; /* slate-400   — TikTok */
+  --social-teal-bg: rgba(20, 184, 166, 0.2); /* slate-500/20 */
+  --social-teal-bd: rgba(45, 212, 191, 0.3); /* slate-400/30 */
+  --social-teal-hover: rgba(20, 184, 166, 0.3); /* slate-500/30 */
+
+  --social-emerald: #34d399; /* emerald-400 — Instagram */
+  --social-emerald-bg: rgba(16, 185, 129, 0.2); /* emerald-500/20 */
+  --social-emerald-bd: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
+  --social-emerald-hover: rgba(16, 185, 129, 0.3); /* emerald-500/30 */
+
+  --social-zinc: #a1a1aa; /* zinc-400    — GitHub    */
+  --social-zinc-bg: rgba(113, 113, 122, 0.2); /* zinc-500/20 */
+  --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
+  --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
+}
+
+/* ── Orange-Yellow ── */
+.theme-orange-yellow {
+  --accent-from: #fb923c; /* orange-400 */
+  --accent-to: #facc15; /* yellow-400 */
+  --accent-mid: #f97316; /* orange-500 */
+  --accent-text: #fb923c;
+  --accent-text-muted: #fdba74; /* orange-300 */
+  --accent-bg: rgba(251, 146, 60, 0.1);
+  --accent-bg-hover: rgba(251, 146, 60, 0.2);
+  --accent-border: rgba(251, 146, 60, 0.2);
+  --accent-border-hover: rgba(251, 146, 60, 0.6);
+  --accent-shadow: rgba(249, 115, 22, 0.25);
+  --accent-shadow-lg: rgba(249, 115, 22, 0.4);
+  --nav-btn-bg: rgba(61, 31, 5, 0.5);
+  --nav-btn-border: rgba(251, 146, 60, 0.2);
+  --nav-btn-hover: rgba(124, 45, 18, 0.5);
+  --section-grad-to: rgba(124, 45, 18, 0.2);
+  --section-border: rgba(249, 115, 22, 0.2);
+  --icon-accent: #fb923c;
+  --icon-accent-2: #facc15;
+  --icon-accent-3: #f59e0b; /* pink-400   */
+  --icon-bg: rgba(251, 146, 60, 0.2);
+  --icon-bg-2: rgba(250, 204, 21, 0.2);
+  --icon-bg-3: rgba(251, 191, 36, 0.2);
+  --cta-gradient: linear-gradient(to right, #f97316, #eab308);
+  --logo-gradient: linear-gradient(to right, #fb923c, #facc15);
+
+  /* Specific to Navbar.vue */
+  --navbar-bg-color: rgba(22, 15, 10, 0.8);
+  --navbar-bg: rgba(22, 15, 10, 0.8);
+
+  /* Specific to BackToTop.vue */
+  --back-to-top-bg: linear-gradient(to right, #ea580c, #ca8a04);
+
+  /* Specific to About.vue */
+  --accent-mid-dark: #ea580c; /* orange-600*/
+  --accent-to-mid: #eab308; /* yellow-500*/
+  --accent-to-dark: #ca8a04; /* yellow-600*/
+
+  /* Specific to ExperienceSkills.vue */
+  --accent-border-2: rgba(234, 179, 8, 0.3); /* yellow-500/30 */
+  --accent-border-2-soft: rgba(234, 179, 8, 0.2); /* yellow-500/20 */
+  --accent-to-bg: rgba(250, 204, 21, 0.2); /* yellow-400/20 */
+  --accent-to-bg-hover: rgba(250, 204, 21, 0.3); /* yellow-400/30 */
+
+  /* Specific to Services.vue */
+  --accent-glow: rgba(22, 15, 10, 0.8); /* orange-500/5 — card hover glow */
+
+  /* Specific to Projects.vue */
+  --accent-text-light: #fdba74; /* orange-300 */
+  --accent-to-light: #fde047; /* yellow-300 */
+  --accent-to-pill-txt: #fef08a; /* yellow-200 */
+
+  /* Specific to Testimonials.vue */
+  --accent-star: #facc15; /* yellow-400 — star rating (stays yellow across ALL themes, it's semantic) */
+  --accent-text-soft: #fdba74; /* blue-300   — position text */
+
+  /* Specific to ServiceDetail.vue */
+  --accent-line: rgba(
+    249,
+    115,
+    22,
+    0.4
+  ); /* blue-500/40 — center timeline line */
+  --accent-line-glow: rgba(
+    249,
+    115,
+    22,
+    0.2
+  ); /* blue-500/20 — line shadow          */
+  --accent-node-bg: #0a0f1d; /* fixed dark bg for number nodes     */
+
+  /* Specific to Footer.vue */
+  --footer-bg-color: rgba(17, 24, 39, 0.8);
+
+  /* Specific to Footer.vue */
+  --footer-bg-color: rgba(22, 15, 10, 0.8);
+
+  /* Speicific to Conact.vue */
+  /* Same across ALL themes — these are brand identity colors */
+  --social-indigo: #818cf8; /* indigo-400  — Facebook  */
+  --social-indigo-bg: rgba(99, 102, 241, 0.2); /* indigo-500/20 */
+  --social-indigo-bd: rgba(129, 140, 248, 0.3); /* indigo-400/30 */
+  --social-indigo-hover: rgba(99, 102, 241, 0.3); /* indigo-500/30 */
+
+  --social-sky: #38bdf8; /* sky-400     — Telegram  */
+  --social-sky-bg: rgba(14, 165, 233, 0.2); /* sky-500/20 */
+  --social-sky-bd: rgba(56, 189, 248, 0.3); /* sky-400/30 */
+  --social-sky-hover: rgba(14, 165, 233, 0.3); /* sky-500/30 */
+
+  --social-slate: #94a3b8; /* slate-400   — X/Twitter */
+  --social-slate-bg: rgba(100, 116, 139, 0.2); /* slate-500/20 */
+  --social-slate-bd: rgba(148, 163, 184, 0.3); /* slate-400/30 */
+  --social-slate-hover: rgba(100, 116, 139, 0.3); /* slate-500/30 */
+
+  --social-teal: #2dd4bf; /* slate-400   — TikTok */
+  --social-teal-bg: rgba(20, 184, 166, 0.2); /* slate-500/20 */
+  --social-teal-bd: rgba(45, 212, 191, 0.3); /* slate-400/30 */
+  --social-teal-hover: rgba(20, 184, 166, 0.3); /* slate-500/30 */
+
+  --social-emerald: #34d399; /* emerald-400 — Instagram */
+  --social-emerald-bg: rgba(16, 185, 129, 0.2); /* emerald-500/20 */
+  --social-emerald-bd: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
+  --social-emerald-hover: rgba(16, 185, 129, 0.3); /* emerald-500/30 */
+
+  --social-zinc: #a1a1aa; /* zinc-400    — GitHub    */
+  --social-zinc-bg: rgba(113, 113, 122, 0.2); /* zinc-500/20 */
+  --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
+  --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
+}
+
+/* ============================================================
+   REUSABLE UTILITY CLASSES  (use these in your components)
+   ============================================================ */
+
+/* Text */
+.accent-text {
+  color: var(--accent-text);
+}
+.accent-text-muted {
+  color: var(--accent-text-muted);
+}
+
+/* Gradient text */
+.accent-gradient-text {
+  background: var(--logo-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Gradient backgrounds */
+.accent-gradient-bg {
+  background: var(--cta-gradient);
+}
+
+/* Borders */
+.accent-border {
+  border-color: var(--accent-border);
+}
+.accent-border-active {
+  border-color: var(--accent-text);
+}
+
+/* Backgrounds */
+.accent-bg {
+  background-color: var(--accent-bg);
+}
+.accent-bg-hover:hover {
+  background-color: var(--accent-bg-hover);
+}
+
+/* Buttons */
+.btn-accent {
+  background: var(--cta-gradient);
+  color: #fff;
+  transition:
+    box-shadow 0.3s,
+    transform 0.3s;
+}
+.btn-accent:hover {
+  box-shadow: 0 10px 25px var(--accent-shadow-lg);
+  transform: scale(1.05);
+}
+
+/* Nav underline */
+.nav-underline {
+  background-color: var(--accent-text);
+}
+
+/* Icon containers */
+.icon-box-1 {
+  background-color: var(--icon-bg);
+  color: var(--icon-accent);
+}
+.icon-box-2 {
+  background-color: var(--icon-bg-2);
+  color: var(--icon-accent-2);
+}
+.icon-box-3 {
+  background-color: var(--icon-bg-3);
+  color: var(--icon-accent-3);
+}
+
+/* Card / section containers */
+/* .accent-card {
+  background: linear-gradient(
+    to bottom right,
+    rgba(31, 41, 55, 0.5),
+    var(--section-grad-to)
+  );
+  border: 1px solid var(--section-border);
+  backdrop-filter: blur(8px);
+} */
+
+.accent-start {
+}

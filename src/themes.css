@@ -1,0 +1,105 @@
+/* ============================================================
+   LIGHT / DARK / DEVICE THEME SURFACE VARIABLES
+   Applied via a class on <html>: theme-dark / theme-light
+   Device = auto via @media (prefers-color-scheme)
+   ============================================================ */
+
+/* ── Dark (default) ── */
+:root,
+html.theme-dark {
+  /* Specific to App.vue */
+  --surface-bg: #000000;
+
+  /* Specific to Hero.vue */
+  --surface-bg-2: #080c14;
+  --surface-bg-3: #111827;
+  /* --surface-bg-3: #121212; */
+  --surface-card: rgba(31, 41, 55, 0.5);
+  --surface-text: #ffffff;
+  --surface-text-sub: #9ca3af;
+  --surface-text-dim: #6b7280;
+  --surface-border: rgba(255, 255, 255, 0.06);
+  --navbar-bg: #111827;
+
+  /* Specific to NavBar.vue */
+
+  /* Specific to Settings.vue */
+  /* Card / section containers */
+  .accent-card {
+    background: linear-gradient(
+      to bottom right,
+      rgba(31, 41, 55, 0.5),
+      var(--section-grad-to)
+    );
+    border: 1px solid var(--section-border); /* see in style.css */
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* ── Light ── */
+html.theme-light {
+  /* Specific to App.vue */
+  --surface-bg: #f8fafc;
+
+  /* Specific to Hero.vue */
+  --surface-bg-2: #f1f5f9;
+  /* --surface-bg-3: #e2e8f0; */
+  --surface-bg-3: #FFFFFF;
+  --surface-card: rgba(255, 255, 255, 0.8);
+  --surface-text: #0f172a;
+  --surface-text-sub: #475569;
+  --surface-text-dim: #94a3b8;
+  --surface-border: rgba(0, 0, 0, 0.08);
+  --navbar-bg: #ffffff;
+
+  /* Specific to Navbar.vue */
+
+  /* Card / section containers */
+  .accent-card {
+    background: linear-gradient(
+      to bottom right,
+      rgba(213, 225, 240, 0.5),
+      var(--section-grad-to)
+    );
+    border: 1px solid var(--section-border); /* see in style.css */
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* ── Device (auto) ── */
+@media (prefers-color-scheme: dark) {
+  html.theme-device {
+    /* Specific to App.vue */
+    --surface-bg: #000000;
+
+    /* Specific to Hero.vue */
+    --surface-bg-2: #080c14;
+    --surface-bg-3: #111827;
+    --surface-card: rgba(31, 41, 55, 0.5);
+    --surface-text: #ffffff;
+    --surface-text-sub: #9ca3af;
+    --surface-text-dim: #6b7280;
+    --surface-border: rgba(255, 255, 255, 0.06);
+    --navbar-bg: #111827;
+
+    /* Specific to Navbar.vue */
+  }
+}
+@media (prefers-color-scheme: light) {
+  html.theme-device {
+    /* Specific to App.vue */
+    --surface-bg: #f8fafc;
+
+    /* Specific to Hero.vue */
+    --surface-bg-2: #f1f5f9;
+    --surface-bg-3: #e2e8f0;
+    --surface-card: rgba(255, 255, 255, 0.8);
+    --surface-text: #0f172a;
+    --surface-text-sub: #475569;
+    --surface-text-dim: #94a3b8;
+    --surface-border: rgba(0, 0, 0, 0.08);
+    --navbar-bg: #ffffff;
+
+    /* Specific to Navbar.vue */
+  }
+}
