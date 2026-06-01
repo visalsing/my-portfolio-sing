@@ -229,28 +229,16 @@
   --icon-bg-3: rgba(63, 63, 70, 0.08);
 
   /* Branding */
-  --cta-gradient: linear-gradient(
-    to right,
-    #3f3f46,
-    #09090b
-  );
+  --cta-gradient: linear-gradient(to right, #3f3f46, #09090b);
 
-  --logo-gradient: linear-gradient(
-    to right,
-    #fafafa,
-    #71717a
-  );
+  --logo-gradient: linear-gradient(to right, #fafafa, #71717a);
 
   /* Navbar */
   --navbar-bg-color: rgba(10, 10, 10, 0.88);
   --navbar-bg: rgba(10, 10, 10, 0.88);
 
   /* BackToTop */
-  --back-to-top-bg: linear-gradient(
-    to right,
-    #52525b,
-    #18181b
-  );
+  --back-to-top-bg: linear-gradient(to right, #52525b, #18181b);
 
   /* About */
   --accent-mid-dark: #27272a;
@@ -356,28 +344,16 @@
   --icon-bg-3: rgba(24, 24, 27, 0.03);
 
   /* Branding */
-  --cta-gradient: linear-gradient(
-    to right,
-    #71717a,
-    #52525b
-  );
+  --cta-gradient: linear-gradient(to right, #71717a, #52525b);
 
-  --logo-gradient: linear-gradient(
-    to right,
-    #27272a,
-    #71717a
-  );
+  --logo-gradient: linear-gradient(to right, #27272a, #71717a);
 
   /* Navbar */
   --navbar-bg-color: rgba(250, 250, 250, 0.9);
   --navbar-bg: rgba(250, 250, 250, 0.9);
 
   /* BackToTop */
-  --back-to-top-bg: linear-gradient(
-    to right,
-    #71717a,
-    #52525b
-  );
+  --back-to-top-bg: linear-gradient(to right, #71717a, #52525b);
 
   /* About */
   --accent-mid-dark: #d4d4d8;
@@ -422,7 +398,6 @@
   --social-emerald: #047857;
   --social-zinc: #52525b;
 }
-
 
 /* ── Red-Scarlet ── */
 .theme-red-scarlet {
@@ -869,6 +844,138 @@
   --social-zinc-bg: rgba(113, 113, 122, 0.2); /* zinc-500/20 */
   --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
   --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
+}
+
+/* ── Rainbow (Original 8-Color Flag) ── */
+/* ── Rainbow (Original 8-Color Flag) ── */
+.theme-rainbow {
+  /* 
+    The 8 Classic Colors Map:
+    1. Pink: #f472b6      2. Red: #ef4444         3. Orange: #f97316    4. Yellow: #facc15 
+    5. Green: #22c55e     6. Turquoise: #06b6d4   7. Indigo: #6366f1    8. Violet: #a855f7
+  */
+
+  --accent-from: #f472b6; /* hot pink-400 */
+  --accent-to: #a855f7; /* violet-500 */
+  --accent-mid: #22c55e; /* green-500 */
+
+  /* ── FIXING SOLID TEXTS ── */
+  /* If text cannot accept a gradient, we cycle colors down the page so it feels like a rainbow overall */
+  --accent-text: #f472b6; /* Pink base */
+  --accent-text-muted: #fde047; /* Yellow-300 */
+
+  /* ── FIXING SOLID BORDERS & BG GLOWS ── */
+  /* Instead of flat pink, these give your components multi-hue transparency layers */
+  --accent-bg: rgba(6, 182, 212, 0.08); /* Turquoise transparent mist */
+  --accent-bg-hover: rgba(168, 85, 247, 0.15); /* Violet transparent mist */
+
+  /* If a component falls back to a basic border property, use a neutral color so it doesn't stay pink... */
+  --accent-border: rgba(255, 255, 255, 0.1);
+  /* ...or give it a distinct hue from the flag */
+  --accent-border-hover: #06b6d4;
+
+  --accent-shadow: rgba(239, 68, 68, 0.2);
+  --accent-shadow-lg: rgba(99, 102, 241, 0.35);
+
+  /* ── FIXING NAV BUTTONS & ACTIVE UNDERLINE (image_0ca562.png) ── */
+  --nav-btn-bg: rgba(15, 12, 22, 0.6);
+  --nav-btn-border: #f97316; /* Orange border fallback */
+  --nav-btn-hover: rgba(99, 102, 241, 0.2);
+
+  /* ── MASTER RAINBOW GRADIENTS ── */
+  --cta-gradient: linear-gradient(
+    to right,
+    #ef4444,
+    #f97316,
+    #facc15,
+    #22c55e,
+    #06b6d4,
+    #6366f1,
+    #a855f7
+  );
+  --logo-gradient: linear-gradient(
+    to right,
+    #f472b6,
+    #ef4444,
+    #f97316,
+    #facc15,
+    #22c55e,
+    #06b6d4,
+    #6366f1,
+    #a855f7
+  );
+
+  /* Specific to Navbar.vue */
+  --navbar-bg-color: rgba(15, 12, 22, 0.85);
+  --navbar-bg: rgba(15, 12, 22, 0.85);
+
+  /* Specific to BackToTop.vue */
+  --back-to-top-bg: linear-gradient(
+    to top right,
+    #f472b6,
+    #ef4444,
+    #facc15,
+    #06b6d4,
+    #a855f7
+  );
+
+  /* Specific to About.vue */
+  --accent-mid-dark: #ef4444; /* Red */
+  --accent-to-mid: #22c55e; /* Green */
+  --accent-to-dark: #6366f1; /* Indigo */
+
+  /* Specific to ExperienceSkills.vue (Grid elements in image_0ca4eb.jpg) */
+  --accent-border-2: rgba(6, 182, 212, 0.4); /* Turquoise bounds */
+  --accent-border-2-soft: rgba(168, 85, 247, 0.25); /* Violet edge bounds */
+  --accent-to-bg: rgba(34, 197, 94, 0.1); /* Green transparency tint */
+  --accent-to-bg-hover: rgba(249, 115, 22, 0.15); /* Orange transparency tint */
+
+  /* Specific to Services.vue */
+  --hue: 195, 80%, 50%; /* Clear vibrant ocean turquoise base */
+
+  /* Specific to Projects.vue */
+  --accent-text-light: #fbcfe8; /* Light Pink */
+  --accent-to-light: #fed7aa; /* Light Orange */
+  --accent-to-pill-txt: #ccfbf1; /* Light Turquoise */
+  --accent-to-pill-txt-2: #22c55e; /* Green contrast */
+  --accent-pill-bg-light: rgba(99, 102, 241, 0.15);
+
+  /* Specific to Testimonials.vue */
+  --accent-star: #facc15;
+  --accent-text-soft: #c7d2fe;
+
+  /* Specific to SoftSkills.vue or ServiceDetail.vue */
+  --accent-line: linear-gradient(to bottom, #ef4444, #facc15, #22c55e, #a855f7);
+  --accent-line-glow: rgba(6, 182, 212, 0.3);
+
+  /* Specific to Footer.vue */
+  --footer-rgb: 15, 12, 22;
+
+  /* Preserved Static Social Colors */
+  --social-indigo: #818cf8;
+  --social-indigo-bg: rgba(99, 102, 241, 0.2);
+  --social-indigo-bd: rgba(129, 140, 248, 0.3);
+  --social-indigo-hover: rgba(99, 102, 241, 0.3);
+  --social-sky: #38bdf8;
+  --social-sky-bg: rgba(14, 165, 233, 0.2);
+  --social-sky-bd: rgba(56, 189, 248, 0.3);
+  --social-sky-hover: rgba(14, 165, 233, 0.3);
+  --social-slate: #94a3b8;
+  --social-slate-bg: rgba(100, 116, 139, 0.2);
+  --social-slate-bd: rgba(148, 163, 184, 0.3);
+  --social-slate-hover: rgba(100, 116, 139, 0.3);
+  --social-teal: #2dd4bf;
+  --social-teal-bg: rgba(20, 184, 166, 0.2);
+  --social-teal-bd: rgba(45, 212, 191, 0.3);
+  --social-teal-hover: rgba(20, 184, 166, 0.3);
+  --social-emerald: #34d399;
+  --social-emerald-bg: rgba(16, 185, 129, 0.2);
+  --social-emerald-bd: rgba(52, 211, 153, 0.3);
+  --social-emerald-hover: rgba(16, 185, 129, 0.3);
+  --social-zinc: #a1a1aa;
+  --social-zinc-bg: rgba(113, 113, 122, 0.2);
+  --social-zinc-bd: rgba(161, 161, 170, 0.3);
+  --social-zinc-hover: rgba(113, 113, 122, 0.3);
 }
 
 /* ============================================================

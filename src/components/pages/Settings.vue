@@ -170,12 +170,53 @@
                                     : { borderColor: 'rgba(75,85,99,1)' }" @click="setColorScheme(color.name)">
                                 <div class="relative flex flex-col items-center gap-2">
                                     <div class="flex -space-x-2">
-                                        <div class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
+                                        <!-- <div class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
                                             :style="{ backgroundColor: color.from, borderColor: 'var(--surface-bg-3)' }">
                                         </div>
                                         <div class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
                                             :style="{ backgroundColor: color.to, borderColor: 'var(--surface-bg-3)' }">
-                                        </div>
+                                        </div> -->
+                                        <div class="flex -space-x-2">
+
+    <!-- Normal colors -->
+    <template v-if="!color.gradient">
+        <div
+            class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
+            :style="{
+                backgroundColor: color.from,
+                borderColor: 'var(--surface-bg-3)'
+            }">
+        </div>
+
+        <div
+            class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
+            :style="{
+                backgroundColor: color.to,
+                borderColor: 'var(--surface-bg-3)'
+            }">
+        </div>
+    </template>
+
+    <!-- Rainbow -->
+    <template v-else>
+        <div
+            class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
+            :style="{
+                background: color.gradient,
+                borderColor: 'var(--surface-bg-3)'
+            }">
+        </div>
+
+        <div
+            class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
+            :style="{
+                background: color.gradient,
+                borderColor: 'var(--surface-bg-3)'
+            }">
+        </div>
+    </template>
+
+</div>
                                     </div>
                                     <span class="text-sm font-medium transition-colors"
                                         :style="currentScheme === color.name ? { color: color.from } : { color: 'var(--surface-text-sub)' }">
@@ -611,6 +652,10 @@ const colorSchemes = [
     { name: 'Purple-Pink', from: '#a855f7', to: '#ec4899' },
     { name: 'Green-Dark', from: '#4ade80', to: '#059669' },
     { name: 'Orange-Yellow', from: '#fb923c', to: '#facc15' },
+    {
+        name: 'Rainbow',
+        gradient: 'linear-gradient(to right, #f472b6, #ef4444, #f97316, #facc15, #22c55e, #06b6d4, #6366f1, #a855f7)'
+    }
     // { name: 'Black-Charcoal', from: '#000000', to: '#36454F' },
     // { name: 'White-Smoke', from: '#ffffff', to: '#F5F5F5' },
 ];

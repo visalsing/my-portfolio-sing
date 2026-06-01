@@ -1,0 +1,76 @@
+Here is the complete, updated cheat sheet including single files, multiple files, folders, and everything we discussed. You can copy and save this entire block!
+
+---
+
+# 📝 The Ultimate Git & Vercel Deployment Cheat Sheet
+
+### 🚀 The Golden Rule of Vercel
+
+Vercel is linked directly to your GitHub repository. You do **not** need a special Vercel command to deploy.
+
+* **Your deployment command is simply your `git push` command.**
+
+Before pushing, you choose exactly what goes live by using different `git add` commands.
+
+---
+
+### 🎛️ The `git add` Menu (Choose your target)
+
+| If you want to deploy... | Run this command: |
+| --- | --- |
+| **Everything** (Whole Project) | `git add .` |
+| **Only One File** | `git add path/to/file.vue` |
+| **An Entire Folder** (Directory) | `git add path/to/folder/` |
+| **Multiple Specific Files** | `git add file1.vue file2.vue file3.vue` *(separated by spaces)* |
+
+---
+
+### 🛠️ The 3-Step Deployment Workflows
+
+#### Option 1: Deploy the WHOLE Project
+
+```bash
+git add .
+git commit -m "Fixed typo and added new sections"
+git push origin main
+
+```
+
+#### Option 2: Deploy ONLY Specific Items (Files or Folders)
+
+```bash
+# Example: Adding one file and one whole image folder together
+git add src/components/Services.vue src/assets/images/
+
+# Lock them in
+git commit -m "Updated services section and added images"
+
+# Ship it live!
+git push origin main
+
+```
+
+---
+
+### 🔍 How to Check Your Work Before Shipping
+
+Always run this command before you commit if you want to see what is about to be sent to your website:
+
+```bash
+git status
+
+```
+
+* **Files in GREEN:** Staged and ready to go live.
+* **Files in RED:** Left behind on your computer (will not deploy yet).
+
+> 💡 *VS Code Pro-Tip:* Right-click any file in your VS Code sidebar and click **"Copy Relative Path"** to easily get the exact path for your `git add` command.
+
+---
+
+### ⚠️ Troubleshooting Checklist
+
+* **Blank White Page on Vercel?**
+Check your `vite.config.js` file. For root Vercel domains, it must say: `base: '/'`.
+* **Changes not showing up?**
+Go to your Vercel Dashboard, click the **Deployments** tab, find your latest build, click the three dots (`...`), and click **Redeploy**.

@@ -8,6 +8,7 @@ const THEME_CLASSES = {
   'Orange-Yellow': 'theme-orange-yellow',
   'Black-Charcoal': 'theme-black-charcoal',
   'White-Smoke': 'theme-white-smoke',
+  'Rainbow': 'theme-rainbow',
 
   // 'Indigo-Purple': 'theme-indigo-purple',
   // 'Lime-Green':    'theme-lime-green',

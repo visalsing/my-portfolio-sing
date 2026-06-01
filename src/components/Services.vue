@@ -101,6 +101,7 @@
 <script setup>
 import { ref } from 'vue';
 import { t } from './../stores/languages.js';
+import { useRouter } from 'vue-router';
 import {
     CloudArrowUpIcon, ArrowRightIcon, ChatBubbleLeftRightIcon,
     CodeBracketIcon, CommandLineIcon, PaintBrushIcon, DocumentTextIcon,
