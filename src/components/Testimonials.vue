@@ -4,12 +4,10 @@
 
             <!-- ── Heading ── -->
             <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                <h2 class="text-4xl md:text-5xl font-bold text-[var(--surface-text)] mb-4">
                     {{ t('client1_') }}
-                    <span
-                        class="text-transparent bg-clip-text"
-                        :style="{ backgroundImage: 'var(--logo-gradient)' }"
-                    >{{ t('testimonials') }}</span>{{ t('_client2') }}
+                    <span class="text-transparent bg-clip-text" :style="{ backgroundImage: 'var(--logo-gradient)' }">{{
+                        t('testimonials') }}</span>{{ t('_client2') }}
                 </h2>
                 <p class="text-lg" :style="{ color: 'var(--accent-text-muted)' }">
                     What people say about working with me
@@ -18,49 +16,33 @@
 
             <!-- ── Cards ── -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div
-                    v-for="(testimonial, index) in testimonials"
-                    :key="testimonial.id"
-                    class="rounded-2xl p-6 backdrop-blur-sm transition-all duration-300"
-                    :style="{
-                        background:  'linear-gradient(to bottom right, rgba(31,41,55,0.50), var(--section-grad-to))',
-                        border:      '1px solid var(--section-border)'
-                    }"
-                    data-aos="fade-up"
-                    :data-aos-delay="index * 100"
+                <div v-for="(testimonial, index) in testimonials" :key="testimonial.id"
+                    class="rounded-2xl p-6 backdrop-blur-sm transition-all duration-300" :style="{
+                        // background:  'linear-gradient(to bottom right, rgba(31,41,55,0.50), var(--section-grad-to))',
+                        background: 'linear-gradient(to bottom right, var(--card-bg-from), var(--section-grad-to))',
+                        border: '1px solid var(--section-border)'
+                    }" data-aos="fade-up" :data-aos-delay="index * 100"
                     @mouseenter="e => e.currentTarget.style.borderColor = 'var(--accent-text)'"
-                    @mouseleave="e => e.currentTarget.style.borderColor = 'var(--section-border)'"
-                >
+                    @mouseleave="e => e.currentTarget.style.borderColor = 'var(--section-border)'">
                     <!-- Stars -->
                     <div class="flex gap-1 mb-4">
-                        <StarIcon
-                            v-for="n in 5"
-                            :key="n"
-                            class="w-5 h-5"
-                            :style="{ color: 'var(--accent-star)' }"
-                        />
+                        <StarIcon v-for="n in 5" :key="n" class="w-5 h-5" :style="{ color: 'var(--accent-star)' }" />
                     </div>
 
                     <!-- Text -->
-                    <p class="text-blue-100 text-sm leading-relaxed mb-6">
+                    <p class="text-[var(--surface-text-sub)] text-sm leading-relaxed mb-6">
                         "{{ testimonial.text }}"
                     </p>
 
                     <!-- Client -->
                     <div class="flex items-center gap-4">
-                        <div
-                            class="w-12 h-12 rounded-full overflow-hidden border-2"
-                            :style="{ borderColor: 'var(--accent-border-hover)' }"
-                        >
-                            <img
-                                :src="testimonial.avatar"
-                                :alt="testimonial.name"
-                                class="w-full h-full object-cover"
-                            />
+                        <div class="w-12 h-12 rounded-full overflow-hidden border-2"
+                            :style="{ borderColor: 'var(--accent-border-hover)' }">
+                            <img :src="testimonial.avatar" :alt="testimonial.name" class="w-full h-full object-cover" />
                         </div>
                         <div>
-                            <p class="text-white font-semibold">{{ testimonial.name }}</p>
-                            <p class="text-sm" :style="{ color: 'var(--accent-text-light)' }">
+                            <p class="text-[var(--surface-text)] font-semibold">{{ testimonial.name }}</p>
+                            <p class="text-sm" :style="{ color: 'var(--accent-text)' }">
                                 {{ testimonial.position }}
                             </p>
                         </div>
@@ -69,6 +51,11 @@
             </div>
 
         </div>
+
+        <h3 class="text-center text-1xl font-bold text-[var(--accent-text-muted)] mt-5">
+            [ There is no testimonials yet. It is just a pattern. ]
+        </h3>
+
     </section>
 </template>
 
@@ -84,21 +71,21 @@ const testimonials = [
         name: "Sarah Johnson",
         position: "CEO, TechCorp",
         // 2. Use the path string directly
-        avatar: "/person1.jpg", 
+        avatar: new URL('../assets/images/testimonials/person1.png', import.meta.url).href
     },
     {
         id: 2,
         text: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s`,
         name: "Michael Chen",
         position: "Product Manager",
-        avatar: "/person2.jpg",
+        avatar: new URL('../assets/images/testimonials/person2.png', import.meta.url).href
     },
     {
         id: 3,
         text: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s`,
         name: "Emily Davis",
         position: "Startup Founder",
-        avatar: "/person3.jpeg",
+        avatar: new URL('../assets/images/testimonials/person3.png', import.meta.url).href
     },
 ];
 </script>

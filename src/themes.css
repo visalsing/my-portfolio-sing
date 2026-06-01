@@ -5,21 +5,108 @@
    ============================================================ */
 
 /* ── Dark (default) ── */
+
+/* LIGHT MODE (Default) */
+/* :root {
+  color-scheme: light;
+  --scrollbar-track: #f1f1f1; 
+  --scrollbar-thumb: #c1c1c1;
+  --scrollbar-thumb-hover: #a8a8a8;
+} */
+
+/* DARK MODE */
+/* Use this if you toggle a .dark class on the <html> tag */
+/* :root.dark {
+  color-scheme: dark;
+  --scrollbar-track: #1a1a1a; 
+  --scrollbar-thumb: #444444; 
+  --scrollbar-thumb-hover: #555555;
+} */
+
+/* Chrome, Edge, and Safari Styles */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the vertical scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 10px;
+  /* This creates a little gap around the thumb so it looks "floating" */
+  border: 2px solid var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Firefox Support */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
 :root,
 html.theme-dark {
+  color-scheme: dark;
+  --scrollbar-track: #1a1a1a;
+  --scrollbar-thumb: #444444;
+  --scrollbar-thumb-hover: #555555;
+
   /* Specific to App.vue */
   --surface-bg: #000000;
 
   /* Specific to Hero.vue */
   --surface-bg-2: #080c14;
-  --surface-bg-3: #111827;
+  --surface-bg-3: #111827; /* bg-gray-800 */
   /* --surface-bg-3: #121212; */
-  --surface-card: rgba(31, 41, 55, 0.5);
+  --surface-card: rgba(31, 41, 55, 0.5); /* bg-grey-900/50 */
   --surface-text: #ffffff;
   --surface-text-sub: #9ca3af;
   --surface-text-dim: #6b7280;
   --surface-border: rgba(255, 255, 255, 0.06);
   --navbar-bg: #111827;
+
+  /* Specific to Experiences.vue */
+  /* All themes */
+  --surface-input-bg: #374151; /* dark:  gray-700 — progress bar track  */
+  /* --text-gray: #f3f4f6; */
+  --card-bg-from: rgba(31, 41, 55, 0.5);
+  /* --card-bg-to: rgba(17, 24, 39, 0.3); */
+  --bg-surface-percent: #374151; /* gray-700 */
+
+  /* Specific to Services.vue */
+  /* --accent-glow-box: rgba(255, 255, 255, 0.06); */
+  /* On dark, we want the grid to pop a bit more */
+  --grid-opacity: 0.15;
+  --accent-glow: hsla(var(--hue), var(--grid-opacity));
+
+  /* Specific to Footer.vue */
+  --footer-bg-color: rgba(var(--footer-rgb), 0.8);
+  --surface-text: #ffffff;
+  --bg-color: #0f172a;
+  
+
+  /* NEW VARIABLES FOUND IN DETAILS.VUE */
+  --card-bg-fallback: rgba(
+    255,
+    255,
+    255,
+    0.03
+  ); /* Fallback block style background */
+  --bg-surface-percent-bar: #374151; /* gray-900 */
+
+  /* Specific to Details / NavBar.vue */
+  --nav-btn-border: rgba(255, 255, 255, 0.1);
+
+  /* Specific to Projects.vue  */
+  --accent-to-pill-txt-dynamic: var(--accent-to-pill-txt);
+
+  /* Specific to SoftSkills.vue */
+  --accent-node-bg: #0a0f1d;
 
   /* Specific to NavBar.vue */
 
@@ -38,19 +125,62 @@ html.theme-dark {
 
 /* ── Light ── */
 html.theme-light {
+  color-scheme: light;
+  --scrollbar-track: #f1f1f1;
+  --scrollbar-thumb: #c1c1c1;
+  --scrollbar-thumb-hover: #a8a8a8;
+
   /* Specific to App.vue */
   --surface-bg: #f8fafc;
 
   /* Specific to Hero.vue */
   --surface-bg-2: #f1f5f9;
   /* --surface-bg-3: #e2e8f0; */
-  --surface-bg-3: #FFFFFF;
+  --surface-bg-3: #ffffff;
   --surface-card: rgba(255, 255, 255, 0.8);
   --surface-text: #0f172a;
   --surface-text-sub: #475569;
   --surface-text-dim: #94a3b8;
   --surface-border: rgba(0, 0, 0, 0.08);
   --navbar-bg: #ffffff;
+
+  /* Specific to Experiences.vue */
+  /* Light */
+  --surface-input-bg: #e2e8f0; /* light: slate-200 */
+  /* --text-gray: #111827; */
+  --card-bg-from: rgba(255, 255, 255, 0.75);
+  /* --card-bg-to: rgba(255, 255, 255, 0.45); */
+  --bg-surface-percent: #d1d5db; /* gray-300 */
+
+  /* Specific to Services.vue */
+  /* --accent-glow: rgba(0, 0, 0, 0.04); */
+  /* --accent-glow-box: rgba(255, 255, 255, 0.7); */
+  /* On light, we want it barely visible (very white/gray) */
+  --grid-opacity: 0.05;
+  --accent-glow: hsla(var(--hue), var(--grid-opacity));
+
+  /* Specific to Footer.vue */
+  --footer-bg-color: rgba(var(--footer-rgb), 0.05); 
+  --surface-text: #1f2937;
+  --bg-color: #f8fafc;
+
+  /* NEW VARIABLES FOUND IN DETAILS.VUE */
+  --card-bg-fallback: rgba(
+    0,
+    0,
+    0,
+    0.02
+  ); /* Soft light mode surface block background */
+  --bg-surface-percent-bar: #d1d5db; /* gray-300 */
+
+  /* Specific to Details / NavBar.vue */
+  --nav-btn-border: rgba(0, 0, 0, 0.1);
+
+  /* Specific to Projects.vue  */
+  --accent-to-pill-txt-dynamic: var(--accent-to-pill-txt-2);
+
+    /* Specific to SoftSkills.vue */
+  --accent-node-bg: #e9ebee;
 
   /* Specific to Navbar.vue */
 
@@ -79,10 +209,14 @@ html.theme-light {
     --surface-text: #ffffff;
     --surface-text-sub: #9ca3af;
     --surface-text-dim: #6b7280;
-    --surface-border: rgba(255, 255, 255, 0.06);
+    --surface-border: rgba(255, 255, 255, 0.06); /* border-gray-700 */
     --navbar-bg: #111827;
 
     /* Specific to Navbar.vue */
+
+    /* Specific to Experiences.vue */
+    /* All themes */
+    --surface-input-bg: #374151; /* dark:  gray-700 — progress bar track  */
   }
 }
 @media (prefers-color-scheme: light) {
@@ -101,5 +235,9 @@ html.theme-light {
     --navbar-bg: #ffffff;
 
     /* Specific to Navbar.vue */
+
+    /* Specific to Experiences.vue */
+    /* Light */
+    --surface-input-bg: #e2e8f0; /* light: slate-200 */
   }
 }

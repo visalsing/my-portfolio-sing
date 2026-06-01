@@ -4,7 +4,7 @@
 
             <!-- ── Heading ── -->
             <div class="text-center m-16" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                <h2 class="text-4xl md:text-5xl font-bold text-[var(--surface-text)] mb-4">
                     {{ t('my1_') }}
                     <span class="text-transparent bg-clip-text" :style="{ backgroundImage: 'var(--logo-gradient)' }">{{
                         t('services') }}</span>{{ t('_my2') }}
@@ -21,7 +21,8 @@
                     :data-aos-delay="(index * 100) + 200"
                     class="group relative p-8 rounded-2xl backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 cursor-default"
                     :style="{
-                        background: 'linear-gradient(to bottom right, rgba(31,41,55,0.50), var(--section-grad-to))',
+                        // background: 'linear-gradient(to bottom right, rgba(31,41,55,0.50), var(--section-grad-to))',
+                        background: 'linear-gradient(to bottom right, var(--card-bg-from), var(--section-grad-to))',
                         border: '1px solid var(--section-border)'
                     }" @mouseenter="e => {
                         e.currentTarget.style.borderColor = 'var(--accent-border-hover)'
@@ -46,10 +47,10 @@
                     <!-- Text -->
                     <div class="relative z-10">
                         <h3
-                            class="text-xl font-bold text-white mb-3 transition-colors duration-300 group-hover:text-[var(--accent-text)]">
+                            class="text-xl font-bold text-[var(--surface-text)] mb-3 transition-colors duration-300 group-hover:text-[var(--accent-text)]">
                             {{ service.name }}
                         </h3>
-                        <p class="text-blue-100 leading-relaxed">
+                        <p class="text-[var(--surface-text-sub)] leading-relaxed">
                             {{ service.desc }}
                         </p>
                     </div>
@@ -57,7 +58,10 @@
                     <!-- Arrow -->
                     <div
                         class="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300">
-                        <router-link to="/services/detail">
+                        <!-- <router-link to="/services/detail">
+                            <ArrowRightIcon class="w-6 h-6" :style="{ color: 'var(--icon-accent-2)' }" />
+                        </router-link> -->
+                        <router-link :to="'/services/detail/' + service.id">
                             <ArrowRightIcon class="w-6 h-6" :style="{ color: 'var(--icon-accent-2)' }" />
                         </router-link>
                     </div>

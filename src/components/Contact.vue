@@ -1,13 +1,12 @@
 <template>
-    <section class="relative py-20 overflow-hidden" id="contacts">
+    <section class="relative py-20 overflow-hidden mb-35" id="contacts">
         <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <!-- ── Heading ── -->
             <div class="text-center m-16" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
-                    Get In
-                    <span class="text-transparent bg-clip-text" :style="{ backgroundImage: 'var(--logo-gradient)' }">
-                        Touch</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-[var(--surface-text)] mb-4">
+                    {{ t('get_in_touch1') }}<span class="text-transparent bg-clip-text" :style="{ backgroundImage: 'var(--logo-gradient)' }">
+                        {{ t('get_in_touch2') }}</span>
                 </h2>
                 <p class="text-lg" :style="{ color: 'var(--accent-text-muted)' }">
                     Let's work together on your next project
@@ -18,12 +17,12 @@
 
                 <!-- ── Contact Info ── -->
                 <div data-aos="fade-right">
-                    <h3 class="text-2xl font-bold text-white mb-6">Contact Information</h3>
+                    <h3 class="text-2xl font-bold text-[var(--surface-text-sub)] mb-6">Contact Information</h3>
                     <div class="space-y-6">
                         <div v-for="info in contactInfo" :key="info.label" class="flex items-center gap-4">
                             <component :is="info.icon" class="w-6 h-6" :style="{ color: 'var(--accent-text)' }" />
                             <div>
-                                <p class="text-white font-semibold">{{ info.label }}</p>
+                                <p class="text-[var(--surface-text-sub)] font-semibold">{{ info.label }}</p>
                                 <p :style="{ color: 'var(--accent-text-muted)' }">{{ info.value }}</p>
                             </div>
                         </div>
@@ -31,7 +30,7 @@
 
                     <!-- ── Social Links ── -->
                     <div class="mt-8">
-                        <h4 class="text-lg font-bold text-white mb-4">Follow Me</h4>
+                        <h4 class="text-lg font-bold text-[var(--surface-text-sub)] mb-4">Follow Me</h4>
                         <div class="flex flex-wrap gap-4">
 
                             <!-- Facebook — indigo (brand fixed) -->
@@ -133,17 +132,19 @@
                     <form class="space-y-6">
                         <div class="grid sm:grid-cols-2 gap-6">
                             <div>
-                                <label class="text-white text-sm font-medium mb-2 block">Name</label>
+                                <label
+                                    class="text-[var(--surface-text-sub)] text-sm font-medium mb-2 block">Name</label>
                                 <input type="text" placeholder="Your name"
-                                    class="w-full bg-gray-800/50 rounded-xl px-4 py-3 text-white transition-all outline-none"
+                                    class="w-full bg-[var(--surface-card)] rounded-xl px-4 py-3 text-[var(--surface-text-sub)] transition-all outline-none"
                                     :style="{ border: '1px solid var(--section-border)' }"
                                     @focus="e => e.currentTarget.style.borderColor = 'var(--accent-text)'"
                                     @blur="e => e.currentTarget.style.borderColor = 'var(--section-border)'" />
                             </div>
                             <div>
-                                <label class="text-white text-sm font-medium mb-2 block">Email</label>
+                                <label
+                                    class="text-[var(--surface-text-sub)] text-sm font-medium mb-2 block">Email</label>
                                 <input type="email" placeholder="your@email.com"
-                                    class="w-full bg-gray-800/50 rounded-xl px-4 py-3 text-white transition-all outline-none"
+                                    class="w-full bg-[var(--surface-card)] rounded-xl px-4 py-3 text-[var(--surface-text-sub)] transition-all outline-none"
                                     :style="{ border: '1px solid var(--section-border)' }"
                                     @focus="e => e.currentTarget.style.borderColor = 'var(--accent-text)'"
                                     @blur="e => e.currentTarget.style.borderColor = 'var(--section-border)'" />
@@ -151,26 +152,25 @@
                         </div>
 
                         <div>
-                            <label class="text-white text-sm font-medium mb-2 block">Subject</label>
+                            <label class="text-[var(--surface-text-sub)] text-sm font-medium mb-2 block">Subject</label>
                             <input type="text" placeholder="What's this about?"
-                                class="w-full bg-gray-800/50 rounded-xl px-4 py-3 text-white transition-all outline-none"
+                                class="w-full bg-[var(--surface-card)] rounded-xl px-4 py-3 text-[var(--surface-text-sub)] transition-all outline-none"
                                 :style="{ border: '1px solid var(--section-border)' }"
                                 @focus="e => e.currentTarget.style.borderColor = 'var(--accent-text)'"
                                 @blur="e => e.currentTarget.style.borderColor = 'var(--section-border)'" />
                         </div>
 
                         <div>
-                            <label class="text-white text-sm font-medium mb-2 block">Message</label>
+                            <label class="text-[var(--surface-text-sub)] text-sm font-medium mb-2 block">Message</label>
                             <textarea rows="5" placeholder="Tell me about your project..."
-                                class="w-full bg-gray-800/50 rounded-xl px-4 py-3 text-white transition-all outline-none resize-none"
+                                class="w-full bg-[var(--surface-card)] rounded-xl px-4 py-3 text-[var(--surface-text-sub)] transition-all outline-none resize-none"
                                 :style="{ border: '1px solid var(--section-border)' }"
                                 @focus="e => e.currentTarget.style.borderColor = 'var(--accent-text)'"
-                                @blur="e => e.currentTarget.style.borderColor = 'var(--section-border)'">
-                            </textarea>
+                                @blur="e => e.currentTarget.style.borderColor = 'var(--section-border)'"></textarea>
                         </div>
 
                         <button type="submit"
-                            class="w-full text-white font-semibold py-3 rounded-xl transition-all duration-300"
+                            class="w-full text-white font-semibold py-3 rounded-xl transition-all duration-300 cursor-pointer"
                             :style="{ background: 'var(--cta-gradient)' }"
                             @mouseenter="e => e.currentTarget.style.boxShadow = '0 10px 25px var(--accent-shadow)'"
                             @mouseleave="e => e.currentTarget.style.boxShadow = 'none'">
@@ -185,6 +185,7 @@
 </template>
 
 <script setup>
+import { t } from './../stores/languages';
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/16/solid';
 
 const contactInfo = [

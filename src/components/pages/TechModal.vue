@@ -10,12 +10,12 @@
           class="modal-card relative w-full max-w-sm rounded-2xl overflow-hidden"
           :style="cardStyle"
         >
-          <!-- Glow ring behind card -->
+          <!-- Inner glow ring -->
           <div class="absolute inset-0 rounded-2xl pointer-events-none" :style="glowRing" />
 
           <!-- Close button -->
           <button
-            class="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white"
+            class="modal-close-btn absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full transition-colors"
             @click="$emit('close')"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -24,17 +24,17 @@
           </button>
 
           <!-- Top accent bar -->
-          <div class="h-1 w-full" :style="{ background: accentBar }" />
+          <div class="h-1 w-full flex-shrink-0" :style="{ background: accentBar }" />
 
           <!-- Body -->
           <div class="px-8 pb-8 pt-6 flex flex-col items-center gap-5">
 
-            <!-- Big Logo box -->
+            <!-- Big logo -->
             <div
-              class="logo-modal-box relative flex items-center justify-center rounded-2xl p-5"
+              class="relative flex items-center justify-center rounded-2xl flex-shrink-0"
+              style="width: 9rem; height: 9rem;"
               :style="logoBoxStyle"
             >
-              <!-- subtle inner glow -->
               <div class="absolute inset-0 rounded-2xl" :style="logoInnerGlow" />
               <img
                 :src="tech.logo"
@@ -45,32 +45,41 @@
             </div>
 
             <!-- Name + badges -->
-            <div class="text-center space-y-2">
-              <h3 class="text-2xl font-bold text-white tracking-tight">{{ tech.name }}</h3>
+            <div class="text-center space-y-2 w-full">
+              <h3 class="text-2xl font-bold tracking-tight" style="color: var(--surface-text)">
+                {{ tech.name }}
+              </h3>
               <div class="flex items-center justify-center gap-2 flex-wrap">
                 <span
                   class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider"
-                  :style="badgeStyle"
+                  :style="categoryBadgeStyle"
                 >
                   {{ tech.category }}
                 </span>
-                <span class="px-3 py-1 rounded-full text-xs uppercase tracking-wider bg-white/5 text-gray-400 border border-white/10">
+                <span
+                  class="px-3 py-1 rounded-full text-xs uppercase tracking-wider"
+                  style="background: var(--surface-bg-3); color: var(--surface-text-sub); border: 1px solid var(--surface-border);"
+                >
                   {{ tech.type }}
                 </span>
               </div>
             </div>
 
             <!-- Divider -->
-            <div class="w-full h-px" :style="{ background: `linear-gradient(to right, transparent, rgba(${rgb},0.4), transparent)` }" />
+            <div
+              class="w-full h-px flex-shrink-0"
+              :style="{ background: `linear-gradient(to right, transparent, rgba(${rgb},0.4), transparent)` }"
+            />
 
-            <!-- Close button bottom -->
+            <!-- Close btn -->
             <button
-              class="w-full py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-80"
-              :style="closeBtn"
+              class="w-full py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-75 active:scale-95"
+              :style="closeBtnStyle"
               @click="$emit('close')"
             >
               Close
             </button>
+
           </div>
         </div>
       </div>
@@ -81,17 +90,20 @@
 <script setup>
 import { computed } from 'vue';
 
+// ── Props & emits ──
 const props = defineProps({
   tech: { type: Object, default: null },
 });
 defineEmits(['close']);
 
+// ── Derived color ──
 const rgb = computed(() => props.tech?._styles?.rgb ?? '99,102,241');
 
+// ── Computed styles ──
 const cardStyle = computed(() => ({
-  background: 'linear-gradient(160deg, rgba(17,24,39,0.98) 0%, rgba(9,11,17,0.99) 100%)',
-  border: `1px solid rgba(${rgb.value},0.30)`,
-  boxShadow: `0 0 60px 10px rgba(${rgb.value},0.15), 0 25px 60px rgba(0,0,0,0.6)`,
+  background: 'var(--surface-bg-2)',
+  border:     `1px solid rgba(${rgb.value},0.30)`,
+  boxShadow:  `0 0 60px 10px rgba(${rgb.value},0.15), 0 25px 60px rgba(0,0,0,0.4)`,
 }));
 
 const glowRing = computed(() => ({
@@ -103,39 +115,52 @@ const accentBar = computed(() =>
 );
 
 const logoBoxStyle = computed(() => ({
-  background: `radial-gradient(circle at center, rgba(${rgb.value},0.12) 0%, rgba(17,24,39,0.6) 100%)`,
-  border: `1px solid rgba(${rgb.value},0.25)`,
-  boxShadow: `0 0 30px 4px rgba(${rgb.value},0.20)`,
-  width: '9rem',
-  height: '9rem',
+  background: 'var(--surface-bg-3)',
+  border:     `1px solid rgba(${rgb.value},0.25)`,
+  boxShadow:  `0 0 30px 4px rgba(${rgb.value},0.20)`,
 }));
 
 const logoInnerGlow = computed(() => ({
   background: `radial-gradient(circle at 50% 30%, rgba(${rgb.value},0.15) 0%, transparent 70%)`,
 }));
 
-const badgeStyle = computed(() => ({
+const categoryBadgeStyle = computed(() => ({
   background: `rgba(${rgb.value},0.15)`,
-  color: `rgb(${rgb.value})`,
-  border: `1px solid rgba(${rgb.value},0.30)`,
+  color:      `rgb(${rgb.value})`,
+  border:     `1px solid rgba(${rgb.value},0.30)`,
 }));
 
-const closeBtn = computed(() => ({
+const closeBtnStyle = computed(() => ({
   background: `rgba(${rgb.value},0.12)`,
-  color: `rgb(${rgb.value})`,
-  border: `1px solid rgba(${rgb.value},0.25)`,
+  color:      `rgb(${rgb.value})`,
+  border:     `1px solid rgba(${rgb.value},0.25)`,
 }));
 </script>
 
 <style scoped>
-/* Backdrop */
+/* ── Backdrop ── */
 .modal-backdrop {
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.60);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 
-/* Modal enter/leave transitions */
+/* Light theme: softer backdrop */
+html.theme-light .modal-backdrop {
+  background: rgba(15, 23, 42, 0.40);
+}
+
+/* ── Close button ── */
+.modal-close-btn {
+  background: var(--surface-border);
+  color:      var(--surface-text-sub);
+}
+.modal-close-btn:hover {
+  background: var(--surface-card);
+  color:      var(--surface-text);
+}
+
+/* ── Modal enter / leave transitions ── */
 .modal-enter-active {
   transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }

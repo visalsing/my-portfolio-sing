@@ -1,10 +1,12 @@
 /* Google Fonts import */
 /* @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;700&family=Freehand&display=swap'); */
-@import url("https://fonts.googleapis.com/css2?family=Hanuman:wght@100..900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Hanuman:wght@100..900&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Lao+Looped:wght@100..900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tagalog&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Tagalog&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 
 @import "tailwindcss";
 
@@ -15,11 +17,17 @@
 
 * {
   font-family: var(--font-body);
+  /* line-height: 1.5; */
+
+  /* This prevents the browser from being too aggressive with clipping */
+  /* text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased; */
 }
 
 /* Khmer override — only when <html data-lang="km"> */
 :root[data-lang="km"] {
-  --font-body: "Hanuman", sans-serif;
+  /* --font-body: "Hanuman", sans-serif; */
+  --font-body: "Kantumruy Pro", sans-serif;
 }
 
 /* English override — only when <html data-lang="en"> */
@@ -32,7 +40,12 @@
   --font-body: "Noto Sans SC", sans-serif;
 }
 
-/* Chinese override — only when <html data-lang="zh"> */
+/* Thai override — only when <html data-lang="en"> */
+:root[data-lang="th"] {
+  --font-body: "Mali", sans-serif;
+}
+
+/* Lao override — only when <html data-lang="zh"> */
 :root[data-lang="lo"] {
   --font-body: "Noto Sans Lao Looped", sans-serif;
 }
@@ -113,18 +126,21 @@
   --accent-to-bg-hover: rgba(34, 211, 238, 0.3); /* cyan-400/30 */
 
   /* Specific to Services.vue */
-  --accent-glow: rgba(59, 130, 246, 0.03); /* blue-500/5 — card hover glow */
+  /* --accent-glow: rgba(59, 130, 246, 0.03); */ /* blue-500/5 — card hover glow */
+  --hue: 217, 91%, 60%;
 
   /* Specific to Projects.vue */
-  --accent-text-light: #93c5fd; /* blue-300  — link hover color  */
-  --accent-to-light: #67e8f9; /* cyan-300  — link hover color  */
-  --accent-to-pill-txt: #a5f3fc; /* cyan-200  — tech pill text    */
+  --accent-text-light: #93c5fd; /* blue-300 */
+  --accent-to-light: #67e8f9; /* cyan-300 */
+  --accent-to-pill-txt: #a5f3fc; /* cyan-200 */
+  --accent-to-pill-txt-2: #0891b2; /* cyan-600 */
+  --accent-pill-bg-light: rgba(34, 211, 238, 0.1); /* transparent glow */
 
   /* Specific to Testimonials.vue */
   --accent-star: #facc15; /* yellow-400 — star rating (stays yellow across ALL themes, it's semantic) */
   --accent-text-soft: #93c5fd; /* blue-300   — position text */
 
-  /* Specific to ServiceDetail.vue */
+  /* Specific to SoftSkills.vue */
   --accent-line: rgba(
     59,
     130,
@@ -137,10 +153,11 @@
     246,
     0.2
   ); /* blue-500/20 — line shadow          */
-  --accent-node-bg: #0a0f1d; /* fixed dark bg for number nodes     */
+  /* --accent-node-bg: #0a0f1d; fixed dark bg for number nodes     */
 
   /* Specific to Footer.vue */
-  --footer-bg-color: rgba(17, 24, 39, 0.8);
+  /* --footer-bg-color: rgba(17, 24, 39, 0.8); */
+  --footer-rgb: 17, 24, 39;
 
   /* Speicific to Conact.vue */
   /* Same across ALL themes — these are brand identity colors */
@@ -174,6 +191,238 @@
   --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
   --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
 }
+
+.theme-black-charcoal {
+  /* Core */
+  --accent-from: #52525b; /* zinc-600 */
+  --accent-mid: #3f3f46; /* zinc-700 */
+  --accent-to: #18181b; /* zinc-900 */
+
+  --accent-text: #e4e4e7;
+  --accent-text-muted: #a1a1aa;
+
+  --accent-bg: rgba(82, 82, 91, 0.08);
+  --accent-bg-hover: rgba(82, 82, 91, 0.14);
+
+  --accent-border: rgba(82, 82, 91, 0.18);
+  --accent-border-hover: rgba(212, 212, 216, 0.25);
+
+  --accent-shadow: rgba(0, 0, 0, 0.55);
+  --accent-shadow-lg: rgba(0, 0, 0, 0.8);
+
+  /* Navigation */
+  --nav-btn-bg: rgba(24, 24, 27, 0.55);
+  --nav-btn-border: rgba(82, 82, 91, 0.18);
+  --nav-btn-hover: rgba(9, 9, 11, 0.8);
+
+  /* Sections */
+  --section-grad-to: rgba(9, 9, 11, 0.35);
+  --section-border: rgba(82, 82, 91, 0.14);
+
+  /* Icons */
+  --icon-accent: #d4d4d8;
+  --icon-accent-2: #71717a;
+  --icon-accent-3: #3f3f46;
+
+  --icon-bg: rgba(212, 212, 216, 0.08);
+  --icon-bg-2: rgba(113, 113, 122, 0.08);
+  --icon-bg-3: rgba(63, 63, 70, 0.08);
+
+  /* Branding */
+  --cta-gradient: linear-gradient(
+    to right,
+    #3f3f46,
+    #09090b
+  );
+
+  --logo-gradient: linear-gradient(
+    to right,
+    #fafafa,
+    #71717a
+  );
+
+  /* Navbar */
+  --navbar-bg-color: rgba(10, 10, 10, 0.88);
+  --navbar-bg: rgba(10, 10, 10, 0.88);
+
+  /* BackToTop */
+  --back-to-top-bg: linear-gradient(
+    to right,
+    #52525b,
+    #18181b
+  );
+
+  /* About */
+  --accent-mid-dark: #27272a;
+  --accent-to-mid: #18181b;
+  --accent-to-dark: #09090b;
+
+  /* Experience */
+  --accent-border-2: rgba(82, 82, 91, 0.2);
+  --accent-border-2-soft: rgba(82, 82, 91, 0.1);
+
+  --accent-to-bg: rgba(24, 24, 27, 0.35);
+  --accent-to-bg-hover: rgba(24, 24, 27, 0.5);
+
+  /* Services */
+  --hue: 240, 5%, 22%;
+
+  /* Projects */
+  --accent-text-light: #d4d4d8;
+  --accent-to-light: #a1a1aa;
+
+  --accent-to-pill-txt: #fafafa;
+  --accent-to-pill-txt-2: #18181b;
+
+  --accent-pill-bg-light: rgba(255, 255, 255, 0.03);
+
+  /* Testimonials */
+  --accent-star: #facc15;
+  --accent-text-soft: #a1a1aa;
+
+  /* SoftSkills */
+  --accent-line: rgba(82, 82, 91, 0.3);
+  --accent-line-glow: rgba(82, 82, 91, 0.15);
+
+  /* Footer */
+  --footer-rgb: 10, 10, 10;
+
+  /* Socials */
+  --social-indigo: #818cf8;
+  --social-indigo-bg: rgba(99, 102, 241, 0.2);
+  --social-indigo-bd: rgba(129, 140, 248, 0.3);
+  --social-indigo-hover: rgba(99, 102, 241, 0.3);
+
+  --social-sky: #38bdf8;
+  --social-sky-bg: rgba(14, 165, 233, 0.2);
+  --social-sky-bd: rgba(56, 189, 248, 0.3);
+  --social-sky-hover: rgba(14, 165, 233, 0.3);
+
+  --social-slate: #71717a;
+  --social-slate-bg: rgba(113, 113, 122, 0.2);
+  --social-slate-bd: rgba(113, 113, 122, 0.3);
+  --social-slate-hover: rgba(113, 113, 122, 0.3);
+
+  --social-teal: #2dd4bf;
+  --social-teal-bg: rgba(20, 184, 166, 0.2);
+  --social-teal-bd: rgba(45, 212, 191, 0.3);
+  --social-teal-hover: rgba(20, 184, 166, 0.3);
+
+  --social-emerald: #34d399;
+  --social-emerald-bg: rgba(16, 185, 129, 0.2);
+  --social-emerald-bd: rgba(52, 211, 153, 0.3);
+  --social-emerald-hover: rgba(16, 185, 129, 0.3);
+
+  --social-zinc: #a1a1aa;
+  --social-zinc-bg: rgba(113, 113, 122, 0.2);
+  --social-zinc-bd: rgba(161, 161, 170, 0.3);
+  --social-zinc-hover: rgba(113, 113, 122, 0.3);
+}
+
+.theme-white-smoke {
+  /* Core */
+  --accent-from: #a1a1aa; /* zinc-400 */
+  --accent-mid: #71717a; /* zinc-500 */
+  --accent-to: #52525b; /* zinc-600 */
+
+  --accent-text: #27272a;
+  --accent-text-muted: #52525b;
+
+  --accent-bg: rgba(113, 113, 122, 0.05);
+  --accent-bg-hover: rgba(113, 113, 122, 0.1);
+
+  --accent-border: rgba(113, 113, 122, 0.14);
+  --accent-border-hover: rgba(82, 82, 91, 0.24);
+
+  --accent-shadow: rgba(0, 0, 0, 0.05);
+  --accent-shadow-lg: rgba(0, 0, 0, 0.12);
+
+  /* Navigation */
+  --nav-btn-bg: rgba(255, 255, 255, 0.85);
+  --nav-btn-border: rgba(113, 113, 122, 0.12);
+  --nav-btn-hover: #f4f4f5;
+
+  /* Sections */
+  --section-grad-to: #f4f4f5;
+  --section-border: rgba(113, 113, 122, 0.12);
+
+  /* Icons */
+  --icon-accent: #27272a;
+  --icon-accent-2: #52525b;
+  --icon-accent-3: #71717a;
+
+  --icon-bg: rgba(24, 24, 27, 0.05);
+  --icon-bg-2: rgba(24, 24, 27, 0.04);
+  --icon-bg-3: rgba(24, 24, 27, 0.03);
+
+  /* Branding */
+  --cta-gradient: linear-gradient(
+    to right,
+    #71717a,
+    #52525b
+  );
+
+  --logo-gradient: linear-gradient(
+    to right,
+    #27272a,
+    #71717a
+  );
+
+  /* Navbar */
+  --navbar-bg-color: rgba(250, 250, 250, 0.9);
+  --navbar-bg: rgba(250, 250, 250, 0.9);
+
+  /* BackToTop */
+  --back-to-top-bg: linear-gradient(
+    to right,
+    #71717a,
+    #52525b
+  );
+
+  /* About */
+  --accent-mid-dark: #d4d4d8;
+  --accent-to-mid: #e4e4e7;
+  --accent-to-dark: #f4f4f5;
+
+  /* Experience */
+  --accent-border-2: rgba(113, 113, 122, 0.14);
+  --accent-border-2-soft: rgba(113, 113, 122, 0.08);
+
+  --accent-to-bg: rgba(228, 228, 231, 0.6);
+  --accent-to-bg-hover: rgba(212, 212, 216, 0.8);
+
+  /* Services */
+  --hue: 240, 5%, 92%;
+
+  /* Projects */
+  --accent-text-light: #27272a;
+  --accent-to-light: #52525b;
+
+  --accent-to-pill-txt: #18181b;
+  --accent-to-pill-txt-2: #fafafa;
+
+  --accent-pill-bg-light: rgba(24, 24, 27, 0.05);
+
+  /* Testimonials */
+  --accent-star: #ca8a04;
+  --accent-text-soft: #52525b;
+
+  /* SoftSkills */
+  --accent-line: rgba(113, 113, 122, 0.15);
+  --accent-line-glow: rgba(113, 113, 122, 0.08);
+
+  /* Footer */
+  --footer-rgb: 244, 244, 245;
+
+  /* Socials */
+  --social-indigo: #4338ca;
+  --social-sky: #0369a1;
+  --social-slate: #475569;
+  --social-teal: #0f766e;
+  --social-emerald: #047857;
+  --social-zinc: #52525b;
+}
+
 
 /* ── Red-Scarlet ── */
 .theme-red-scarlet {
@@ -221,12 +470,14 @@
   --accent-to-bg-hover: rgba(251, 146, 60, 0.3); /* orange-400/30 */
 
   /* Specific to Services.vue */
-  --accent-glow: rgba(239, 68, 68, 0.03); /* red-500/5 — card hover glow */
+  /* --accent-glow: rgba(239, 68, 68, 0.03); red-500/5 — card hover glow */
+  --hue: 0, 72%, 51%;
 
   /* Specific to Projects.vue */
   --accent-text-light: #fca5a5; /* red-300    */
   --accent-to-light: #fdba74; /* orange-300 */
   --accent-to-pill-txt: #fed7aa; /* orange-200 */
+  --accent-to-pill-txt-2: #ea580c;
 
   /* Specific to Testimonials.vue */
   --accent-star: #facc15; /* yellow-400 — star rating (stays yellow across ALL themes, it's semantic) */
@@ -245,10 +496,11 @@
     68,
     0.2
   ); /* blue-500/20 — line shadow          */
-  --accent-node-bg: #0a0f1d; /* fixed dark bg for number nodes     */
+  /* --accent-node-bg: #0a0f1d; fixed dark bg for number nodes     */
 
   /* Specific to Footer.vue */
-  --footer-bg-color: rgba(22, 10, 10, 0.8);
+  /* --footer-bg-color: rgba(22, 10, 10, 0.8); */
+  --footer-rgb: 22, 10, 10;
 
   /* Speicific to Conact.vue */
   /* Same across ALL themes — these are brand identity colors */
@@ -329,12 +581,14 @@
   --accent-to-bg-hover: rgba(244, 114, 182, 0.3); /* pink-400/30 */
 
   /* Specific to Services.vue */
-  --accent-glow: rgba(147, 51, 234, 0.03); /* purple-500/5 — card hover glow */
+  /* --accent-glow: rgba(147, 51, 234, 0.03); purple-500/5 — card hover glow */
+  --hue: 270, 70%, 60%;
 
   /* Specific to Projects.vue */
   --accent-text-light: #d8b4fe; /* purple-300 */
   --accent-to-light: #f9a8d4; /* pink-300   */
   --accent-to-pill-txt: #fbcfe8; /* pink-200   */
+  --accent-to-pill-txt-2: #db2777;
 
   /* Specific to Testimonials.vue */
   --accent-star: #facc15; /* yellow-400 — star rating (stays yellow across ALL themes, it's semantic) */
@@ -353,10 +607,11 @@
     234,
     0.2
   ); /* blue-500/20 — line shadow          */
-  --accent-node-bg: #0a0f1d; /* fixed dark bg for number nodes     */
+  /* --accent-node-bg: #0a0f1d; fixed dark bg for number nodes     */
 
   /* Specific to Footer.vue */
-  --footer-bg-color: rgba(18, 10, 22, 0.8);
+  /* --footer-bg-color: rgba(18, 10, 22, 0.8); */
+  --footer-rgb: 18, 10, 22;
 
   /* Speicific to Conact.vue */
   /* Same across ALL themes — these are brand identity colors */
@@ -437,12 +692,14 @@
   --accent-to-bg-hover: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
 
   /* Specific to Services.vue */
-  --accent-glow: rgba(34, 197, 94, 0.03); /* green-500/5 — card hover glow */
+  /* --accent-glow: rgba(34, 197, 94, 0.03); green-500/5 — card hover glow */
+  --hue: 142, 70%, 45%;
 
   /* Specific to Projects.vue */
   --accent-text-light: #86efac; /* green-300  */
   --accent-to-light: #6ee7b7; /* emerald-300*/
   --accent-to-pill-txt: #a7f3d0; /* emerald-200*/
+  --accent-to-pill-txt-2: #059669;
 
   /* Specific to Testimonials.vue */
   --accent-star: #facc15; /* yellow-400 — star rating (stays yellow across ALL themes, it's semantic) */
@@ -461,10 +718,11 @@
     94,
     0.2
   ); /* blue-500/20 — line shadow          */
-  --accent-node-bg: #0a0f1d; /* fixed dark bg for number nodes     */
+  /* --accent-node-bg: #0a0f1d; fixed dark bg for number nodes     */
 
   /* Specific to Footer.vue */
-  --footer-bg-color: rgba(10, 22, 15, 0.8);
+  /* --footer-bg-color: rgba(10, 22, 15, 0.8); */
+  --footer-rgb: 10, 22, 15;
 
   /* Speicific to Conact.vue */
   /* Same across ALL themes — these are brand identity colors */
@@ -545,12 +803,14 @@
   --accent-to-bg-hover: rgba(250, 204, 21, 0.3); /* yellow-400/30 */
 
   /* Specific to Services.vue */
-  --accent-glow: rgba(22, 15, 10, 0.8); /* orange-500/5 — card hover glow */
+  /* --accent-glow: rgba(22, 15, 10, 0.8); orange-500/5 — card hover glow */
+  --hue: 35, 92%, 50%;
 
   /* Specific to Projects.vue */
   --accent-text-light: #fdba74; /* orange-300 */
   --accent-to-light: #fde047; /* yellow-300 */
   --accent-to-pill-txt: #fef08a; /* yellow-200 */
+  --accent-to-pill-txt-2: #ca8a04;
 
   /* Specific to Testimonials.vue */
   --accent-star: #facc15; /* yellow-400 — star rating (stays yellow across ALL themes, it's semantic) */
@@ -569,13 +829,14 @@
     22,
     0.2
   ); /* blue-500/20 — line shadow          */
-  --accent-node-bg: #0a0f1d; /* fixed dark bg for number nodes     */
+  /* --accent-node-bg: #0a0f1d; fixed dark bg for number nodes     */
 
   /* Specific to Footer.vue */
-  --footer-bg-color: rgba(17, 24, 39, 0.8);
+  /* --footer-bg-color: rgba(17, 24, 39, 0.8); */
 
   /* Specific to Footer.vue */
-  --footer-bg-color: rgba(22, 15, 10, 0.8);
+  /* --footer-bg-color: rgba(22, 15, 10, 0.8); */
+  --footer-rgb: 22, 15, 10;
 
   /* Speicific to Conact.vue */
   /* Same across ALL themes — these are brand identity colors */

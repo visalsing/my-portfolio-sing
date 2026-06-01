@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-black text-white">
+    <div class="min-h-screen bg-[var(--surface-bg)] text-[var(--surface-text)]">
         <section class="relative py-20 overflow-hidden" id="projects">
             <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -18,7 +18,7 @@
                         <li class="flex items-center">
                             <router-link to="/projects"
                                 class="group inline-flex items-center text-sm font-medium text-gray-400 transition-all duration-300">
-                                <svg class="w-6 h-6 text-gray-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-6 h-6 text-gray-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                         clip-rule="evenodd" />
@@ -28,7 +28,7 @@
                         </li>
                         <li>
                             <div class="flex items-center">
-                                <svg class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                         clip-rule="evenodd" />
@@ -48,14 +48,14 @@
 
                 <!-- ── Heading ── -->
                 <div class="text-center mb-16" data-aos="fade-up">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    <h2 class="text-4xl md:text-5xl font-bold text-[var(--surface-text)] mb-4">
                         {{ t('my1_') }}
                         <span class="text-transparent bg-clip-text"
                             :style="{ backgroundImage: 'var(--logo-gradient)' }">
                             {{ t('projects') }}
                         </span>{{ t('_my2') }}
                     </h2>
-                    <p class="text-lg max-w-2xl mx-auto" :style="{ color: 'var(--accent-text-muted)' }">
+                    <p class="text-lg max-w-2xl mx-auto" :style="{ color: 'var(--accent-text)' }">
                         A Collection of my recent work and creative solutions
                     </p>
                 </div>
@@ -69,7 +69,7 @@
                             <!-- ── Slideshow ── -->
                             <div class="lg:col-span-7 space-y-4">
                                 <div
-                                    class="relative group rounded-3xl overflow-hidden border border-white/10 bg-gray-900 aspect-video">
+                                    class="relative group rounded-3xl overflow-hidden border border-white/10 bg-[ var(--surface-bg-3)] aspect-video">
                                     <transition name="fade" mode="out-in">
                                         <img :key="project.currentSlide" :src="project.slides[project.currentSlide]"
                                             class="w-full h-full object-cover" />
@@ -77,7 +77,7 @@
 
                                     <!-- Zoom button -->
                                     <button @click="openZoom(pIndex)"
-                                        class="absolute top-4 right-4 z-30 p-3 rounded-xl bg-black/40 backdrop-blur-md border border-white/10 text-white transition-all opacity-0 group-hover:opacity-100"
+                                        class="absolute top-4 right-4 z-30 p-3 rounded-xl bg-[var(--surface-bg)]/40 backdrop-blur-md border border-white/10 text-[var(--surface-text)] transition-all opacity-0 group-hover:opacity-100"
                                         :style="''"
                                         @mouseenter="e => e.currentTarget.style.backgroundColor = 'var(--accent-mid)'"
                                         @mouseleave="e => e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.40)'">
@@ -86,7 +86,7 @@
 
                                     <!-- Slide counter -->
                                     <div
-                                        class="absolute bottom-6 left-6 z-20 bg-black/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10">
+                                        class="absolute bottom-6 left-6 z-20 bg-[var(--surface-bg)]/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10">
                                         <span class="text-xs font-bold tracking-widest uppercase"
                                             :style="{ color: 'var(--accent-text-muted)' }">
                                             Slide {{ project.currentSlide + 1 }} / {{ project.slides.length }}
@@ -97,13 +97,13 @@
                                     <div
                                         class="absolute inset-y-0 px-4 flex items-center justify-between w-full opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                                         <button @click="prevSlide(pIndex)"
-                                            class="p-2 rounded-full bg-black/50 text-white transition-all pointer-events-auto"
+                                            class="p-2 rounded-full bg-[var(--surface-bg)]/50 text-[var(--surface-text)] transition-all pointer-events-auto"
                                             @mouseenter="e => e.currentTarget.style.backgroundColor = 'var(--accent-mid)'"
                                             @mouseleave="e => e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.50)'">
                                             <ArrowLeftCircleIcon class="w-8 h-8" />
                                         </button>
                                         <button @click="nextSlide(pIndex)"
-                                            class="p-2 rounded-full bg-black/50 text-white transition-all pointer-events-auto"
+                                            class="p-2 rounded-full bg-[var(--surface-bg)]/50 text-[var(--surface-text)] transition-all pointer-events-auto"
                                             @mouseenter="e => e.currentTarget.style.backgroundColor = 'var(--accent-mid)'"
                                             @mouseleave="e => e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.50)'">
                                             <ArrowRightCircleIcon class="w-8 h-8" />
@@ -129,10 +129,10 @@
 
                             <!-- ── Info Panel ── -->
                             <div class="lg:col-span-5 space-y-6 pt-4">
-                                <h3 class="text-4xl font-bold text-white">{{ project.title }}</h3>
+                                <h3 class="text-4xl font-bold text-[var(--surface-text-sub)]">{{ project.title }}</h3>
 
                                 <p class="text-lg leading-relaxed"
-                                    :style="{ color: 'var(--accent-text-muted)', opacity: 0.7 }">
+                                    :style="{ color: 'var(--surface-text-sub)', opacity: 0.7 }">
                                     {{ project.desc }}
                                 </p>
 
@@ -199,10 +199,10 @@
         <!-- ── Zoom Modal ── -->
         <transition name="scale">
             <div v-if="isZoomed"
-                class="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-xl"
+                class="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--surface-bg)]/95 backdrop-blur-xl"
                 tabindex="0">
                 <button @click="isZoomed = false"
-                    class="absolute top-8 right-8 z-[110] text-white/50 hover:text-white transition-colors">
+                    class="absolute top-8 right-8 z-[110] text-[var(--surface-text)]/50 hover:text-[var(--surface-text)] transition-colors">
                     <XMarkIcon class="w-10 h-10" />
                 </button>
                 <button @click="prevSlide(activeProjectIndex)" class="absolute left-8 z-[110] p-4 transition-all"
