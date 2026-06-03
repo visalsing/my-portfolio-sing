@@ -159,7 +159,9 @@
 import { ArrowRightIcon, ArrowDownTrayIcon } from '@heroicons/vue/16/solid';
 import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue';
 import { t } from './../stores/languages';
-import { currentHeroBg, backgroundImages } from './../stores/heroBg.js';
+// import { currentHeroBg, backgroundImages } from './../stores/heroBg.js';
+// Hero.vue — fixed
+import { currentHeroBg, getHeroBgUrl } from './../stores/heroBg.js';
 import { currentTheme } from './../stores/themeMode.js';
 import { currentProfileFrame, FRAME_STYLES } from './../stores/profileFrame.js';
 
@@ -223,12 +225,55 @@ onMounted(() => {
     typeEffect();
 });
 
-// ── Hero background style (image-based backgrounds) ───────────────────────────
+// // ── Hero background style (image-based backgrounds) ───────────────────────────
+// const heroBgStyle = computed(() => {
+//     const imgUrl = backgroundImages[currentHeroBg.value];
+//     if (!imgUrl) return {};
+//     return {
+//         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url(${imgUrl})`,
+//         backgroundSize: 'cover',
+//         backgroundPosition: 'center',
+//         backgroundAttachment: 'fixed',
+//         transition: 'background-image 0.4s ease',
+//     };
+// });
+// // 1. Import getHeroBgUrl
+// // import { currentHeroBg, getHeroBgUrl } from './../stores/heroBg.js';
+
+// // 2. Fix the computed
+// const heroBgStyle = computed(() => {
+//     const imgUrl = getHeroBgUrl(currentHeroBg.value);
+//     if (!imgUrl) return {};
+//     return {
+//         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url(${imgUrl})`,
+//         backgroundSize: 'cover',
+//         backgroundPosition: 'center',
+//         backgroundAttachment: 'fixed',
+//         transition: 'background-image 0.4s ease',
+//     };
+// });
+// computed
+// const heroBgStyle = computed(() => {
+//     const imgUrl = getHeroBgUrl(currentHeroBg.value);
+//     if (!imgUrl) return {};
+//     return {
+//         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url(${imgUrl})`,
+//         backgroundSize: 'cover',
+//         backgroundPosition: 'center',
+//         backgroundAttachment: 'fixed',
+//         transition: 'background-image 0.4s ease',
+//     };
+// });
 const heroBgStyle = computed(() => {
-    const imgUrl = backgroundImages[currentHeroBg.value];
+    const imgUrl = getHeroBgUrl(currentHeroBg.value);
     if (!imgUrl) return {};
+
+    const isStars = currentHeroBg.value === 'stars';
+
     return {
-        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url(${imgUrl})`,
+        backgroundImage: isStars
+            ? `url(${imgUrl})`  // ✅ no dark overlay for stars
+            : `linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url(${imgUrl})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',

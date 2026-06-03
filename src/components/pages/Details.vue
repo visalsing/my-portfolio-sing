@@ -12,9 +12,17 @@
             ]"
                 :style="!isMenuOpen ? { backgroundColor: 'color-mix(in srgb, var(--navbar-bg), transparent 50%)' } : {}">
 
-                <div class="text-xl sm:text-2xl lg:text-3xl font-bold bg-clip-text text-transparent relative z-[110]"
+                <!-- <div class="text-xl sm:text-2xl lg:text-3xl font-bold bg-clip-text text-transparent relative z-[110]"
                     :style="{ backgroundImage: 'var(--logo-gradient)' }">
                     Dev <span class="font-black">Portfolio</span>
+                </div> -->
+                <!-- Primary nav logo (has relative z-[110]) -->
+                <div class="flex items-center gap-2 relative z-[110]">
+                    <img :src="logoSrc" alt="Logo" class="w-8 h-8 object-contain rounded-xl" />
+                    <div class="text-xl sm:text-2xl lg:text-3xl font-bold bg-clip-text text-transparent"
+                        :style="{ backgroundImage: 'var(--logo-gradient)' }">
+                        Dev <span class="font-black">Portfolio</span>
+                    </div>
                 </div>
 
                 <div class="lg:hidden relative z-[110]">
@@ -73,15 +81,28 @@
                 </nav>
             </header>
 
+            <!-- ✅ ADD THIS HERE — between the two headers -->
+            <div class="fixed top-0 left-0 w-full h-4 z-[60] hidden lg:block" @mouseenter="isHoveringTop = true"></div>
+
             <header :class="[
                 'fixed top-0 left-0 w-full z-50 transition-all duration-500 transform hidden lg:flex',
-                (isStickyVisible && isHoveringTop) ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-            ]" class="justify-between items-center p-6 backdrop-blur-md shadow-2xl"
-                :style="{ backgroundColor: 'var(--navbar-bg)', borderBottom: '1px solid var(--surface-border)' }"
-                @mouseleave="isHoveringTop = false">
-                <div class="text-3xl font-bold bg-clip-text text-transparent"
+                (isStickyVisible && isHoveringTop) ? 'translate-y-0 opacity-90' : '-translate-y-full opacity-0'
+            ]" class="justify-between items-center p-6 backdrop-blur-md shadow-2xl" :style="{
+                backgroundColor: 'color-mix(in srgb, var(--navbar-bg) 85%, transparent)',
+                borderBottom: '1px solid var(--surface-border)',
+                boxShadow: '0 4px 30px var(--accent-shadow)'
+            }" @mouseleave="isHoveringTop = false">
+                <!-- <div class="text-3xl font-bold bg-clip-text text-transparent"
                     :style="{ backgroundImage: 'var(--logo-gradient)' }">
                     Dev <span class="font-black">Portfolio</span>
+                </div> -->
+                <!-- Sticky nav logo -->
+                <div class="flex items-center gap-2">
+                    <img :src="logoSrc" alt="Logo" class="w-8 h-8 object-contain rounded-xl" />
+                    <div class="text-3xl font-bold bg-clip-text text-transparent"
+                        :style="{ backgroundImage: 'var(--logo-gradient)' }">
+                        Dev <span class="font-black">Portfolio</span>
+                    </div>
                 </div>
                 <nav class="flex items-center">
                     <ul class="flex flex-row space-x-5">
@@ -835,7 +856,7 @@
 
 <script setup>
 import { BriefcaseIcon, AcademicCapIcon } from '@heroicons/vue/24/outline';
-import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { ref, onMounted, onUnmounted, watch, computed } from 'vue';
 import { t } from './../../stores/languages.js';
 import { useRouter } from 'vue-router';
 import Footer from '../Footer.vue';
@@ -848,6 +869,26 @@ import {
     Squares2X2Icon, SwatchIcon, WrenchScrewdriverIcon,
 } from '@heroicons/vue/16/solid';
 import BackToTop from '../BackToTop.vue';
+
+
+// import { computed } from 'vue';
+import { currentScheme } from './../../stores/colorScheme.js';
+
+const logoSchemeMap = {
+    'Blue-Cyan': 'logo-portfolio-blue-cyan.png',
+    'Red-Scarlet': 'logo-portfolio-red-scarlet.png',
+    'Purple-Pink': 'logo-portfolio-purple-pink.png',
+    'Green-Dark': 'logo-portfolio-green-dark.png',
+    'Orange-Yellow': 'logo-portfolio-orange-yellow.png',
+    'Rainbow': 'logo-portfolio-rainbow.png',
+    'Black-Charcoal': 'logo-portfolio-black-charcoal.png',
+    'White-Smoke': 'logo-portfolio-white-smoke.png',
+};
+
+const logoSrc = computed(() => {
+    const file = logoSchemeMap[currentScheme.value] ?? logoSchemeMap['Blue-Cyan'];
+    return new URL(`../../assets/logos/${file}`, import.meta.url).href;
+});
 
 const router = useRouter();
 

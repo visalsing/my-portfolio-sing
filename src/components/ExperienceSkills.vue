@@ -60,10 +60,10 @@
                                     borderColor: 'var(--surface-border)',
                                     color: 'var(--surface-text-sub)'
                                 }" @mouseenter="e => {
-                                e.currentTarget.style.backgroundColor = 'var(--accent-bg)';
-                                e.currentTarget.style.borderColor = 'var(--accent-border)';
-                                e.currentTarget.style.color = 'var(--surface-text)';
-                            }" @mouseleave="e => {
+                                    e.currentTarget.style.backgroundColor = 'var(--accent-bg)';
+                                    e.currentTarget.style.borderColor = 'var(--accent-border)';
+                                    e.currentTarget.style.color = 'var(--surface-text)';
+                                }" @mouseleave="e => {
                                 e.currentTarget.style.backgroundColor = 'var(--surface-card)';
                                 e.currentTarget.style.borderColor = 'var(--surface-border)';
                                 e.currentTarget.style.color = 'var(--surface-text-sub)';
@@ -93,7 +93,7 @@
                                     </svg>
                                     <div class="absolute inset-0 flex flex-col items-center justify-center">
                                         <span class="text-[var(--surface-text)] font-bold text-lg">{{ skill.percentage
-                                            }}%</span>
+                                        }}%</span>
                                     </div>
                                 </div>
                                 <span class="font-medium text-center text-sm"
@@ -352,7 +352,7 @@
                                 <!-- <p class="text-blue-100 text-sm leading-relaxed">{{ education.desc }}</p> -->
                                 <p class="text-[var(--surface-text-sub)] text-sm leading-relaxed">
                                     <span v-if="!expandedEduTextIds.has(education.id)">
-                                        {{ education.desc.substring(0, 250) }}...
+                                        {{ education.desc.substring(0, 215) }}...
                                     </span>
 
                                     <span v-else>
@@ -435,7 +435,7 @@
                                 @mouseleave="e => e.currentTarget.style.borderColor = additionalSkill.useAccent2 ? 'var(--accent-border-2-soft)' : 'var(--section-border)'">
                                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
                                     <h4 class="text-lg font-bold text-[var(--surface-text)]">{{ additionalSkill.position
-                                        }}</h4>
+                                    }}</h4>
                                     <span class="mt-1 sm:mt-0 text-sm font-semibold"
                                         :style="{ color: additionalSkill.useAccent2 ? 'var(--icon-accent-2)' : 'var(--icon-accent)' }">{{
                                             additionalSkill.period }}</span>
@@ -443,8 +443,23 @@
                                 <p class="font-medium mb-3"
                                     :style="{ color: additionalSkill.useAccent2 ? 'var(--icon-accent)' : 'var(--icon-accent-2)' }">
                                     {{ additionalSkill.company }}</p>
-                                <p class="text-[var(--surface-text-sub)] text-sm leading-relaxed">{{
-                                    additionalSkill.desc }}</p>
+                                <!-- <p class="text-[var(--surface-text-sub)] text-sm leading-relaxed">{{
+                                    additionalSkill.desc }}</p> -->
+                                <p class="text-[var(--surface-text-sub)] text-sm leading-relaxed">
+                                    <span v-if="!expandedAddSkillTextIds.has(additionalSkill.id)">
+                                        {{ additionalSkill.desc.substring(0, 215) }}...
+                                    </span>
+
+                                    <span v-else>
+                                        {{ additionalSkill.desc }}
+                                    </span>
+
+                                    <span @click="toggleAddSkillText(additionalSkill.id)"
+                                        class="ml-1 font-bold cursor-pointer hover:underline uppercase text-[10px] tracking-widest"
+                                        :style="{ color: additionalSkill.useAccent2 ? 'var(--icon-accent-2)' : 'var(--icon-accent)' }">
+                                        {{ expandedAddSkillTextIds.has(additionalSkill.id) ? t('show_less') : t('see_more') }}
+                                    </span>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -482,7 +497,7 @@ const skills = [
     { id: 1, title: "Front-end Development", icon: CodeBracketIcon, useAccent2: false, percentage: 84 },
     { id: 2, title: "Back-end Development", icon: ServerIcon, useAccent2: true, percentage: 79 },
     { id: 3, title: "Web Design", icon: PaintBrushIcon, useAccent2: false, percentage: 68 },
-    { id: 4, title: "Mobile Developer", icon: DevicePhoneMobileIcon, useAccent2: true, percentage: 50 },
+    { id: 4, title: "Mobile Developer", icon: DevicePhoneMobileIcon, useAccent2: true, percentage: 40 },
     { id: 5, title: "DevOps & Cloud", icon: CloudIcon, useAccent2: false, percentage: 40 },
     { id: 6, title: "Marketing & Automation", icon: MegaphoneIcon, useAccent2: false, percentage: 50 },
     { id: 7, title: "API Architecture & Implementation", icon: CircleStackIcon, useAccent2: false, percentage: 70 },
@@ -504,7 +519,7 @@ const softSkills = [
 const languages = [
     { id: 1, title: "Khmer", flag: new URL('./../assets/images/flags/cambodia-flag.png', import.meta.url).href, useAccent2: false, percentage: 92 },
     { id: 2, title: "English", flag: new URL('./../assets/images/flags/uk-flag.png', import.meta.url).href, useAccent2: true, percentage: 87 },
-    { id: 3, title: "Chinese", flag: new URL('./../assets/images/flags/china-flag.png', import.meta.url).href, useAccent2: false, percentage: 22 },
+    { id: 3, title: "Chinese", flag: new URL('./../assets/images/flags/taiwan-flag.png', import.meta.url).href, useAccent2: false, percentage: 22 },
     { id: 4, title: "French", flag: new URL('./../assets/images/flags/france-flag.png', import.meta.url).href, useAccent2: true, percentage: 10 },
     { id: 5, title: "Thai", flag: new URL('./../assets/images/flags/thailand-flag.png', import.meta.url).href, useAccent2: false, percentage: 65 },
     { id: 6, title: "Lao", flag: new URL('./../assets/images/flags/laos-flag.png', import.meta.url).href, useAccent2: false, percentage: 59 },
@@ -637,14 +652,24 @@ const additionalSkills = [
     {
         id: 1, useAccent2: false,
         position: "Digital Sales Assistant", company: "A Small Business", period: "2024 - 2026",
-        desc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+        desc: "Supported a small relative's retail business by handling online product presentation rather than direct sales. Responsibilities focused on taking clear, appealing product photos of store inventory—including solar fans, solar lights/lamps, and electronic mosquito killer lights—to showcase features accurately for online customers.",
     },
     {
         id: 2, useAccent2: true,
         position: "Small Content Creator", company: "Independent Content Creator", period: "2022 - 2026 (Present)",
-        desc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+        desc: "Create and share educational content on YouTube dedicated to language learning, with a primary focus on teaching the Lao language. Manage the channel independently, translating personal knowledge into clear, accessible video lessons for viewers looking to learn a new language.",
     },
 ];
+// Track which specific education text blocks are expanded
+const expandedAddSkillTextIds = ref(new Set());
+
+const toggleAddSkillText = (id) => {
+    if (expandedAddSkillTextIds.value.has(id)) {
+        expandedAddSkillTextIds.value.delete(id);
+    } else {
+        expandedAddSkillTextIds.value.add(id);
+    }
+};
 
 // ── Tech Stack ──────────────────────────────────────────────
 const frontends = ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Vue.js', 'Vite', 'React.js', 'Next.js', 'Nuxt.js', 'jQuery', 'Tailwind CSS', 'Bootstrap'];

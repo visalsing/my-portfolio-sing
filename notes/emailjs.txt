@@ -1,0 +1,27 @@
+Emailjs.com
+
+https://emailjs.com/
+https://dashboard.emailjs.com/admin
+
+Account:
+sovisalsing55@gmail.com
+#visalsing@55
+
+Config Service:
+Name: So Visalsing
+Service ID: service_0optqsf
+Gmail Connect: sovisalsing288@gmail.com
+
+
+Email Template:
+To Email: sovisalsing288@gmail.com
+Contact Us: {{subejct}}
+New message from {{from_name}}
+Reply to: {{from_email}}
+Message: {{message}}
+
+Contact Us:
+Name: Contact Us
+Template ID: template_7nhyb1w
+
+Public Key: Sv3WEfeCcuUwX3lsu

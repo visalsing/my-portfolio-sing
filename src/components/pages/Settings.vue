@@ -178,45 +178,41 @@
                                         </div> -->
                                         <div class="flex -space-x-2">
 
-    <!-- Normal colors -->
-    <template v-if="!color.gradient">
-        <div
-            class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
-            :style="{
-                backgroundColor: color.from,
-                borderColor: 'var(--surface-bg-3)'
-            }">
-        </div>
+                                            <!-- Normal colors -->
+                                            <template v-if="!color.gradient">
+                                                <div class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
+                                                    :style="{
+                                                        backgroundColor: color.from,
+                                                        borderColor: 'var(--surface-bg-3)'
+                                                    }">
+                                                </div>
 
-        <div
-            class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
-            :style="{
-                backgroundColor: color.to,
-                borderColor: 'var(--surface-bg-3)'
-            }">
-        </div>
-    </template>
+                                                <div class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
+                                                    :style="{
+                                                        backgroundColor: color.to,
+                                                        borderColor: 'var(--surface-bg-3)'
+                                                    }">
+                                                </div>
+                                            </template>
 
-    <!-- Rainbow -->
-    <template v-else>
-        <div
-            class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
-            :style="{
-                background: color.gradient,
-                borderColor: 'var(--surface-bg-3)'
-            }">
-        </div>
+                                            <!-- Rainbow -->
+                                            <template v-else>
+                                                <div class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
+                                                    :style="{
+                                                        background: color.gradient,
+                                                        borderColor: 'var(--surface-bg-3)'
+                                                    }">
+                                                </div>
 
-        <div
-            class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
-            :style="{
-                background: color.gradient,
-                borderColor: 'var(--surface-bg-3)'
-            }">
-        </div>
-    </template>
+                                                <div class="w-7 h-7 rounded-full border-2 shadow-md transition-transform group-hover:scale-110"
+                                                    :style="{
+                                                        background: color.gradient,
+                                                        borderColor: 'var(--surface-bg-3)'
+                                                    }">
+                                                </div>
+                                            </template>
 
-</div>
+                                        </div>
                                     </div>
                                     <span class="text-sm font-medium transition-colors"
                                         :style="currentScheme === color.name ? { color: color.from } : { color: 'var(--surface-text-sub)' }">
@@ -612,6 +608,15 @@ const heroBackgrounds = [
     // { name: 'particles_bubbles', label: 'Bubbles', previewClass: 'preview-bubbles' },
     { name: 'particles-bubbles', label: 'Bubbles', previewClass: 'preview-bubbles' },
     { name: 'rain', label: 'Raindrops', previewClass: 'preview-rain' },
+    { name: 'nyan-cat', label: 'Nyan Cat', previewClass: 'preview-nyan-cat' },
+    // { name: 'stars', label: 'Starry Night', icon: MoonIcon },
+    // In heroBackgrounds array, update stars entry:
+    {
+        name: 'stars',
+        label: 'Starry Night',
+        previewUrl: null,  // handled dynamically
+        previewClass: 'preview-stars'
+    }
 ];
 
 // const heroBackgrounds = [
@@ -655,9 +660,9 @@ const colorSchemes = [
     {
         name: 'Rainbow',
         gradient: 'linear-gradient(to right, #f472b6, #ef4444, #f97316, #facc15, #22c55e, #06b6d4, #6366f1, #a855f7)'
-    }
-    // { name: 'Black-Charcoal', from: '#000000', to: '#36454F' },
-    // { name: 'White-Smoke', from: '#ffffff', to: '#F5F5F5' },
+    },
+    { name: 'Black-Charcoal', from: '#000000', to: '#36454F' },
+    { name: 'White-Smoke', from: '#ffffff', to: '#F5F5F5' },
 ];
 
 const languages = [
@@ -822,6 +827,33 @@ function resetSettings() {
     from { background-position: 0 0; }
     to { background-position: 0 20px; }
 } */
+
+/* --- Cat Rainbow Running --- */
+.preview-nyan-cat {
+    background-image: url('../../assets/images/heroBackgrounds/rainbowcat.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    /* Fill the preview box, not 300px */
+}
+
+.preview-stars {
+    background-image: url('../../assets/images/heroBackgrounds/starynight_dark.png');
+    background-size: cover;
+    background-position: center;
+}
+
+:global(html.theme-light) .preview-stars {
+    background-image: url('../../assets/images/heroBackgrounds/starynight_light.png');
+}
+
+@media (prefers-color-scheme: light) {
+    :global(html.theme-device) .preview-stars {
+        background-image: url('../../assets/images/heroBackgrounds/starynight_light.png');
+    }
+}
 
 /* --- Rain preview (Monochrome) --- */
 .preview-rain {

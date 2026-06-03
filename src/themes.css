@@ -49,6 +49,7 @@ html {
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
+/* ── Dark ── */
 :root,
 html.theme-dark {
   color-scheme: dark;

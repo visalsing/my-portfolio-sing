@@ -2,6 +2,7 @@
     <section class="relative py-20 overflow-hidden mb-35" id="contacts">
         <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
+            <!-- ── Heading ── -->
             <div class="text-center m-16" data-aos="fade-up">
                 <h2 class="text-4xl md:text-5xl font-bold text-[var(--surface-text)] mb-4">
                     {{ t('get_in_touch1') }}<span class="text-transparent bg-clip-text"
@@ -15,7 +16,7 @@
 
             <div class="grid lg:grid-cols-2 gap-12">
 
-                <!-- Left Column: Contact Info -->
+                <!-- ── Contact Info ── -->
                 <div data-aos="fade-right">
                     <h3 class="text-2xl font-bold text-[var(--surface-text-sub)] mb-6">Contact Information</h3>
                     <div class="space-y-6">
@@ -45,8 +46,7 @@
                             </a>
 
                             <!-- LinkedIn — accent primary -->
-                            <a href="https://www.linkedin.com/in/so-visalsing-227509312/"
-                                class="p-3 rounded-xl transition-all" target="_blank"
+                            <a href="https://www.linkedin.com/in/so-visalsing-227509312/" class="p-3 rounded-xl transition-all" target="_blank"
                                 :style="{ backgroundColor: 'var(--accent-bg)', border: '1px solid var(--accent-border)', color: 'var(--accent-text)' }"
                                 @mouseenter="e => e.currentTarget.style.backgroundColor = 'var(--accent-bg-hover)'"
                                 @mouseleave="e => e.currentTarget.style.backgroundColor = 'var(--accent-bg)'">
@@ -79,8 +79,7 @@
                             </a>
 
                             <!-- YouTube — accent secondary -->
-                            <a href="https://www.youtube.com/@sovisalsing7790" class="p-3 rounded-xl transition-all"
-                                target="_blank"
+                            <a href="https://www.youtube.com/@sovisalsing7790" class="p-3 rounded-xl transition-all" target="_blank"
                                 :style="{ backgroundColor: 'var(--accent-border-2-soft)', border: '1px solid var(--accent-to-bg-hover)', color: 'var(--icon-accent-2)' }"
                                 @mouseenter="e => e.currentTarget.style.backgroundColor = 'var(--accent-to-bg-hover)'"
                                 @mouseleave="e => e.currentTarget.style.backgroundColor = 'var(--accent-border-2-soft)'">
@@ -140,14 +139,14 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Contact Form -->
+                <!-- ── Contact Form ── -->
                 <div data-aos="fade-left">
-                    <form @submit.prevent="sendEmail" class="space-y-6">
+                    <form class="space-y-6">
                         <div class="grid sm:grid-cols-2 gap-6">
                             <div>
                                 <label
                                     class="text-[var(--surface-text-sub)] text-sm font-medium mb-2 block">Name</label>
-                                <input v-model="formData.name" type="text" placeholder="Your name" required
+                                <input type="text" placeholder="Your name"
                                     class="w-full bg-[var(--surface-card)] rounded-xl px-4 py-3 text-[var(--surface-text-sub)] transition-all outline-none"
                                     :style="{ border: '1px solid var(--section-border)' }"
                                     @focus="e => e.currentTarget.style.borderColor = 'var(--accent-text)'"
@@ -156,7 +155,7 @@
                             <div>
                                 <label
                                     class="text-[var(--surface-text-sub)] text-sm font-medium mb-2 block">Email</label>
-                                <input v-model="formData.email" type="email" placeholder="your@email.com" required
+                                <input type="email" placeholder="your@email.com"
                                     class="w-full bg-[var(--surface-card)] rounded-xl px-4 py-3 text-[var(--surface-text-sub)] transition-all outline-none"
                                     :style="{ border: '1px solid var(--section-border)' }"
                                     @focus="e => e.currentTarget.style.borderColor = 'var(--accent-text)'"
@@ -166,7 +165,7 @@
 
                         <div>
                             <label class="text-[var(--surface-text-sub)] text-sm font-medium mb-2 block">Subject</label>
-                            <input v-model="formData.subject" type="text" placeholder="What's this about?" required
+                            <input type="text" placeholder="What's this about?"
                                 class="w-full bg-[var(--surface-card)] rounded-xl px-4 py-3 text-[var(--surface-text-sub)] transition-all outline-none"
                                 :style="{ border: '1px solid var(--section-border)' }"
                                 @focus="e => e.currentTarget.style.borderColor = 'var(--accent-text)'"
@@ -175,168 +174,35 @@
 
                         <div>
                             <label class="text-[var(--surface-text-sub)] text-sm font-medium mb-2 block">Message</label>
-                            <textarea v-model="formData.message" rows="5" placeholder="Tell me about your project..."
-                                required
+                            <textarea rows="5" placeholder="Tell me about your project..."
                                 class="w-full bg-[var(--surface-card)] rounded-xl px-4 py-3 text-[var(--surface-text-sub)] transition-all outline-none resize-none"
                                 :style="{ border: '1px solid var(--section-border)' }"
                                 @focus="e => e.currentTarget.style.borderColor = 'var(--accent-text)'"
                                 @blur="e => e.currentTarget.style.borderColor = 'var(--section-border)'"></textarea>
                         </div>
 
-                        <button type="submit" :disabled="isSending"
-                            class="w-full text-white font-semibold py-3 rounded-xl transition-all duration-300 cursor-pointer disabled:opacity-50"
+                        <button type="submit"
+                            class="w-full text-white font-semibold py-3 rounded-xl transition-all duration-300 cursor-pointer"
                             :style="{ background: 'var(--cta-gradient)' }"
-                            @mouseenter="e => !isSending && (e.currentTarget.style.boxShadow = '0 10px 25px var(--accent-shadow)')"
+                            @mouseenter="e => e.currentTarget.style.boxShadow = '0 10px 25px var(--accent-shadow)'"
                             @mouseleave="e => e.currentTarget.style.boxShadow = 'none'">
-                            {{ isSending ? 'Sending...' : 'Send Message' }}
+                            Send Message
                         </button>
                     </form>
                 </div>
 
             </div>
         </div>
-
-        <!-- Custom Tailwind CSS Notification Modal Background Overlay -->
-        <div v-if="modal.show"
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all">
-            <!-- Modal Box Container -->
-            <div class="bg-[var(--surface-card)] border rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl"
-                :style="{ borderColor: 'var(--section-border)' }">
-
-                <!-- Success State Template -->
-                <div v-if="modal.type === 'success'">
-                    <div
-                        class="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-[var(--surface-text)] mb-2">Message Sent!</h3>
-                    <p class="text-sm mb-6" :style="{ color: 'var(--accent-text-muted)' }">
-                        Thank you! Your email was sent successfully. I will get back to you shortly.
-                    </p>
-                </div>
-
-                <!-- Error State Template -->
-                <div v-else>
-                    <div
-                        class="w-16 h-16 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-[var(--surface-text)] mb-2">Sending Failed</h3>
-                    <p class="text-sm mb-6" :style="{ color: 'var(--accent-text-muted)' }">
-                        Something went wrong while connecting to the email dispatch service. Please try again.
-                    </p>
-                </div>
-
-                <!-- Close Button -->
-                <button @click="closeModal"
-                    class="w-full text-white font-medium py-2.5 px-4 rounded-xl transition-all duration-200 cursor-pointer"
-                    :style="{ background: 'var(--cta-gradient)' }">
-                    Dismiss
-                </button>
-            </div>
-        </div>
     </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import emailjs from '@emailjs/browser';
 import { t } from './../stores/languages';
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/16/solid';
 
 const contactInfo = [
-    { icon: EnvelopeIcon, label: 'Email', value: 'sovisalsing288@gmail.com' },
+    { icon: EnvelopeIcon, label: 'Email', value: 'sovisalsing@gmail.com' },
     { icon: PhoneIcon, label: 'Phone', value: '+855 (0) 96 252 1705' },
     { icon: MapPinIcon, label: 'Location', value: 'Phnom Penh, Cambodia' },
 ];
-
-// --- Form States ---
-const isSending = ref(false);
-const formData = ref({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-});
-
-// --- Modal State Management ---
-const modal = ref({
-    show: false,
-    type: 'success' // can be 'success' or 'error'
-});
-
-const openModal = (type) => {
-    modal.value.type = type;
-    modal.value.show = true;
-};
-
-const closeModal = () => {
-    modal.value.show = false;
-};
-
-const sendEmail = async () => {
-    isSending.value = true;
-
-    // EmailJS credentials setup 
-    const SERVICE_ID = "service_0optqsf";
-    const TEMPLATE_ID = "template_7nhyb1w";
-    const PUBLIC_KEY = "Sv3WEfeCcuUwX3lsu";
-
-    // Generate accurate timestamp context
-    const currentDateTime = new Date().toLocaleString(undefined, {
-        dateStyle: 'medium',
-        timeStyle: 'short'
-    });
-
-    let userLocation = "Unknown Location";
-
-    // Fetch approximate network geographic position 
-    try {
-        const response = await fetch("https://ipapi.co/json/");
-        if (response.ok) {
-            const data = await response.json();
-            userLocation = `${data.city || 'Unknown City'}, ${data.region || 'Unknown State'}, ${data.country_name || 'Unknown Country'}`;
-        }
-    } catch (error) {
-        console.error("Location lookup failed, proceeding with fallback string:", error);
-    }
-
-    // Direct mapping keys targeted towards your layout layout variables in image_99f959.png
-    const templateParams = {
-        name: formData.value.name,
-        subject: formData.value.subject,
-        time: currentDateTime,
-        message: `Sender Email: ${formData.value.email}\nLocation: ${userLocation}\n\nMessage:\n${formData.value.message}`,
-        from_email: formData.value.email
-    };
-
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
-        .then(() => {
-            // Replaced ugly browser alert with modern custom modal trigger
-            openModal('success');
-            formData.value = { name: '', email: '', subject: '', message: '' };
-        })
-        .catch((err) => {
-            console.error('Error:', err);
-            // Error path fallback trigger
-            openModal('error');
-        })
-        .finally(() => {
-            isSending.value = false;
-        });
-};
 </script>
-
-
-// // 1. Go to EmailJS "Email Services" tab to find this
-// const SERVICE_ID = "service_0optqsf";
-
-// // 2. Click the "Settings" tab in your screenshot to find this
-// const TEMPLATE_ID = "template_7nhyb1w";
-
-// // 3. Go to "Account" -> "API Keys" to find this
-// const PUBLIC_KEY = "Sv3WEfeCcuUwX3lsu";

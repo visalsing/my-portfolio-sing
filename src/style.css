@@ -161,242 +161,324 @@
 
   /* Speicific to Conact.vue */
   /* Same across ALL themes — these are brand identity colors */
-  --social-indigo: #818cf8; /* indigo-400  — Facebook  */
-  --social-indigo-bg: rgba(99, 102, 241, 0.2); /* indigo-500/20 */
-  --social-indigo-bd: rgba(129, 140, 248, 0.3); /* indigo-400/30 */
-  --social-indigo-hover: rgba(99, 102, 241, 0.3); /* indigo-500/30 */
+  /* --- Facebook: Deep Royal Blue --- */
+  --social-indigo: #2563eb;
+  --social-indigo-bg: rgba(37, 99, 241, 0.12);
+  --social-indigo-bd: rgba(37, 99, 241, 0.35);
+  --social-indigo-hover: rgba(37, 99, 241, 0.25);
 
-  --social-sky: #38bdf8; /* sky-400     — Telegram  */
-  --social-sky-bg: rgba(14, 165, 233, 0.2); /* sky-500/20 */
-  --social-sky-bd: rgba(56, 189, 248, 0.3); /* sky-400/30 */
-  --social-sky-hover: rgba(14, 165, 233, 0.3); /* sky-500/30 */
+  /* --- Telegram: Clear Sky Blue --- */
+  --social-sky: #38bdf8;
+  --social-sky-bg: rgba(56, 189, 248, 0.12);
+  --social-sky-bd: rgba(56, 189, 248, 0.35);
+  --social-sky-hover: rgba(56, 189, 248, 0.25);
 
-  --social-slate: #94a3b8; /* slate-400   — X/Twitter */
-  --social-slate-bg: rgba(100, 116, 139, 0.2); /* slate-500/20 */
-  --social-slate-bd: rgba(148, 163, 184, 0.3); /* slate-400/30 */
-  --social-slate-hover: rgba(100, 116, 139, 0.3); /* slate-500/30 */
+  /* --- X / Twitter: Steel Blue --- */
+  --social-slate: #60a5fa;
+  --social-slate-bg: rgba(96, 165, 250, 0.12);
+  --social-slate-bd: rgba(96, 165, 250, 0.35);
+  --social-slate-hover: rgba(96, 165, 250, 0.25);
 
-  --social-teal: #2dd4bf; /* slate-400   — TikTok */
-  --social-teal-bg: rgba(20, 184, 166, 0.2); /* slate-500/20 */
-  --social-teal-bd: rgba(45, 212, 191, 0.3); /* slate-400/30 */
-  --social-teal-hover: rgba(20, 184, 166, 0.3); /* slate-500/30 */
+  /* --- TikTok: Dark Cyan / Teal --- */
+  --social-teal: #0ea5e9;
+  --social-teal-bg: rgba(14, 165, 233, 0.12);
+  --social-teal-bd: rgba(14, 165, 233, 0.35);
+  --social-teal-hover: rgba(14, 165, 233, 0.25);
 
-  --social-emerald: #34d399; /* emerald-400 — Instagram */
-  --social-emerald-bg: rgba(16, 185, 129, 0.2); /* emerald-500/20 */
-  --social-emerald-bd: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
-  --social-emerald-hover: rgba(16, 185, 129, 0.3); /* emerald-500/30 */
+  /* --- Instagram: Electric Cyan-Blue --- */
+  --social-emerald: #22d3ee;
+  --social-emerald-bg: rgba(34, 211, 238, 0.12);
+  --social-emerald-bd: rgba(34, 211, 238, 0.35);
+  --social-emerald-hover: rgba(34, 211, 238, 0.25);
 
-  --social-zinc: #a1a1aa; /* zinc-400    — GitHub    */
-  --social-zinc-bg: rgba(113, 113, 122, 0.2); /* zinc-500/20 */
-  --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
-  --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
+  /* --- GitHub: Frost Cyan / Ice Blue --- */
+  --social-zinc: #a5f3fc;
+  --social-zinc-bg: rgba(165, 243, 252, 0.1);
+  --social-zinc-bd: rgba(165, 243, 252, 0.3);
+  --social-zinc-hover: rgba(165, 243, 252, 0.2);
+
+  /* --- YouTube: Vivid Tech Cyan (Matching image_9d2c16.png) --- */
+  --social-youtube: #06b6d4;
+  --social-youtube-bg: rgba(6, 182, 212, 0.12);
+  --social-youtube-bd: rgba(6, 182, 212, 0.35);
+  --social-youtube-hover: rgba(6, 182, 212, 0.25);
+
+  /* --- GitLab: Bright Tech Teal --- */
+  --social-gitlab: #0ea5e9; 
+  --social-gitlab-bg: rgba(14, 165, 233, 0.12); 
+  --social-gitlab-bd: rgba(14, 165, 233, 0.35); 
+  --social-gitlab-hover: rgba(14, 165, 233, 0.25);
 }
 
 .theme-black-charcoal {
-  /* Core */
-  --accent-from: #52525b; /* zinc-600 */
-  --accent-mid: #3f3f46; /* zinc-700 */
-  --accent-to: #18181b; /* zinc-900 */
+  /* Core - Adjusted to balanced, adaptive transparencies */
+  --accent-from: rgba(113, 113, 122, 0.65); /* Zinc-500 with alpha: Soft gray on light, glowing on dark */
+  --accent-mid: rgba(82, 82, 91, 0.45);    /* Zinc-600 with alpha */
+  --accent-to: rgba(39, 39, 42, 0.25);     /* Zinc-800 with alpha: Anchors gradients without turning pitch black */
 
-  --accent-text: #e4e4e7;
-  --accent-text-muted: #a1a1aa;
+  /* Text - Balanced contrast for both backgrounds */
+  --accent-text: var(--surface-text); /* Inherits from active mode to guarantee perfect legibility */
+  --accent-text-muted: var(--surface-text-sub); /* Dynamically scales brightness based on active mode */
 
-  --accent-bg: rgba(82, 82, 91, 0.08);
-  --accent-bg-hover: rgba(82, 82, 91, 0.14);
+  /* Backgrounds - Highly responsive overlays */
+  --accent-bg: rgba(113, 113, 122, 0.08);
+  --accent-bg-hover: rgba(113, 113, 122, 0.16);
 
-  --accent-border: rgba(82, 82, 91, 0.18);
-  --accent-border-hover: rgba(212, 212, 216, 0.25);
+  /* Borders - Slightly strengthened to stay visible against white backgrounds */
+  --accent-border: rgba(113, 113, 122, 0.25);
+  --accent-border-hover: rgba(113, 113, 122, 0.45);
 
-  --accent-shadow: rgba(0, 0, 0, 0.55);
-  --accent-shadow-lg: rgba(0, 0, 0, 0.8);
+  /* Shadows - Softened to prevent dirty looks on light mode */
+  --accent-shadow: rgba(0, 0, 0, 0.15);
+  --accent-shadow-lg: rgba(0, 0, 0, 0.25);
 
   /* Navigation */
-  --nav-btn-bg: rgba(24, 24, 27, 0.55);
-  --nav-btn-border: rgba(82, 82, 91, 0.18);
-  --nav-btn-hover: rgba(9, 9, 11, 0.8);
+  --nav-btn-bg: rgba(113, 113, 122, 0.1);
+  --nav-btn-border: rgba(113, 113, 122, 0.2);
+  --nav-btn-hover: rgba(113, 113, 122, 0.2);
 
   /* Sections */
-  --section-grad-to: rgba(9, 9, 11, 0.35);
-  --section-border: rgba(82, 82, 91, 0.14);
+  --section-grad-to: rgba(113, 113, 122, 0.03);
+  --section-border: rgba(113, 113, 122, 0.18);
 
   /* Icons */
-  --icon-accent: #d4d4d8;
-  --icon-accent-2: #71717a;
-  --icon-accent-3: #3f3f46;
+  --icon-accent: rgba(113, 113, 122, 0.9);
+  --icon-accent-2: rgba(113, 113, 122, 0.6);
+  --icon-accent-3: rgba(113, 113, 122, 0.4);
 
-  --icon-bg: rgba(212, 212, 216, 0.08);
-  --icon-bg-2: rgba(113, 113, 122, 0.08);
-  --icon-bg-3: rgba(63, 63, 70, 0.08);
+  --icon-bg: rgba(113, 113, 122, 0.06);
+  --icon-bg-2: rgba(113, 113, 122, 0.1);
+  --icon-bg-3: rgba(113, 113, 122, 0.14);
 
-  /* Branding */
-  --cta-gradient: linear-gradient(to right, #3f3f46, #09090b);
-
-  --logo-gradient: linear-gradient(to right, #fafafa, #71717a);
+  /* Branding - Uses standard text inheritance to blend with light/dark layouts */
+  --cta-gradient: linear-gradient(to right, rgba(82, 82, 91, 0.3), rgba(39, 39, 42, 0.1));
+  --logo-gradient: linear-gradient(to right, var(--surface-text), var(--surface-text-dim));
 
   /* Navbar */
-  --navbar-bg-color: rgba(10, 10, 10, 0.88);
-  --navbar-bg: rgba(10, 10, 10, 0.88);
+  --navbar-bg-color: var(--navbar-bg);
 
   /* BackToTop */
-  --back-to-top-bg: linear-gradient(to right, #52525b, #18181b);
+  --back-to-top-bg: linear-gradient(to right, rgba(82, 82, 91, 0.8), rgba(39, 39, 42, 0.6));
 
   /* About */
-  --accent-mid-dark: #27272a;
-  --accent-to-mid: #18181b;
-  --accent-to-dark: #09090b;
+  --accent-mid-dark: rgba(82, 82, 91, 0.4);
+  --accent-to-mid: rgba(63, 63, 70, 0.3);
+  --accent-to-dark: rgba(39, 39, 42, 0.2);
 
   /* Experience */
-  --accent-border-2: rgba(82, 82, 91, 0.2);
-  --accent-border-2-soft: rgba(82, 82, 91, 0.1);
+  --accent-border-2: rgba(113, 113, 122, 0.25);
+  --accent-border-2-soft: rgba(113, 113, 122, 0.12);
 
-  --accent-to-bg: rgba(24, 24, 27, 0.35);
-  --accent-to-bg-hover: rgba(24, 24, 27, 0.5);
+  --accent-to-bg: rgba(113, 113, 122, 0.05);
+  --accent-to-bg-hover: rgba(113, 113, 122, 0.1);
 
   /* Services */
-  --hue: 240, 5%, 22%;
+  --hue: 240, 5%, 50%; /* Adjusted middle ground lightness (50%) */
 
   /* Projects */
-  --accent-text-light: #d4d4d8;
-  --accent-to-light: #a1a1aa;
+  --accent-text-light: var(--surface-text-sub);
+  --accent-to-light: var(--surface-text-dim);
 
-  --accent-to-pill-txt: #fafafa;
+  --accent-to-pill-txt: #ffffff;
   --accent-to-pill-txt-2: #18181b;
 
-  --accent-pill-bg-light: rgba(255, 255, 255, 0.03);
+  --accent-pill-bg-light: rgba(113, 113, 122, 0.08);
 
   /* Testimonials */
-  --accent-star: #facc15;
-  --accent-text-soft: #a1a1aa;
+  --accent-star: #eab308; /* Balanced amber/yellow */
+  --accent-text-soft: var(--surface-text-dim);
 
   /* SoftSkills */
-  --accent-line: rgba(82, 82, 91, 0.3);
-  --accent-line-glow: rgba(82, 82, 91, 0.15);
+  --accent-line: rgba(113, 113, 122, 0.25);
+  --accent-line-glow: rgba(113, 113, 122, 0.1);
 
   /* Footer */
-  --footer-rgb: 10, 10, 10;
+  --footer-rgb: var(--surface-text);
 
-  /* Socials */
-  --social-indigo: #818cf8;
-  --social-indigo-bg: rgba(99, 102, 241, 0.2);
-  --social-indigo-bd: rgba(129, 140, 248, 0.3);
-  --social-indigo-hover: rgba(99, 102, 241, 0.3);
+  /* Socials - Retuned to mid-tone desaturated slates for seamless dark/light styling */
+  /* --- Facebook --- */
+  --social-indigo: #64748b; 
+  --social-indigo-bg: rgba(100, 116, 139, 0.1); 
+  --social-indigo-bd: rgba(100, 116, 139, 0.3); 
+  --social-indigo-hover: rgba(100, 116, 139, 0.18); 
 
-  --social-sky: #38bdf8;
-  --social-sky-bg: rgba(14, 165, 233, 0.2);
-  --social-sky-bd: rgba(56, 189, 248, 0.3);
-  --social-sky-hover: rgba(14, 165, 233, 0.3);
+  /* --- Telegram --- */
+  --social-sky: #475569; 
+  --social-sky-bg: rgba(71, 85, 105, 0.1); 
+  --social-sky-bd: rgba(71, 85, 105, 0.3); 
+  --social-sky-hover: rgba(71, 85, 105, 0.18); 
 
-  --social-slate: #71717a;
-  --social-slate-bg: rgba(113, 113, 122, 0.2);
-  --social-slate-bd: rgba(113, 113, 122, 0.3);
-  --social-slate-hover: rgba(113, 113, 122, 0.3);
+  /* --- X / Twitter --- */
+  --social-slate: #4b5563; 
+  --social-slate-bg: rgba(75, 85, 99, 0.1); 
+  --social-slate-bd: rgba(75, 85, 99, 0.3); 
+  --social-slate-hover: rgba(75, 85, 99, 0.18); 
 
-  --social-teal: #2dd4bf;
-  --social-teal-bg: rgba(20, 184, 166, 0.2);
-  --social-teal-bd: rgba(45, 212, 191, 0.3);
-  --social-teal-hover: rgba(20, 184, 166, 0.3);
+  /* --- TikTok --- */
+  --social-teal: #6b7280; 
+  --social-teal-bg: rgba(107, 114, 128, 0.1); 
+  --social-teal-bd: rgba(107, 114, 128, 0.3); 
+  --social-teal-hover: rgba(107, 114, 128, 0.18); 
 
-  --social-emerald: #34d399;
-  --social-emerald-bg: rgba(16, 185, 129, 0.2);
-  --social-emerald-bd: rgba(52, 211, 153, 0.3);
-  --social-emerald-hover: rgba(16, 185, 129, 0.3);
+  /* --- Instagram --- */
+  --social-emerald: #9ca3af; 
+  --social-emerald-bg: rgba(156, 163, 175, 0.08); 
+  --social-emerald-bd: rgba(156, 163, 175, 0.3); 
+  --social-emerald-hover: rgba(156, 163, 175, 0.15); 
 
-  --social-zinc: #a1a1aa;
-  --social-zinc-bg: rgba(113, 113, 122, 0.2);
-  --social-zinc-bd: rgba(161, 161, 170, 0.3);
-  --social-zinc-hover: rgba(113, 113, 122, 0.3);
+  /* --- GitHub --- */
+  --social-zinc: #374151; 
+  --social-zinc-bg: rgba(55, 65, 81, 0.08); 
+  --social-zinc-bd: rgba(55, 65, 81, 0.25); 
+  --social-zinc-hover: rgba(55, 65, 81, 0.15);
+
+  /* --- YouTube --- */
+  --social-youtube: #4b5563;
+  --social-youtube-bg: rgba(75, 85, 99, 0.08);
+  --social-youtube-bd: rgba(75, 85, 99, 0.25);
+  --social-youtube-hover: rgba(75, 85, 99, 0.15);
+
+  /* --- GitLab --- */
+  --social-gitlab: #78716c; 
+  --social-gitlab-bg: rgba(120, 113, 108, 0.08); 
+  --social-gitlab-bd: rgba(120, 113, 108, 0.25); 
+  --social-gitlab-hover: rgba(120, 113, 108, 0.15);
 }
 
 .theme-white-smoke {
-  /* Core */
-  --accent-from: #a1a1aa; /* zinc-400 */
-  --accent-mid: #71717a; /* zinc-500 */
-  --accent-to: #52525b; /* zinc-600 */
+  /* Core - Shifted to alpha-neutrals that dynamically blend */
+  --accent-from: rgba(161, 161, 170, 0.65); /* Zinc-400 with alpha: Pure frost on dark, soft mist on light */
+  --accent-mid: rgba(113, 113, 122, 0.5);   /* Zinc-500 with alpha */
+  --accent-to: rgba(82, 82, 91, 0.35);      /* Zinc-600 with alpha */
 
-  --accent-text: #27272a;
-  --accent-text-muted: #52525b;
+  /* Text - Leverages dynamic global system variables to prevent vanishing */
+  --accent-text: var(--surface-text);
+  --accent-text-muted: var(--surface-text-sub);
 
-  --accent-bg: rgba(113, 113, 122, 0.05);
-  --accent-bg-hover: rgba(113, 113, 122, 0.1);
+  /* Backgrounds - Semi-transparent overlays that inherit contrast natively */
+  --accent-bg: rgba(161, 161, 170, 0.08);
+  --accent-bg-hover: rgba(161, 161, 170, 0.16);
 
-  --accent-border: rgba(113, 113, 122, 0.14);
-  --accent-border-hover: rgba(82, 82, 91, 0.24);
+  /* Borders - Adjusted to be visible on dark canvases and crisp on light ones */
+  --accent-border: rgba(113, 113, 122, 0.22);
+  --accent-border-hover: rgba(113, 113, 122, 0.4);
 
-  --accent-shadow: rgba(0, 0, 0, 0.05);
-  --accent-shadow-lg: rgba(0, 0, 0, 0.12);
+  /* Shadows */
+  --accent-shadow: rgba(0, 0, 0, 0.08);
+  --accent-shadow-lg: rgba(0, 0, 0, 0.15);
 
   /* Navigation */
-  --nav-btn-bg: rgba(255, 255, 255, 0.85);
-  --nav-btn-border: rgba(113, 113, 122, 0.12);
-  --nav-btn-hover: #f4f4f5;
+  --nav-btn-bg: rgba(161, 161, 170, 0.1);
+  --nav-btn-border: rgba(113, 113, 122, 0.2);
+  --nav-btn-hover: rgba(161, 161, 170, 0.18);
 
-  /* Sections */
-  --section-grad-to: #f4f4f5;
-  --section-border: rgba(113, 113, 122, 0.12);
+  /* Sections - Removed solid light gray (#f4f4f5) to prevent dark mode blinding blocks */
+  --section-grad-to: rgba(161, 161, 170, 0.03);
+  --section-border: rgba(113, 113, 122, 0.16);
 
   /* Icons */
-  --icon-accent: #27272a;
-  --icon-accent-2: #52525b;
-  --icon-accent-3: #71717a;
+  --icon-accent: var(--surface-text);
+  --icon-accent-2: var(--surface-text-sub);
+  --icon-accent-3: var(--surface-text-dim);
 
-  --icon-bg: rgba(24, 24, 27, 0.05);
-  --icon-bg-2: rgba(24, 24, 27, 0.04);
-  --icon-bg-3: rgba(24, 24, 27, 0.03);
+  --icon-bg: rgba(113, 113, 122, 0.06);
+  --icon-bg-2: rgba(113, 113, 122, 0.1);
+  --icon-bg-3: rgba(113, 113, 122, 0.14);
 
   /* Branding */
-  --cta-gradient: linear-gradient(to right, #71717a, #52525b);
+  --cta-gradient: linear-gradient(to right, rgba(113, 113, 122, 0.6), rgba(82, 82, 91, 0.4));
+  --logo-gradient: linear-gradient(to right, var(--surface-text), var(--surface-text-dim));
 
-  --logo-gradient: linear-gradient(to right, #27272a, #71717a);
-
-  /* Navbar */
-  --navbar-bg-color: rgba(250, 250, 250, 0.9);
-  --navbar-bg: rgba(250, 250, 250, 0.9);
+  /* Navbar - Uses system-level nav background to accurately match light/dark settings */
+  --navbar-bg-color: var(--navbar-bg);
+  --navbar-bg: var(--navbar-bg);
 
   /* BackToTop */
-  --back-to-top-bg: linear-gradient(to right, #71717a, #52525b);
+  --back-to-top-bg: linear-gradient(to right, rgba(113, 113, 122, 0.7), rgba(82, 82, 91, 0.5));
 
-  /* About */
-  --accent-mid-dark: #d4d4d8;
-  --accent-to-mid: #e4e4e7;
-  --accent-to-dark: #f4f4f5;
+  /* About - Converted from raw light hex colors to soft background washes */
+  --accent-mid-dark: rgba(161, 161, 170, 0.25);
+  --accent-to-mid: rgba(161, 161, 170, 0.15);
+  --accent-to-dark: rgba(161, 161, 170, 0.05);
 
   /* Experience */
-  --accent-border-2: rgba(113, 113, 122, 0.14);
-  --accent-border-2-soft: rgba(113, 113, 122, 0.08);
+  --accent-border-2: rgba(113, 113, 122, 0.22);
+  --accent-border-2-soft: rgba(113, 113, 122, 0.1);
 
-  --accent-to-bg: rgba(228, 228, 231, 0.6);
-  --accent-to-bg-hover: rgba(212, 212, 216, 0.8);
+  --accent-to-bg: rgba(161, 161, 170, 0.12);
+  --accent-to-bg-hover: rgba(161, 161, 170, 0.2);
 
   /* Services */
-  --hue: 240, 5%, 92%;
+  --hue: 240, 5%, 65%; /* Adjusted mid-tone lightness (65%) for a smoky gray balance */
 
   /* Projects */
-  --accent-text-light: #27272a;
-  --accent-to-light: #52525b;
+  --accent-text-light: var(--surface-text-sub);
+  --accent-to-light: var(--surface-text-dim);
 
-  --accent-to-pill-txt: #18181b;
-  --accent-to-pill-txt-2: #fafafa;
+  --accent-to-pill-txt: #ffffff;
+  --accent-to-pill-txt-2: #18181b;
 
-  --accent-pill-bg-light: rgba(24, 24, 27, 0.05);
+  --accent-pill-bg-light: rgba(113, 113, 122, 0.1);
 
   /* Testimonials */
-  --accent-star: #ca8a04;
-  --accent-text-soft: #52525b;
+  --accent-star: #ca8a04; 
+  --accent-text-soft: var(--surface-text-dim);
 
   /* SoftSkills */
-  --accent-line: rgba(113, 113, 122, 0.15);
-  --accent-line-glow: rgba(113, 113, 122, 0.08);
+  --accent-line: rgba(113, 113, 122, 0.2);
+  --accent-line-glow: rgba(113, 113, 122, 0.1);
 
   /* Footer */
-  --footer-rgb: 244, 244, 245;
+  --footer-rgb: var(--surface-text);
 
-  /* Socials */
-  --social-indigo: #4338ca;
-  --social-sky: #0369a1;
-  --social-slate: #475569;
-  --social-teal: #0f766e;
-  --social-emerald: #047857;
-  --social-zinc: #52525b;
+  /* Socials - Retuned to stable mid-tone slates that stay highly visible on black OR white */
+  /* --- Facebook --- */
+  --social-indigo: #475569; 
+  --social-indigo-bg: rgba(71, 85, 105, 0.08); 
+  --social-indigo-bd: rgba(71, 85, 105, 0.25); 
+  --social-indigo-hover: rgba(71, 85, 105, 0.15); 
+
+  /* --- Telegram --- */
+  --social-sky: #5b697c; 
+  --social-sky-bg: rgba(91, 105, 124, 0.08); 
+  --social-sky-bd: rgba(91, 105, 124, 0.25); 
+  --social-sky-hover: rgba(91, 105, 124, 0.15); 
+
+  /* --- X / Twitter --- */
+  --social-slate: #64748b; 
+  --social-slate-bg: rgba(100, 116, 139, 0.08); 
+  --social-slate-bd: rgba(100, 116, 139, 0.25); 
+  --social-slate-hover: rgba(100, 116, 139, 0.15); 
+
+  /* --- TikTok --- */
+  --social-teal: #4b5563; 
+  --social-teal-bg: rgba(75, 85, 99, 0.08); 
+  --social-teal-bd: rgba(75, 85, 99, 0.25); 
+  --social-teal-hover: rgba(75, 85, 99, 0.15); 
+
+  /* --- Instagram --- */
+  --social-emerald: #94a3b8; 
+  --social-emerald-bg: rgba(148, 163, 184, 0.08); 
+  --social-emerald-bd: rgba(148, 163, 184, 0.25); 
+  --social-emerald-hover: rgba(148, 163, 184, 0.15); 
+
+  /* --- GitHub --- */
+  --social-zinc: #6b7280; 
+  --social-zinc-bg: rgba(107, 114, 128, 0.08); 
+  --social-zinc-bd: rgba(107, 114, 128, 0.25); 
+  --social-zinc-hover: rgba(107, 114, 128, 0.15);
+
+  /* --- YouTube --- */
+  --social-youtube: #78716c;
+  --social-youtube-bg: rgba(120, 113, 108, 0.08);
+  --social-youtube-bd: rgba(120, 113, 108, 0.25);
+  --social-youtube-hover: rgba(120, 113, 108, 0.15);
+
+  /* --- GitLab --- */
+  --social-gitlab: #87807b; 
+  --social-gitlab-bg: rgba(135, 128, 123, 0.08); 
+  --social-gitlab-bd: rgba(135, 128, 123, 0.25); 
+  --social-gitlab-hover: rgba(135, 128, 123, 0.15);
 }
 
 /* ── Red-Scarlet ── */
@@ -479,35 +561,53 @@
 
   /* Speicific to Conact.vue */
   /* Same across ALL themes — these are brand identity colors */
-  --social-indigo: #818cf8; /* indigo-400  — Facebook  */
-  --social-indigo-bg: rgba(99, 102, 241, 0.2); /* indigo-500/20 */
-  --social-indigo-bd: rgba(129, 140, 248, 0.3); /* indigo-400/30 */
-  --social-indigo-hover: rgba(99, 102, 241, 0.3); /* indigo-500/30 */
+  /* --- Facebook: Deep Crimson Red --- */
+  --social-indigo: #991b1b;
+  --social-indigo-bg: rgba(153, 27, 27, 0.15);
+  --social-indigo-bd: rgba(153, 27, 27, 0.4);
+  --social-indigo-hover: rgba(153, 27, 27, 0.25);
 
-  --social-sky: #38bdf8; /* sky-400     — Telegram  */
-  --social-sky-bg: rgba(14, 165, 233, 0.2); /* sky-500/20 */
-  --social-sky-bd: rgba(56, 189, 248, 0.3); /* sky-400/30 */
-  --social-sky-hover: rgba(14, 165, 233, 0.3); /* sky-500/30 */
+  /* --- Telegram: Electric Ruby/Rose --- */
+  --social-sky: #f43f5e;
+  --social-sky-bg: rgba(244, 63, 94, 0.12);
+  --social-sky-bd: rgba(244, 63, 94, 0.4);
+  --social-sky-hover: rgba(244, 63, 94, 0.25);
 
-  --social-slate: #94a3b8; /* slate-400   — X/Twitter */
-  --social-slate-bg: rgba(100, 116, 139, 0.2); /* slate-500/20 */
-  --social-slate-bd: rgba(148, 163, 184, 0.3); /* slate-400/30 */
-  --social-slate-hover: rgba(100, 116, 139, 0.3); /* slate-500/30 */
+  /* --- X / Twitter: Muted Wine / Maroon --- */
+  --social-slate: #ba1a1a;
+  --social-slate-bg: rgba(186, 26, 26, 0.12);
+  --social-slate-bd: rgba(186, 26, 26, 0.35);
+  --social-slate-hover: rgba(186, 26, 26, 0.22);
 
-  --social-teal: #2dd4bf; /* slate-400   — TikTok */
-  --social-teal-bg: rgba(20, 184, 166, 0.2); /* slate-500/20 */
-  --social-teal-bd: rgba(45, 212, 191, 0.3); /* slate-400/30 */
-  --social-teal-hover: rgba(20, 184, 166, 0.3); /* slate-500/30 */
+  /* --- TikTok: Deep Scarlet --- */
+  --social-teal: #dc2626;
+  --social-teal-bg: rgba(220, 38, 38, 0.12);
+  --social-teal-bd: rgba(220, 38, 38, 0.4);
+  --social-teal-hover: rgba(220, 38, 38, 0.25);
 
-  --social-emerald: #34d399; /* emerald-400 — Instagram */
-  --social-emerald-bg: rgba(16, 185, 129, 0.2); /* emerald-500/20 */
-  --social-emerald-bd: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
-  --social-emerald-hover: rgba(16, 185, 129, 0.3); /* emerald-500/30 */
+  /* --- Instagram: Bright Vivid Scarlet-Red --- */
+  --social-emerald: #ef4444;
+  --social-emerald-bg: rgba(239, 68, 68, 0.12);
+  --social-emerald-bd: rgba(239, 68, 68, 0.4);
+  --social-emerald-hover: rgba(239, 68, 68, 0.25);
 
-  --social-zinc: #a1a1aa; /* zinc-400    — GitHub    */
-  --social-zinc-bg: rgba(113, 113, 122, 0.2); /* zinc-500/20 */
-  --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
-  --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
+  /* --- GitHub: Soft Coral / Rose Tint --- */
+  --social-zinc: #fca5a5;
+  --social-zinc-bg: rgba(252, 165, 165, 0.1);
+  --social-zinc-bd: rgba(252, 165, 165, 0.35);
+  --social-zinc-hover: rgba(252, 165, 165, 0.2);
+
+  /* --- YouTube: Intense Fire Scarlet --- */
+  --social-youtube: #ff3333;
+  --social-youtube-bg: rgba(255, 51, 51, 0.15);
+  --social-youtube-bd: rgba(255, 51, 51, 0.45);
+  --social-youtube-hover: rgba(255, 51, 51, 0.3);
+
+  /* --- GitLab: Crimson Red --- */
+  --social-gitlab: #b91c1c; 
+  --social-gitlab-bg: rgba(185, 28, 28, 0.15); 
+  --social-gitlab-bd: rgba(185, 28, 28, 0.4); 
+  --social-gitlab-hover: rgba(185, 28, 28, 0.25);
 }
 
 /* ── Purple-Pink ── */
@@ -590,35 +690,53 @@
 
   /* Speicific to Conact.vue */
   /* Same across ALL themes — these are brand identity colors */
-  --social-indigo: #818cf8; /* indigo-400  — Facebook  */
-  --social-indigo-bg: rgba(99, 102, 241, 0.2); /* indigo-500/20 */
-  --social-indigo-bd: rgba(129, 140, 248, 0.3); /* indigo-400/30 */
-  --social-indigo-hover: rgba(99, 102, 241, 0.3); /* indigo-500/30 */
+/* --- Facebook: Deep Violet-Indigo --- */
+  --social-indigo: #6366f1; 
+  --social-indigo-bg: rgba(99, 102, 241, 0.12); 
+  --social-indigo-bd: rgba(99, 102, 241, 0.35); 
+  --social-indigo-hover: rgba(99, 102, 241, 0.25); 
 
-  --social-sky: #38bdf8; /* sky-400     — Telegram  */
-  --social-sky-bg: rgba(14, 165, 233, 0.2); /* sky-500/20 */
-  --social-sky-bd: rgba(56, 189, 248, 0.3); /* sky-400/30 */
-  --social-sky-hover: rgba(14, 165, 233, 0.3); /* sky-500/30 */
+  /* --- Telegram: Intense Royal Purple --- */
+  --social-sky: #a855f7; 
+  --social-sky-bg: rgba(168, 85, 247, 0.12); 
+  --social-sky-bd: rgba(168, 85, 247, 0.35); 
+  --social-sky-hover: rgba(168, 85, 247, 0.25); 
 
-  --social-slate: #94a3b8; /* slate-400   — X/Twitter */
-  --social-slate-bg: rgba(100, 116, 139, 0.2); /* slate-500/20 */
-  --social-slate-bd: rgba(148, 163, 184, 0.3); /* slate-400/30 */
-  --social-slate-hover: rgba(100, 116, 139, 0.3); /* slate-500/30 */
+  /* --- X / Twitter: Deep Orchid --- */
+  --social-slate: #c084fc; 
+  --social-slate-bg: rgba(192, 132, 252, 0.12); 
+  --social-slate-bd: rgba(192, 132, 252, 0.35); 
+  --social-slate-hover: rgba(192, 132, 252, 0.22); 
 
-  --social-teal: #2dd4bf; /* slate-400   — TikTok */
-  --social-teal-bg: rgba(20, 184, 166, 0.2); /* slate-500/20 */
-  --social-teal-bd: rgba(45, 212, 191, 0.3); /* slate-400/30 */
-  --social-teal-hover: rgba(20, 184, 166, 0.3); /* slate-500/30 */
+  /* --- TikTok: Hot Magenta --- */
+  --social-teal: #d946ef; 
+  --social-teal-bg: rgba(217, 70, 239, 0.12); 
+  --social-teal-bd: rgba(217, 70, 239, 0.35); 
+  --social-teal-hover: rgba(217, 70, 239, 0.25); 
 
-  --social-emerald: #34d399; /* emerald-400 — Instagram */
-  --social-emerald-bg: rgba(16, 185, 129, 0.2); /* emerald-500/20 */
-  --social-emerald-bd: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
-  --social-emerald-hover: rgba(16, 185, 129, 0.3); /* emerald-500/30 */
+  /* --- Instagram: Electric Pink --- */
+  --social-emerald: #ec4899; 
+  --social-emerald-bg: rgba(236, 72, 153, 0.12); 
+  --social-emerald-bd: rgba(236, 72, 153, 0.35); 
+  --social-emerald-hover: rgba(236, 72, 153, 0.25); 
 
-  --social-zinc: #a1a1aa; /* zinc-400    — GitHub    */
-  --social-zinc-bg: rgba(113, 113, 122, 0.2); /* zinc-500/20 */
-  --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
-  --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
+  /* --- GitHub: Soft Rose / Pastel Lavender --- */
+  --social-zinc: #fbcfe8; 
+  --social-zinc-bg: rgba(251, 207, 232, 0.1); 
+  --social-zinc-bd: rgba(251, 207, 232, 0.3); 
+  --social-zinc-hover: rgba(251, 207, 232, 0.2);
+
+  /* --- YouTube: Vivid Tech Pink / Bright Fuchsia --- */
+  --social-youtube: #f43f5e;
+  --social-youtube-bg: rgba(244, 63, 94, 0.12);
+  --social-youtube-bd: rgba(244, 63, 94, 0.35);
+  --social-youtube-hover: rgba(244, 63, 94, 0.25);
+
+  /* --- GitLab: Deep Violet --- */
+  --social-gitlab: #7c3aed; 
+  --social-gitlab-bg: rgba(124, 58, 237, 0.12); 
+  --social-gitlab-bd: rgba(124, 58, 237, 0.35); 
+  --social-gitlab-hover: rgba(124, 58, 237, 0.25);
 }
 
 /* ── Green-Dark ── */
@@ -701,35 +819,53 @@
 
   /* Speicific to Conact.vue */
   /* Same across ALL themes — these are brand identity colors */
-  --social-indigo: #818cf8; /* indigo-400  — Facebook  */
-  --social-indigo-bg: rgba(99, 102, 241, 0.2); /* indigo-500/20 */
-  --social-indigo-bd: rgba(129, 140, 248, 0.3); /* indigo-400/30 */
-  --social-indigo-hover: rgba(99, 102, 241, 0.3); /* indigo-500/30 */
+  /* --- Facebook: Deep Forest/Pine Green --- */
+  --social-indigo: #065f46; 
+  --social-indigo-bg: rgba(6, 95, 70, 0.15); 
+  --social-indigo-bd: rgba(6, 95, 70, 0.4); 
+  --social-indigo-hover: rgba(6, 95, 70, 0.25); 
 
-  --social-sky: #38bdf8; /* sky-400     — Telegram  */
-  --social-sky-bg: rgba(14, 165, 233, 0.2); /* sky-500/20 */
-  --social-sky-bd: rgba(56, 189, 248, 0.3); /* sky-400/30 */
-  --social-sky-hover: rgba(14, 165, 233, 0.3); /* sky-500/30 */
+  /* --- Telegram: Electric Emerald --- */
+  --social-sky: #10b981; 
+  --social-sky-bg: rgba(16, 185, 129, 0.12); 
+  --social-sky-bd: rgba(16, 185, 129, 0.35); 
+  --social-sky-hover: rgba(16, 185, 129, 0.25); 
 
-  --social-slate: #94a3b8; /* slate-400   — X/Twitter */
-  --social-slate-bg: rgba(100, 116, 139, 0.2); /* slate-500/20 */
-  --social-slate-bd: rgba(148, 163, 184, 0.3); /* slate-400/30 */
-  --social-slate-hover: rgba(100, 116, 139, 0.3); /* slate-500/30 */
+  /* --- X / Twitter: Deep Teal-Green --- */
+  --social-slate: #0f766e; 
+  --social-slate-bg: rgba(15, 118, 110, 0.12); 
+  --social-slate-bd: rgba(15, 118, 110, 0.35); 
+  --social-slate-hover: rgba(15, 118, 110, 0.22); 
 
-  --social-teal: #2dd4bf; /* slate-400   — TikTok */
-  --social-teal-bg: rgba(20, 184, 166, 0.2); /* slate-500/20 */
-  --social-teal-bd: rgba(45, 212, 191, 0.3); /* slate-400/30 */
-  --social-teal-hover: rgba(20, 184, 166, 0.3); /* slate-500/30 */
+  /* --- TikTok: Vibrant Mint --- */
+  --social-teal: #34d399; 
+  --social-teal-bg: rgba(52, 211, 153, 0.12); 
+  --social-teal-bd: rgba(52, 211, 153, 0.35); 
+  --social-teal-hover: rgba(52, 211, 153, 0.25); 
 
-  --social-emerald: #34d399; /* emerald-400 — Instagram */
-  --social-emerald-bg: rgba(16, 185, 129, 0.2); /* emerald-500/20 */
-  --social-emerald-bd: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
-  --social-emerald-hover: rgba(16, 185, 129, 0.3); /* emerald-500/30 */
+  /* --- Instagram: Cyber Lime/Bright Green --- */
+  --social-emerald: #22c55e; 
+  --social-emerald-bg: rgba(34, 197, 94, 0.12); 
+  --social-emerald-bd: rgba(34, 197, 94, 0.35); 
+  --social-emerald-hover: rgba(34, 197, 94, 0.25); 
 
-  --social-zinc: #a1a1aa; /* zinc-400    — GitHub    */
-  --social-zinc-bg: rgba(113, 113, 122, 0.2); /* zinc-500/20 */
-  --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
-  --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
+  /* --- GitHub: Soft Sage / Pastel Mint --- */
+  --social-zinc: #a7f3d0; 
+  --social-zinc-bg: rgba(167, 243, 208, 0.1); 
+  --social-zinc-bd: rgba(167, 243, 208, 0.3); 
+  --social-zinc-hover: rgba(167, 243, 208, 0.2);
+
+  /* --- YouTube: Intense Neo-Green --- */
+  --social-youtube: #00ff66;
+  --social-youtube-bg: rgba(0, 255, 102, 0.12);
+  --social-youtube-bd: rgba(0, 255, 102, 0.4);
+  --social-youtube-hover: rgba(0, 255, 102, 0.25);
+
+  /* --- GitLab: Neo Mint --- */
+  --social-gitlab: #10b981; 
+  --social-gitlab-bg: rgba(16, 185, 129, 0.12); 
+  --social-gitlab-bd: rgba(16, 185, 129, 0.35); 
+  --social-gitlab-hover: rgba(16, 185, 129, 0.25);
 }
 
 /* ── Orange-Yellow ── */
@@ -815,38 +951,55 @@
 
   /* Speicific to Conact.vue */
   /* Same across ALL themes — these are brand identity colors */
-  --social-indigo: #818cf8; /* indigo-400  — Facebook  */
-  --social-indigo-bg: rgba(99, 102, 241, 0.2); /* indigo-500/20 */
-  --social-indigo-bd: rgba(129, 140, 248, 0.3); /* indigo-400/30 */
-  --social-indigo-hover: rgba(99, 102, 241, 0.3); /* indigo-500/30 */
+  /* --- Facebook: Deep Burnt Terracotta --- */
+  --social-indigo: #c2410c; 
+  --social-indigo-bg: rgba(194, 65, 12, 0.15); 
+  --social-indigo-bd: rgba(194, 65, 12, 0.4); 
+  --social-indigo-hover: rgba(194, 65, 12, 0.25); 
 
-  --social-sky: #38bdf8; /* sky-400     — Telegram  */
-  --social-sky-bg: rgba(14, 165, 233, 0.2); /* sky-500/20 */
-  --social-sky-bd: rgba(56, 189, 248, 0.3); /* sky-400/30 */
-  --social-sky-hover: rgba(14, 165, 233, 0.3); /* sky-500/30 */
+  /* --- Telegram: Vivid Amber Orange --- */
+  --social-sky: #f97316; 
+  --social-sky-bg: rgba(249, 115, 22, 0.12); 
+  --social-sky-bd: rgba(249, 115, 22, 0.35); 
+  --social-sky-hover: rgba(249, 115, 22, 0.25); 
 
-  --social-slate: #94a3b8; /* slate-400   — X/Twitter */
-  --social-slate-bg: rgba(100, 116, 139, 0.2); /* slate-500/20 */
-  --social-slate-bd: rgba(148, 163, 184, 0.3); /* slate-400/30 */
-  --social-slate-hover: rgba(100, 116, 139, 0.3); /* slate-500/30 */
+  /* --- X / Twitter: Dark Gold / Bronze --- */
+  --social-slate: #b45309; 
+  --social-slate-bg: rgba(180, 83, 9, 0.12); 
+  --social-slate-bd: rgba(180, 83, 9, 0.35); 
+  --social-slate-hover: rgba(180, 83, 9, 0.22); 
 
-  --social-teal: #2dd4bf; /* slate-400   — TikTok */
-  --social-teal-bg: rgba(20, 184, 166, 0.2); /* slate-500/20 */
-  --social-teal-bd: rgba(45, 212, 191, 0.3); /* slate-400/30 */
-  --social-teal-hover: rgba(20, 184, 166, 0.3); /* slate-500/30 */
+  /* --- TikTok: Electric Gold --- */
+  --social-teal: #eab308; 
+  --social-teal-bg: rgba(234, 179, 8, 0.1); 
+  --social-teal-bd: rgba(234, 179, 8, 0.35); 
+  --social-teal-hover: rgba(234, 179, 8, 0.22); 
 
-  --social-emerald: #34d399; /* emerald-400 — Instagram */
-  --social-emerald-bg: rgba(16, 185, 129, 0.2); /* emerald-500/20 */
-  --social-emerald-bd: rgba(52, 211, 153, 0.3); /* emerald-400/30 */
-  --social-emerald-hover: rgba(16, 185, 129, 0.3); /* emerald-500/30 */
+  /* --- Instagram: Bright Neon Yellow --- */
+  --social-emerald: #facc15; 
+  --social-emerald-bg: rgba(250, 204, 21, 0.08); 
+  --social-emerald-bd: rgba(250, 204, 21, 0.4); 
+  --social-emerald-hover: rgba(250, 204, 21, 0.2); 
 
-  --social-zinc: #a1a1aa; /* zinc-400    — GitHub    */
-  --social-zinc-bg: rgba(113, 113, 122, 0.2); /* zinc-500/20 */
-  --social-zinc-bd: rgba(161, 161, 170, 0.3); /* zinc-400/30 */
-  --social-zinc-hover: rgba(113, 113, 122, 0.3); /* zinc-500/30 */
+  /* --- GitHub: Soft Pale Peach / Cream --- */
+  --social-zinc: #ffedd5; 
+  --social-zinc-bg: rgba(255, 237, 213, 0.08); 
+  --social-zinc-bd: rgba(255, 237, 213, 0.3); 
+  --social-zinc-hover: rgba(255, 237, 213, 0.15);
+
+  /* --- YouTube: High-Octane Cyber Orange --- */
+  --social-youtube: #ff4500;
+  --social-youtube-bg: rgba(255, 69, 0, 0.15);
+  --social-youtube-bd: rgba(255, 69, 0, 0.4);
+  --social-youtube-hover: rgba(255, 69, 0, 0.25);
+
+  /* --- GitLab: Fire Orange --- */
+  --social-gitlab: #f97316; 
+  --social-gitlab-bg: rgba(249, 115, 22, 0.12); 
+  --social-gitlab-bd: rgba(249, 115, 22, 0.35); 
+  --social-gitlab-hover: rgba(249, 115, 22, 0.25);
 }
 
-/* ── Rainbow (Original 8-Color Flag) ── */
 /* ── Rainbow (Original 8-Color Flag) ── */
 .theme-rainbow {
   /* 
@@ -952,30 +1105,53 @@
   --footer-rgb: 15, 12, 22;
 
   /* Preserved Static Social Colors */
-  --social-indigo: #818cf8;
-  --social-indigo-bg: rgba(99, 102, 241, 0.2);
-  --social-indigo-bd: rgba(129, 140, 248, 0.3);
-  --social-indigo-hover: rgba(99, 102, 241, 0.3);
-  --social-sky: #38bdf8;
-  --social-sky-bg: rgba(14, 165, 233, 0.2);
-  --social-sky-bd: rgba(56, 189, 248, 0.3);
-  --social-sky-hover: rgba(14, 165, 233, 0.3);
-  --social-slate: #94a3b8;
-  --social-slate-bg: rgba(100, 116, 139, 0.2);
-  --social-slate-bd: rgba(148, 163, 184, 0.3);
-  --social-slate-hover: rgba(100, 116, 139, 0.3);
-  --social-teal: #2dd4bf;
-  --social-teal-bg: rgba(20, 184, 166, 0.2);
-  --social-teal-bd: rgba(45, 212, 191, 0.3);
-  --social-teal-hover: rgba(20, 184, 166, 0.3);
-  --social-emerald: #34d399;
-  --social-emerald-bg: rgba(16, 185, 129, 0.2);
-  --social-emerald-bd: rgba(52, 211, 153, 0.3);
-  --social-emerald-hover: rgba(16, 185, 129, 0.3);
-  --social-zinc: #a1a1aa;
-  --social-zinc-bg: rgba(113, 113, 122, 0.2);
-  --social-zinc-bd: rgba(161, 161, 170, 0.3);
-  --social-zinc-hover: rgba(113, 113, 122, 0.3);
+/* --- Facebook: Pride Red (Life) --- */
+  --social-indigo: #ef4444; 
+  --social-indigo-bg: rgba(239, 68, 68, 0.12); 
+  --social-indigo-bd: rgba(239, 68, 68, 0.35); 
+  --social-indigo-hover: rgba(239, 68, 68, 0.25); 
+
+  /* --- Telegram: Pride Orange (Healing) --- */
+  --social-sky: #f97316; 
+  --social-sky-bg: rgba(249, 115, 22, 0.12); 
+  --social-sky-bd: rgba(249, 115, 22, 0.35); 
+  --social-sky-hover: rgba(249, 115, 22, 0.25); 
+
+  /* --- X / Twitter: Pride Yellow (Sunlight) --- */
+  --social-slate: #eab308; 
+  --social-slate-bg: rgba(234, 179, 8, 0.1); 
+  --social-slate-bd: rgba(234, 179, 8, 0.4); 
+  --social-slate-hover: rgba(234, 179, 8, 0.22); 
+
+  /* --- TikTok: Pride Green (Nature) --- */
+  --social-teal: #22c55e; 
+  --social-teal-bg: rgba(34, 197, 94, 0.12); 
+  --social-teal-bd: rgba(34, 197, 94, 0.35); 
+  --social-teal-hover: rgba(34, 197, 94, 0.25); 
+
+  /* --- Instagram: Pride Blue (Serenity) --- */
+  --social-emerald: #3b82f6; 
+  --social-emerald-bg: rgba(59, 130, 246, 0.12); 
+  --social-emerald-bd: rgba(59, 130, 246, 0.35); 
+  --social-emerald-hover: rgba(59, 130, 246, 0.25); 
+
+  /* --- GitHub: Pride Violet/Purple (Spirit) --- */
+  --social-zinc: #a855f7; 
+  --social-zinc-bg: rgba(168, 85, 247, 0.12); 
+  --social-zinc-bd: rgba(168, 85, 247, 0.35); 
+  --social-zinc-hover: rgba(168, 85, 247, 0.25);
+
+  /* --- YouTube: Pride Pink / Vibrant Fuchsia --- */
+  --social-youtube: #ec4899;
+  --social-youtube-bg: rgba(236, 72, 153, 0.15);
+  --social-youtube-bd: rgba(236, 72, 153, 0.4);
+  --social-youtube-hover: rgba(236, 72, 153, 0.25);
+
+  /* --- GitLab: Pride Indigo/Blue-Violet --- */
+  --social-gitlab: #4f46e5; 
+  --social-gitlab-bg: rgba(79, 70, 229, 0.12); 
+  --social-gitlab-bd: rgba(79, 70, 229, 0.35); 
+  --social-gitlab-hover: rgba(79, 70, 229, 0.25);
 }
 
 /* ============================================================

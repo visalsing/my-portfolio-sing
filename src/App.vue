@@ -306,6 +306,45 @@ import LoadingSpinner   from './components/LoadingSpinner.vue';
 import { ref, computed, nextTick, onMounted, onUnmounted, defineComponent } from 'vue';
 import { currentViewport, setViewport, viewportWidths } from './stores/viewport.js';
 
+
+import { useHead } from '@vueuse/head'
+
+// useHead({
+//     title: 'So Visalsing — Software Developer Portfolio',
+//     meta: [
+//         { name: 'description', content: 'Full-stack developer specializing in Vue.js, Laravel, and modern web technologies. Based in Phnom Penh, Cambodia.' },
+//         { property: 'og:title', content: 'So Visalsing — Software Developer Portfolio' },
+//         { property: 'og:description', content: 'Full-stack developer specializing in Vue.js, Laravel.' },
+//         { property: 'og:image', content: 'https://yoursite.com/hero-2.png' },
+//         { property: 'og:url', content: 'https://yoursite.com' },
+//         { name: 'twitter:card', content: 'summary_large_image' },
+//     ]
+// })
+useHead({
+    title: 'So Visalsing — Software Developer Portfolio',
+    meta: [
+        { 
+            name: 'description', 
+            content: 'Full-stack developer specializing in Vue.js, Laravel, and modern web technologies. Based in Phnom Penh, Cambodia.' 
+        },
+        // Open Graph / Facebook / LinkedIn
+        { property: 'og:title', content: 'So Visalsing — Software Developer Portfolio' },
+        { property: 'og:description', content: 'Full-stack developer specializing in Vue.js, Laravel.' },
+        { property: 'og:image', content: 'https://my-portfolio-sing.vercel.app/hero-2.png' }, // ✅ Absolute link
+        { property: 'og:url', content: 'https://my-portfolio-sing.vercel.app/' },
+        
+        // Twitter
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'So Visalsing — Portfolio' },
+        { name: 'twitter:image', content: 'https://my-portfolio-sing.vercel.app/hero-2.png' },
+    ]
+})
+
+
+// import { activeBgUrl, initBgThemeListeners } from './stores/heroBg.js';
+
+// initBgThemeListeners(); // Call this once to keep "Device" theme in sync
+
 export default defineComponent({
     name: 'App',
 

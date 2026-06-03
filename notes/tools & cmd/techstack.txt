@@ -1,0 +1,12 @@
+Vue.js
+Vite.js
+Taiwind CSS
+Vercel
+VS Code
+Git
+GitHub
+GitLab
+Emailjs
+npm
+npx
+ipapi.co

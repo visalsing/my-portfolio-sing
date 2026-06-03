@@ -7,13 +7,30 @@
 
 
 
+// import { createApp } from 'vue'
+// import App from './App.vue'
+// import router from './router'
+
+// import './style.css'
+// import './themes.css'
+
+// createApp(App)
+//   .use(router)
+//   .mount('#app')
+
+
+
+
 import { createApp } from 'vue'
+import { createHead } from '@vueuse/head'
 import App from './App.vue'
 import router from './router'
 
 import './style.css'
 import './themes.css'
 
-createApp(App)
-  .use(router)
-  .mount('#app')
+const app = createApp(App)
+
+app.use(router)
+app.use(createHead())
+app.mount('#app')
