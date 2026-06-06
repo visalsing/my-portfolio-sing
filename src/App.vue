@@ -330,13 +330,13 @@ useHead({
         // Open Graph / Facebook / LinkedIn
         { property: 'og:title', content: 'So Visalsing — Software Developer Portfolio' },
         { property: 'og:description', content: 'Full-stack developer specializing in Vue.js, Laravel.' },
-        { property: 'og:image', content: 'https://my-portfolio-sing.vercel.app/hero-2.png' }, // ✅ Absolute link
+        { property: 'og:image', content: 'https://my-portfolio-sing.vercel.app/seo.jpg' }, // ✅ Absolute link
         { property: 'og:url', content: 'https://my-portfolio-sing.vercel.app/' },
         
         // Twitter
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'So Visalsing — Portfolio' },
-        { name: 'twitter:image', content: 'https://my-portfolio-sing.vercel.app/hero-2.png' },
+        { name: 'twitter:image', content: 'https://my-portfolio-sing.vercel.app/seo.jpg' },
     ]
 })
 
