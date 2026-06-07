@@ -210,6 +210,125 @@
   --social-gitlab-hover: rgba(14, 165, 233, 0.25);
 }
 
+/* ── Deep Navy (Abyssal & Royal Blues) ── */
+.theme-midnight-blue {
+  --accent-from: #60a5fa;           /* Blue-400 / Clear Sapphire */
+  --accent-to: #1d4ed8;             /* Blue-700 / Deep Royal Blue */
+  --accent-mid: #3b82f6;            /* Blue-500 / Electric Cobalt */
+  --accent-text: #60a5fa;
+  --accent-text-muted: #93c5fd;     /* Blue-300 / Soft Sky */
+  --accent-bg: rgba(59, 130, 246, 0.1);
+  --accent-bg-hover: rgba(59, 130, 246, 0.2);
+  --accent-border: rgba(59, 130, 246, 0.2);
+  --accent-border-hover: rgba(59, 130, 246, 0.6);
+  --accent-shadow: rgba(37, 99, 235, 0.25);
+  --accent-shadow-lg: rgba(29, 78, 216, 0.45);
+  
+  --nav-btn-bg: rgba(15, 23, 42, 0.6);       /* Slate-900 / Midnight Air */
+  --nav-btn-border: rgba(59, 130, 246, 0.2);
+  --nav-btn-hover: rgba(30, 58, 138, 0.5);   /* Blue-900 Deep Navy */
+  --section-grad-to: rgba(30, 58, 138, 0.15);
+  --section-border: rgba(37, 99, 235, 0.2);
+  
+  --icon-accent: #3b82f6;           /* Electric Cobalt */
+  --icon-accent-2: #1e40af;         /* Blue-800 / Deep Navy */
+  --icon-accent-3: #7dd3fc;         /* Sky-300 / Frost Ice Blue */
+  --icon-bg: rgba(59, 130, 246, 0.15);
+  --icon-bg-2: rgba(30, 64, 175, 0.2);
+  --icon-bg-3: rgba(125, 211, 252, 0.15);
+  
+  --cta-gradient: linear-gradient(to right, #2563eb, #0f172a); /* Royal Blue to Deep Abyssal Navy */
+  --logo-gradient: linear-gradient(to right, #60a5fa, #1d4ed8);
+
+  /* Specific to Navbar.vue */
+  --navbar-bg-color: rgba(3, 7, 18, 0.85);   /* Gray-950 / Near Black-Navy */
+  --navbar-bg: rgba(3, 7, 18, 0.85);
+
+  /* Specific to BackToTop.vue */
+  --back-to-top-bg: linear-gradient(to right, #1d4ed8, #1e3a8a); /* Deep Royal to Navy */
+
+  /* Specific to About.vue */
+  --accent-mid-dark: #1d4ed8;       /* Royal Blue */
+  --accent-to-mid: #2563eb;         /* Pure Blue */
+  --accent-to-dark: #1e3a8a;        /* Classic Navy Blue */
+
+  /* Specific to ExperienceSkills.vue */
+  --accent-border-2: rgba(37, 99, 235, 0.35); 
+  --accent-border-2-soft: rgba(30, 58, 138, 0.25); 
+  --accent-to-bg: rgba(29, 78, 216, 0.15); 
+  --accent-to-bg-hover: rgba(29, 78, 216, 0.25); 
+
+  /* Specific to Services.vue */
+  --hue: 221, 83%, 53%;             /* Pure Royal Blue HSL Base */
+
+  /* Specific to Projects.vue */
+  --accent-text-light: #bfdbfe;     /* Blue-200 / Ice Glare */
+  --accent-to-light: #38bdf8;       /* Sky-500 / Electric Light Blue */
+  --accent-to-pill-txt: #e0f2fe;    /* Sky-100 / Pale Frost */
+  --accent-to-pill-txt-2: #1d4ed8;
+  --accent-pill-bg-light: rgba(56, 189, 248, 0.1);
+
+  /* Specific to Testimonials.vue */
+  --accent-star: #facc15;           /* Keeps semantic yellow */
+  --accent-text-soft: #93c5fd; 
+
+  /* Specific to SoftSkills.vue */
+  --accent-line: rgba(37, 99, 235, 0.45);     /* Sharp sapphire line */
+  --accent-line-glow: rgba(30, 58, 138, 0.3);  
+  
+  /* Specific to Footer.vue */
+  --footer-rgb: 3, 7, 18;           /* Clean abyssal backdrop finish */
+
+  /* Specific to Contact.vue (Unified Dark Blue Branding Theme) */
+  /* --- Facebook --- */
+  --social-indigo: #1e3a8a;
+  --social-indigo-bg: rgba(30, 58, 138, 0.15);
+  --social-indigo-bd: rgba(30, 58, 138, 0.4);
+  --social-indigo-hover: rgba(30, 58, 138, 0.25);
+
+  /* --- Telegram --- */
+  --social-sky: #0ea5e9;
+  --social-sky-bg: rgba(14, 165, 233, 0.12);
+  --social-sky-bd: rgba(14, 165, 233, 0.4);
+  --social-sky-hover: rgba(14, 165, 233, 0.25);
+
+  /* --- X / Twitter --- */
+  --social-slate: #1e293b;
+  --social-slate-bg: rgba(30, 41, 59, 0.15);
+  --social-slate-bd: rgba(30, 41, 59, 0.4);
+  --social-slate-hover: rgba(30, 41, 59, 0.25);
+
+  /* --- TikTok --- */
+  --social-teal: #0284c7;
+  --social-teal-bg: rgba(2, 132, 199, 0.12);
+  --social-teal-bd: rgba(2, 132, 199, 0.4);
+  --social-teal-hover: rgba(2, 132, 199, 0.25);
+
+  /* --- Instagram --- */
+  --social-emerald: #2563eb;
+  --social-emerald-bg: rgba(37, 99, 235, 0.12);
+  --social-emerald-bd: rgba(37, 99, 235, 0.4);
+  --social-emerald-hover: rgba(37, 99, 235, 0.25);
+
+  /* --- GitHub --- */
+  --social-zinc: #7dd3fc;
+  --social-zinc-bg: rgba(125, 211, 252, 0.1);
+  --social-zinc-bd: rgba(125, 211, 252, 0.35);
+  --social-zinc-hover: rgba(125, 211, 252, 0.2);
+
+  /* --- YouTube --- */
+  --social-youtube: #1d4ed8;
+  --social-youtube-bg: rgba(29, 78, 216, 0.15);
+  --social-youtube-bd: rgba(29, 78, 216, 0.45);
+  --social-youtube-hover: rgba(29, 78, 216, 0.3);
+
+  /* --- GitLab --- */
+  --social-gitlab: #0f172a; 
+  --social-gitlab-bg: rgba(15, 23, 42, 0.15); 
+  --social-gitlab-bd: rgba(15, 23, 42, 0.4); 
+  --social-gitlab-hover: rgba(15, 23, 42, 0.25);
+}
+
 .theme-black-charcoal {
   /* Core - Adjusted to balanced, adaptive transparencies */
   --accent-from: rgba(113, 113, 122, 0.65); /* Zinc-500 with alpha: Soft gray on light, glowing on dark */
@@ -1152,6 +1271,124 @@
   --social-gitlab-bg: rgba(79, 70, 229, 0.12); 
   --social-gitlab-bd: rgba(79, 70, 229, 0.35); 
   --social-gitlab-hover: rgba(79, 70, 229, 0.25);
+}
+
+/* ── Crimson Nocturne (Blood & Shadow) ── */
+.theme-bloody-red {
+  --accent-from: #f87171;           /* Light Scarlet / Fresh Blood */
+  --accent-to: #b91c1c;             /* Deep Crimson / Coagulated Red */
+  --accent-mid: #ef4444;            /* Pure Red */
+  --accent-text: #f87171;
+  --accent-text-muted: #fca5a5;     /* Soft Rose */
+  --accent-bg: rgba(239, 68, 68, 0.1);
+  --accent-bg-hover: rgba(239, 68, 68, 0.2);
+  --accent-border: rgba(239, 68, 68, 0.2);
+  --accent-border-hover: rgba(239, 68, 68, 0.6);
+  --accent-shadow: rgba(185, 28, 28, 0.3);
+  --accent-shadow-lg: rgba(153, 27, 27, 0.5);
+  
+  --nav-btn-bg: rgba(67, 12, 12, 0.6);       /* Deep Maroon */
+  --nav-btn-border: rgba(239, 68, 68, 0.2);
+  --nav-btn-hover: rgba(136, 19, 19, 0.5);
+  --section-grad-to: rgba(67, 12, 12, 0.25);
+  --section-border: rgba(185, 28, 28, 0.25);
+  
+  --icon-accent: #ef4444;           /* Bright Red */
+  --icon-accent-2: #be123c;         /* Rose-700 Deep Crimson */
+  --icon-accent-3: #fda4af;         /* Rose-300 Flesh Pink Tint */
+  --icon-bg: rgba(239, 68, 68, 0.15);
+  --icon-bg-2: rgba(190, 18, 60, 0.2);
+  --icon-bg-3: rgba(253, 164, 175, 0.15);
+  
+  --cta-gradient: linear-gradient(to right, #dc2626, #7f1d1d); /* Scarlet to Dried Blood */
+  --logo-gradient: linear-gradient(to right, #f87171, #be123c);
+
+  /* Specific to Navbar.vue */
+  --navbar-bg-color: rgba(15, 7, 7, 0.9);   /* Obsidian Red Tint */
+  --navbar-bg: rgba(15, 7, 7, 0.9);
+
+  /* Specific to BackToTop.vue */
+  --back-to-top-bg: linear-gradient(to right, #b91c1c, #4c0519); /* Rich Ruby to Deep Wine */
+
+  /* Specific to About.vue */
+  --accent-mid-dark: #991b1b;       /* Dark Brick Red */
+  --accent-to-mid: #be123c;         /* Velvet Red */
+  --accent-to-dark: #4c0519;        /* Black-Cherry Red */
+
+  /* Specific to ExperienceSkills.vue */
+  --accent-border-2: rgba(185, 28, 28, 0.35); 
+  --accent-border-2-soft: rgba(153, 27, 27, 0.2); 
+  --accent-to-bg: rgba(190, 18, 60, 0.15); 
+  --accent-to-bg-hover: rgba(190, 18, 60, 0.25); 
+
+  /* Specific to Services.vue */
+  --hue: 348, 83%, 47%;             /* Crimson HSL Base */
+
+  /* Specific to Projects.vue */
+  --accent-text-light: #fecdd3;     /* Rose-200 */
+  --accent-to-light: #f43f5e;       /* Rose-500 */
+  --accent-to-pill-txt: #ffe4e6;   /* Rose-100 */
+  --accent-to-pill-txt-2: #991b1b;
+
+  /* Specific to Testimonials.vue */
+  --accent-star: #facc15;           /* Keeps semantic yellow */
+  --accent-text-soft: #fca5a5; 
+
+  /* Specific to ServiceDetail.vue */
+  --accent-line: rgba(220, 38, 38, 0.5);      /* Bright arterial line */
+  --accent-line-glow: rgba(153, 27, 27, 0.3);  
+  
+  /* Specific to Footer.vue */
+  --footer-rgb: 15, 7, 7;           /* Matching the navbar obsidian-darkness */
+
+  /* Specific to Contact.vue (Unified Branding Theme Colors) */
+  /* --- Facebook --- */
+  --social-indigo: #7f1d1d;
+  --social-indigo-bg: rgba(127, 29, 29, 0.15);
+  --social-indigo-bd: rgba(127, 29, 29, 0.4);
+  --social-indigo-hover: rgba(127, 29, 29, 0.25);
+
+  /* --- Telegram --- */
+  --social-sky: #e11d48;
+  --social-sky-bg: rgba(225, 29, 72, 0.12);
+  --social-sky-bd: rgba(225, 29, 72, 0.4);
+  --social-sky-hover: rgba(225, 29, 72, 0.25);
+
+  /* --- X / Twitter --- */
+  --social-slate: #4c0519;
+  --social-slate-bg: rgba(76, 5, 25, 0.15);
+  --social-slate-bd: rgba(76, 5, 25, 0.4);
+  --social-slate-hover: rgba(76, 5, 25, 0.25);
+
+  /* --- TikTok --- */
+  --social-teal: #991b1b;
+  --social-teal-bg: rgba(153, 27, 27, 0.12);
+  --social-teal-bd: rgba(153, 27, 27, 0.4);
+  --social-teal-hover: rgba(153, 27, 27, 0.25);
+
+  /* --- Instagram --- */
+  --social-emerald: #b91c1c;
+  --social-emerald-bg: rgba(185, 28, 28, 0.12);
+  --social-emerald-bd: rgba(185, 28, 28, 0.4);
+  --social-emerald-hover: rgba(185, 28, 28, 0.25);
+
+  /* --- GitHub --- */
+  --social-zinc: #fda4af;
+  --social-zinc-bg: rgba(253, 164, 175, 0.1);
+  --social-zinc-bd: rgba(253, 164, 175, 0.35);
+  --social-zinc-hover: rgba(253, 164, 175, 0.2);
+
+  /* --- YouTube --- */
+  --social-youtube: #be123c;
+  --social-youtube-bg: rgba(190, 18, 60, 0.15);
+  --social-youtube-bd: rgba(190, 18, 60, 0.45);
+  --social-youtube-hover: rgba(190, 18, 60, 0.3);
+
+  /* --- GitLab --- */
+  --social-gitlab: #881337; 
+  --social-gitlab-bg: rgba(136, 19, 55, 0.15); 
+  --social-gitlab-bd: rgba(136, 19, 55, 0.4); 
+  --social-gitlab-hover: rgba(136, 19, 55, 0.25);
 }
 
 /* ============================================================

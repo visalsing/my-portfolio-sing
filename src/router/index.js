@@ -17,6 +17,8 @@ import TermsServices from "../components/pages/TermsServices.vue";
 import FAQs from "../components/pages/FAQ.vue";
 import PortfolioMap from "../components/pages/PortfolioMap.vue";
 import ReadMore from "../components/pages/ReadMore.vue";
+import Contact from "../components/pages/Contact.vue";
+import Page404 from "../components/pages/Page404.vue";
 
 const routes = [
   // ✅ 2. Add the Root Route here so the home screen has something to show!
@@ -96,6 +98,16 @@ const routes = [
     name: "ReadMore",
     component: ReadMore,
   },
+    {
+    path: "/contact",
+    name: "Contact",
+    component: Contact,
+  },
+  {
+    path: "/404",
+    name: "Page404",
+    component: Page404,
+  }
   // 💡 Optional: Add a 404 catch-all redirect to prevent blank pages on typos
   // {
   //   path: "/:pathMatch(.*)*",

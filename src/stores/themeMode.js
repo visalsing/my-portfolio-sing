@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 
-const THEME_CLASSES = ['theme-dark', 'theme-light', 'theme-device'];
+const THEME_CLASSES = ['theme-dark', 'theme-light', 'theme-device', 'theme-white', 'theme-black', 'theme-abyss'];
 const saved = localStorage.getItem('theme') || 'Dark';
 
 export const currentTheme = ref(saved);

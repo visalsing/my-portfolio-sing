@@ -72,13 +72,13 @@
 
       <!-- CTA button -->
       <div class="mt-10 lg:mt-0 lg:ml-8">
-        <a href="#contacts"
+        <router-link to="/contact"
           class="px-5 py-2.5 sm:px-7 sm:py-3 text-white rounded-full transition-all duration-300 text-sm font-semibold cursor-pointer"
           :style="{ background: 'var(--cta-gradient)' }"
           @mouseenter="e => e.currentTarget.style.boxShadow = '0 8px 24px var(--accent-shadow)'"
           @mouseleave="e => e.currentTarget.style.boxShadow = 'none'">
           {{ t('lets_talk') }}
-      </a>
+      </router-link>
       </div>
     </nav>
   </header>
@@ -125,12 +125,12 @@
       </ul>
 
       <div class="ml-8">
-        <a href="#contacts" class="px-6 py-2.5 text-white rounded-full transition-all duration-300 text-sm font-semibold cursor-pointer"
+        <router-link  to="/contact" class="px-6 py-2.5 text-white rounded-full transition-all duration-300 text-sm font-semibold cursor-pointer"
           :style="{ background: 'var(--cta-gradient)' }"
           @mouseenter="e => e.currentTarget.style.boxShadow = '0 8px 24px var(--accent-shadow)'"
           @mouseleave="e => e.currentTarget.style.boxShadow = 'none'">
           {{ t('lets_talk') }}
-      </a>
+      </router-link>
       </div>
     </nav>
   </header>
@@ -211,8 +211,11 @@ const logoSchemeMap = {
   'Green-Dark': 'logo-portfolio-green-dark.png',
   'Orange-Yellow': 'logo-portfolio-orange-yellow.png',
   'Rainbow': 'logo-portfolio-rainbow.png',
-  'Black-Charcoal': 'logo-portfolio-black-charcoal.png',
+  'Black-Charcoal': 'logo-portfolio-black-charcoal-darkBg.png',
   'White-Smoke': 'logo-portfolio-white-smoke.png',
+  'Red-Bloody': 'logo-portfolio-bloody-red.png',
+  // 'Midnight-Blue': 'logo-portfolio-midnight-blue.png',
+  'Midnight-Blue': 'logo-portfolio-midnight-blue.png'
 };
 
 const logoSrc = computed(() => {

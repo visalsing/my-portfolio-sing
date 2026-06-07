@@ -197,6 +197,156 @@ html.theme-light {
   }
 }
 
+html.theme-black {
+  color-scheme: dark;
+  --scrollbar-track: #000000;
+  --scrollbar-thumb: #222222;
+  --scrollbar-thumb-hover: #333333;
+
+  /* App Background - absolute black */
+  --surface-bg: #000000;
+
+  /* Tiered Backgrounds (Slightly elevated deep grays) */
+  --surface-bg-2: #050505;
+  --surface-bg-3: #0a0a0a; 
+  --surface-card: rgba(15, 15, 15, 0.6); 
+  
+  /* High Contrast Typography */
+  --surface-text: #ffffff;         /* Pure crisp white */
+  --surface-text-sub: #a3a3a3;     /* Neutral gray */
+  --surface-text-dim: #525252;     /* Muted dark gray */
+  
+  /* Borders & Accents */
+  --surface-border: rgba(255, 255, 255, 0.1);
+  --navbar-bg: #000000;
+  --nav-btn-border: rgba(255, 255, 255, 0.15);
+
+  /* Functional Inputs & Progress Bars */
+  --surface-input-bg: #1a1a1a; 
+  --card-bg-from: rgba(10, 10, 10, 0.8);
+  --bg-surface-percent: #262626; 
+  --bg-surface-percent-bar: #1a1a1a;
+  --card-bg-fallback: rgba(255, 255, 255, 0.01);
+  --accent-node-bg: #030303;
+
+  /* Grid Adjustments */
+  --grid-opacity: 0.25; /* Higher opacity to pop against deep black */
+  --accent-glow: hsla(var(--hue), var(--grid-opacity));
+  
+  --footer-bg-color: rgba(0, 0, 0, 0.9);
+  --bg-color: #000000;
+
+  .accent-card {
+    background: linear-gradient(
+      to bottom right,
+      rgba(10, 10, 10, 0.8),
+      var(--section-grad-to)
+    );
+    border: 1px solid var(--section-border);
+    backdrop-filter: blur(12px);
+  }
+}
+
+html.theme-white {
+  color-scheme: light;
+  --scrollbar-track: #ffffff;
+  --scrollbar-thumb: #d4d4d4;
+  --scrollbar-thumb-hover: #a3a3a3;
+
+  /* App Background - blinding pure white */
+  --surface-bg: #ffffff;
+
+  /* Tiered Backgrounds (Fading down into very soft whites/grays) */
+  --surface-bg-2: #fafafa;
+  --surface-bg-3: #f5f5f5;
+  --surface-card: rgba(255, 255, 255, 0.9);
+  
+  /* High Contrast Typography */
+  --surface-text: #000000;         /* Pure ink black */
+  --surface-text-sub: #404040;     /* Strong neutral gray */
+  --surface-text-dim: #737373;     /* Muted mid gray */
+  
+  /* Borders & Accents */
+  --surface-border: rgba(0, 0, 0, 0.15); /* More visible line separation */
+  --navbar-bg: #ffffff;
+  --nav-btn-border: rgba(0, 0, 0, 0.15);
+
+  /* Functional Inputs & Progress Bars */
+  --surface-input-bg: #e5e5e5; 
+  --card-bg-from: rgba(255, 255, 255, 0.9);
+  --bg-surface-percent: #d4d4d4; 
+  --bg-surface-percent-bar: #e5e5e5;
+  --card-bg-fallback: rgba(0, 0, 0, 0.03);
+  --accent-node-bg: #fdfdfd;
+
+  /* Grid Adjustments */
+  --grid-opacity: 0.08; 
+  --accent-glow: hsla(var(--hue), var(--grid-opacity));
+
+  --footer-bg-color: rgba(255, 255, 255, 0.95);
+  --bg-color: #ffffff;
+
+  .accent-card {
+    background: linear-gradient(
+      to bottom right,
+      rgba(245, 245, 245, 0.7),
+      var(--section-grad-to)
+    );
+    border: 1px solid var(--section-border);
+    backdrop-filter: blur(12px);
+  }
+}
+
+html.theme-abyss {
+  color-scheme: dark;
+  --scrollbar-track: #020617;        /* Deep slate/navy track */
+  --scrollbar-thumb: #1e293b;
+  --scrollbar-thumb-hover: #334155;
+
+  /* App Background - The deepest ocean trench */
+  --surface-bg: #030712;             /* Near-black deep indigo-gray */
+
+  /* Tiered Backgrounds (Saturated deep ocean blues) */
+  --surface-bg-2: #070f22;           /* Deep midnight blue */
+  --surface-bg-3: #0f172a;           /* Dark slate blue */ 
+  --surface-card: rgba(15, 23, 42, 0.6); 
+  
+  /* High Contrast Bioluminescent Typography */
+  --surface-text: #f8fafc;           /* Crisp, clear icy white */
+  --surface-text-sub: #94a3b8;       /* Cool slate gray */
+  --surface-text-dim: #475569;       /* Deep ocean shadow gray */
+  
+  /* Borders & Accents (Subtle glowing teal/blue borders) */
+  --surface-border: rgba(56, 189, 248, 0.08); /* Faint sky-blue glow */
+  --navbar-bg: #030712;
+  --nav-btn-border: rgba(56, 189, 248, 0.15);
+
+  /* Functional Inputs & Progress Bars */
+  --surface-input-bg: #1e293b; 
+  --card-bg-from: rgba(15, 23, 42, 0.8);
+  --bg-surface-percent: #0f172a; 
+  --bg-surface-percent-bar: #334155;
+  --card-bg-fallback: rgba(56, 189, 248, 0.02);
+  --accent-node-bg: #020617;
+
+  /* Grid Adjustments (Letting the background grid glow like sonar) */
+  --grid-opacity: 0.2; 
+  --accent-glow: hsla(200, 100%, 50%, var(--grid-opacity)); /* Neon cyan/blue tint */
+  
+  --footer-bg-color: rgba(3, 7, 18, 0.9);
+  --bg-color: #030712;
+
+  .accent-card {
+    background: linear-gradient(
+      to bottom right,
+      rgba(7, 15, 34, 0.8),
+      var(--section-grad-to)
+    );
+    border: 1px solid var(--section-border);
+    backdrop-filter: blur(12px);
+  }
+}
+
 /* ── Device (auto) ── */
 @media (prefers-color-scheme: dark) {
   html.theme-device {

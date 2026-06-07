@@ -54,7 +54,7 @@
                     <div class="flex items-center gap-4 pt-8 flex-col sm:flex-row sm:w-max sm:mx-auto lg:mx-0"
                         data-aos="fade-up" data-aos-delay="300">
                         <!-- Contact Me -->
-                        <router-link to="/#contacts"
+                        <router-link to="/contact"
                             class="px-8 md:px-10 py-4 rounded-xl relative group w-full sm:w-max flex justify-center overflow-hidden transition-all duration-300"
                             :style="{ background: 'var(--cta-gradient)' }"
                             @mouseenter="e => e.currentTarget.style.filter = 'brightness(1.15)'"
@@ -78,6 +78,21 @@
                                 <span class="pl-3 font-semibold text-lg">{{ t('download_cv') }}</span>
                             </div>
                         </button>
+                    </div>
+                    <div class="flex items-center justify-center lg:justify-start gap-8 pt-12" data-oas="fade-up"
+                        data-aos-delay="400">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-[var(--accent-mid)]">3+</div>
+                            <div class="text-[var(--accent-text-muted)] text-sm">Projects</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-[var(--accent-mid)]">2+</div>
+                            <div class="text-[var(--accent-text-muted)] text-sm">Years</div>
+                        </div>
+                        <!-- <div class="text-center">
+                            <div class="text-2xl font-bold text-[var(--accent-mid)]">0</div>
+                            <div class="text-[var(--accent-text-muted)] text-sm">Clients</div>
+                        </div> -->
                     </div>
                 </div>
 

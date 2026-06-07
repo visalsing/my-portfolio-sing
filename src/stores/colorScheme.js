@@ -46,17 +46,21 @@ const THEME_CLASSES = {
     'Black-Charcoal': 'theme-black-charcoal',
     'White-Smoke':    'theme-white-smoke',
     'Rainbow':        'theme-rainbow',
+    'Bloody-Red':     'theme-bloody-red',
+    'Midnight-Blue':  'theme-midnight-blue',
 };
 
 const logoSchemeMap = {
     'Blue-Cyan':      'logo-portfolio-blue-cyan.png',
     'Red-Scarlet':    'logo-portfolio-red-scarlet.png',
-    'Purple-Pink':    'logo-portfolio-purple-pink.png',
-    'Green-Dark':     'logo-portfolio-green-dark.png',
+    'Purple-Pink':    'logo-portfolio-pink-purple.png',
+    'Green-Dark':     'logo-portfolio-green-darkgreen.png',
     'Orange-Yellow':  'logo-portfolio-orange-yellow.png',
-    'Black-Charcoal': 'logo-portfolio-black-charcoal.png',
+    'Black-Charcoal': 'logo-portfolio-black-charcoal-darkBg.png',
     'White-Smoke':    'logo-portfolio-white-smoke.png',
     'Rainbow':        'logo-portfolio-rainbow.png',
+    'Bloody-Red':     'logo-portfolio-bloody-red.png',
+    'Midnight-Blue':  'logo-portfolio-midnight-blue.png',
 };
 
 // function updateFavicon(name) {
@@ -64,6 +68,7 @@ const logoSchemeMap = {
 //     const favicon = document.getElementById('favicon');
 //     if (favicon) favicon.href = `/logos/${file}`;
 // }
+
 
 function updateFavicon(name) {
     const file = logoSchemeMap[name] ?? logoSchemeMap['Blue-Cyan'];

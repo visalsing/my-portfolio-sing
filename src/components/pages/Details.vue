@@ -70,13 +70,13 @@
                         </li>
                     </ul>
                     <div class="mt-10 lg:mt-0 lg:ml-8">
-                        <button
+                        <router-link to="/contact"
                             class="px-5 py-2.5 sm:px-7 sm:py-3 text-white rounded-full transition-all duration-300 text-sm font-semibold cursor-pointer"
                             :style="{ background: 'var(--cta-gradient)' }"
                             @mouseenter="e => e.currentTarget.style.boxShadow = '0 8px 24px var(--accent-shadow)'"
                             @mouseleave="e => e.currentTarget.style.boxShadow = 'none'">
                             Let's Talk
-                        </button>
+                        </router-link>
                     </div>
                 </nav>
             </header>
@@ -121,13 +121,13 @@
                         </li>
                     </ul>
                     <div class="ml-8">
-                        <button
+                        <router-link to="/contact"
                             class="px-6 py-2.5 text-white rounded-full transition-all duration-300 text-sm font-semibold cursor-pointer"
                             :style="{ background: 'var(--cta-gradient)' }"
                             @mouseenter="e => e.currentTarget.style.boxShadow = '0 8px 24px var(--accent-shadow)'"
                             @mouseleave="e => e.currentTarget.style.boxShadow = 'none'">
                             Let's Talk
-                        </button>
+                        </router-link>
                     </div>
                 </nav>
             </header>
@@ -366,13 +366,13 @@
                                     @mouseleave="e => e.currentTarget.style.boxShadow = 'none'">
                                     Download CV
                                 </button>
-                                <button
+                                <router-link to="/contact"
                                     class="px-6 py-3 border rounded-full font-semibold text-sm transition-all duration-300 cursor-pointer"
                                     :style="{ borderColor: 'var(--accent-border)', color: 'var(--accent-text-muted)' }"
                                     @mouseenter="e => { e.currentTarget.style.borderColor = 'var(--accent-border-hover)'; e.currentTarget.style.backgroundColor = 'var(--accent-bg)' }"
                                     @mouseleave="e => { e.currentTarget.style.borderColor = 'var(--accent-border)'; e.currentTarget.style.backgroundColor = 'transparent' }">
                                     Let's Talk
-                                </button>
+                                </router-link>
                             </div>
                         </div>
 
@@ -881,8 +881,10 @@ const logoSchemeMap = {
     'Green-Dark': 'logo-portfolio-green-dark.png',
     'Orange-Yellow': 'logo-portfolio-orange-yellow.png',
     'Rainbow': 'logo-portfolio-rainbow.png',
-    'Black-Charcoal': 'logo-portfolio-black-charcoal.png',
+    'Black-Charcoal': 'logo-portfolio-black-charcoal-darkBg.png',
     'White-Smoke': 'logo-portfolio-white-smoke.png',
+    'Bloody-Red':     'logo-portfolio-bloody-red.png',
+    'Midnight-Blue':  'logo-portfolio-midnight-blue.png',
 };
 
 const logoSrc = computed(() => {

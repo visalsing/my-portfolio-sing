@@ -543,7 +543,10 @@ import {
 
     DevicePhoneMobileIcon,
     DeviceTabletIcon,
-    TvIcon, // For Large PC/4K
+    TvIcon,
+    SparklesIcon,
+    LightBulbIcon,
+    StarIcon, // For Large PC/4K
 } from '@heroicons/vue/24/outline';
 
 import { currentLoadingScreen, setLoadingScreen } from './../../stores/loadingScreen.js';
@@ -649,6 +652,9 @@ const themes = [
     { name: 'Light', label: 'Light', icon: SunIcon },
     { name: 'Dark', label: 'Dark', icon: MoonIcon },
     { name: 'Device', label: 'Device', icon: ComputerDesktopIcon },
+    { name: 'Black', label: 'Black', icon: StarIcon },
+    { name: 'White', label: 'White', icon: LightBulbIcon },
+    { name: 'Abyss', label: 'Abyss', icon: SparklesIcon },
 ];
 
 const colorSchemes = [
@@ -663,6 +669,8 @@ const colorSchemes = [
     },
     { name: 'Black-Charcoal', from: '#000000', to: '#36454F' },
     { name: 'White-Smoke', from: '#ffffff', to: '#F5F5F5' },
+    { name: 'Bloody-Red', from: '#f87171', to: '#b91c1c' },
+    { name: 'Midnight-Blue', from: '#60a5fa', to: '#1e3a8a' }
 ];
 
 const languages = [
