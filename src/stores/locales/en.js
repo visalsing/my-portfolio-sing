@@ -8,6 +8,7 @@ export default {
   testimonials: "Testimonials",
   contacts: "Contacts",
   settings: "Settings",
+  more: "More",
   lets_talk: "Let's Talk",
 
   // Hero
@@ -17,6 +18,10 @@ export default {
     "I\'m Visalsing, and a software developer. My skills are to create and develop website, front-end, back-end, responsive design, email marketing and more. Here is my CV below! You can click on the button to download my CV.",
   contact_me: "Contact Me",
   download_cv: "Download CV",
+  projects: "Projects",
+  years: "Years",
+  amount3: "3",
+  amount2: "2",
 
   // About Me
   about_: "About",
@@ -75,4 +80,10 @@ export default {
   // ServiceDetail
   details: "Details",
   click_to_return: "Click to return!",
+
+  // Page404
+  page_not_found: "Page not found!",
+  page404: "404",
+  back_to_safety: "Back to Safety!",
+  text404: "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
 };

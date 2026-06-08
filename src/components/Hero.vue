@@ -82,12 +82,12 @@
                     <div class="flex items-center justify-center lg:justify-start gap-8 pt-12" data-oas="fade-up"
                         data-aos-delay="400">
                         <div class="text-center">
-                            <div class="text-2xl font-bold text-[var(--accent-mid)]">3+</div>
-                            <div class="text-[var(--accent-text-muted)] text-sm">Projects</div>
+                            <div class="text-2xl font-bold text-[var(--accent-mid)]">{{t('amount3')}}+</div>
+                            <div class="text-[var(--accent-text-muted)] text-sm">{{t('projects')}}</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-2xl font-bold text-[var(--accent-mid)]">2+</div>
-                            <div class="text-[var(--accent-text-muted)] text-sm">Years</div>
+                            <div class="text-2xl font-bold text-[var(--accent-mid)]">{{t('amount2')}}+</div>
+                            <div class="text-[var(--accent-text-muted)] text-sm">{{t('years')}}</div>
                         </div>
                         <!-- <div class="text-center">
                             <div class="text-2xl font-bold text-[var(--accent-mid)]">0</div>

@@ -107,12 +107,21 @@ const routes = [
     path: "/404",
     name: "Page404",
     component: Page404,
-  }
+  },
   // 💡 Optional: Add a 404 catch-all redirect to prevent blank pages on typos
   // {
   //   path: "/:pathMatch(.*)*",
   //   redirect: "/",
   // },
+
+  // ─── CRITICAL CATCH-ALL ROUTE ───
+  // This must remain at the very end of the array. It intercepts any invalid 
+  // URL path entered by the user and seamlessly mounts your Page404 component.
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFoundCatchAll",
+    component: Page404,
+  }
 ];
 
 const router = createRouter({

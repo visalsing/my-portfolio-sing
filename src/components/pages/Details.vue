@@ -877,8 +877,8 @@ import { currentScheme } from './../../stores/colorScheme.js';
 const logoSchemeMap = {
     'Blue-Cyan': 'logo-portfolio-blue-cyan.png',
     'Red-Scarlet': 'logo-portfolio-red-scarlet.png',
-    'Purple-Pink': 'logo-portfolio-purple-pink.png',
-    'Green-Dark': 'logo-portfolio-green-dark.png',
+    'Purple-Pink': 'logo-portfolio-pink-purple.png',
+    'Green-Dark': 'logo-portfolio-green-darkgreen.png',
     'Orange-Yellow': 'logo-portfolio-orange-yellow.png',
     'Rainbow': 'logo-portfolio-rainbow.png',
     'Black-Charcoal': 'logo-portfolio-black-charcoal-darkBg.png',

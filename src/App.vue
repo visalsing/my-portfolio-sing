@@ -156,52 +156,76 @@ export default defineComponent({
             ">
 
             <!-- Toolbar -->
+            <!-- Toolbar — responsive: sidebar toggle on small screens, tab row on large -->
             <div style="
-                    height: 48px; flex-shrink: 0;
-                    background: #0f1117;
-                    border-bottom: 1px solid #1e2535;
-                    display: flex; align-items: center;
-                    justify-content: space-between;
-                    padding: 0 16px;
-                    font-family: monospace; gap: 12px;
-                ">
-                <span style="color:#4b5563; font-size:11px; white-space:nowrap;">
-                    🖥 Responsive Preview
-                </span>
+        height: 48px; flex-shrink: 0;
+        background: #0f1117;
+        border-bottom: 1px solid #1e2535;
+        display: flex; align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        font-family: monospace; gap: 8px;
+    ">
 
-                <div style="display:flex; gap:6px;">
-                    <button v-for="vp in vpList" :key="vp.name"
-                        @click="switchViewport(vp.name)"
-                        :style="`
-                            padding: 4px 14px; border-radius: 6px;
-                            font-size: 11px; cursor: pointer;
-                            border: 1px solid ${activeViewport === vp.name ? '#6366f1' : '#1f2937'};
-                            background: ${activeViewport === vp.name ? '#1e1b4b' : 'transparent'};
-                            color: ${activeViewport === vp.name ? '#a5b4fc' : '#6b7280'};
-                        `">
-                        {{ vp.icon }} {{ vp.label }}
-                        <span style="opacity:0.45; margin-left:5px; font-size:10px;">
-                            {{ vp.w }}
+                <!-- LEFT: hamburger (mobile) + active badge -->
+                <div style="display:flex; align-items:center; gap:8px; min-width:0;">
+
+                    <!-- Hamburger — only visible when toolbar tabs would overflow -->
+                    <button @click="sidebarOpen = !sidebarOpen" class="rp-menu-btn" style="
+                width:30px; height:30px; border-radius:6px; flex-shrink:0;
+                background:#1a1f2e; border:1px solid #1e2535;
+                color:#6b7280; cursor:pointer; font-size:16px;
+                display:flex; align-items:center; justify-content:center;
+            ">☰</button>
+
+                    <!-- Active viewport badge — always visible -->
+                    <div style="
+                display:flex; align-items:center; gap:6px;
+                background:#1e1b4b; border:1px solid #3730a3;
+                border-radius:7px; padding:3px 10px;
+                font-size:11px; color:#a5b4fc; white-space:nowrap; flex-shrink:0;
+            ">
+                        <span>{{vpList.find(v => v.name === activeViewport)?.icon}}</span>
+                        <span>{{vpList.find(v => v.name === activeViewport)?.label}}</span>
+                        <span style="opacity:0.45; font-size:10px;">
+                            {{vpList.find(v => v.name === activeViewport)?.w}}
                         </span>
-                    </button>
+                    </div>
+
+                    <!-- Tab buttons — hidden on small screens via class -->
+                    <div class="rp-tabs" style="display:flex; gap:6px;">
+                        <button v-for="vp in vpList" :key="vp.name" @click="switchViewport(vp.name)" :style="`
+                    padding: 4px 12px; border-radius: 6px;
+                    font-size: 11px; cursor: pointer; white-space:nowrap;
+                    border: 1px solid ${activeViewport === vp.name ? '#6366f1' : '#1f2937'};
+                    background: ${activeViewport === vp.name ? '#1e1b4b' : 'transparent'};
+                    color: ${activeViewport === vp.name ? '#a5b4fc' : '#6b7280'};
+                `">
+                            {{ vp.icon }} {{ vp.label }}
+                            <span style="opacity:0.45; margin-left:4px; font-size:10px;">{{ vp.w }}</span>
+                        </button>
+                    </div>
                 </div>
 
-                <span style="
-                        color:#6366f1; font-size:11px;
-                        background:#1e1b4b; border:1px solid #3730a3;
-                        padding: 2px 10px; border-radius: 20px; white-space:nowrap;
-                    ">
-                    {{ currentFrameWidth }}px × {{ frameHeight }}px
-                </span>
+                <!-- RIGHT: size pill + exit -->
+                <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
+                    <span class="rp-size-pill" style="
+                color:#6366f1; font-size:11px;
+                background:#1e1b4b; border:1px solid #3730a3;
+                padding: 2px 10px; border-radius: 20px; white-space:nowrap;
+            ">
+                        {{ currentFrameWidth }}px × {{ frameHeight }}px
+                    </span>
 
-                <button @click="switchViewport('Auto')" style="
-                        padding: 4px 14px; border-radius: 6px;
-                        font-size: 11px; cursor: pointer;
-                        border: 1px solid #374151;
-                        background: transparent; color: #f87171; white-space:nowrap;
-                    ">
-                    ✕ Exit
-                </button>
+                    <button @click="switchViewport('Auto')" style="
+                padding: 4px 12px; border-radius: 6px;
+                font-size: 11px; cursor: pointer;
+                border: 1px solid #374151;
+                background: transparent; color: #f87171; white-space:nowrap;
+            ">
+                        ✕ Exit
+                    </button>
+                </div>
             </div>
 
             <!-- Slider -->
@@ -214,20 +238,51 @@ export default defineComponent({
                 <span style="color:#4b5563; font-size:10px; font-family:monospace;">
                     WIDTH
                 </span>
-                <input type="range" :min="320" :max="1600" :value="currentFrameWidth"
-                    @input="onWidthDrag"
+                <input type="range" :min="320" :max="1600" :value="currentFrameWidth" @input="onWidthDrag"
                     style="width:200px; accent-color:#6366f1; cursor:pointer;" />
                 <span style="color:#a5b4fc; font-size:11px; font-family:monospace; min-width:52px;">
                     {{ currentFrameWidth }}px
                 </span>
             </div>
 
+            <!-- Sidebar drawer — slides in over the iframe on small screens -->
+            <transition name="rp-sidebar">
+                <div v-if="sidebarOpen" @click.self="sidebarOpen = false" style="
+            position:absolute; inset:0; top:90px;
+            z-index:100; display:flex;
+        ">
+                    <div style="
+                width:160px; height:100%;
+                background:#0f1117; border-right:1px solid #1e2535;
+                display:flex; flex-direction:column;
+                padding:8px 0;
+            ">
+                        <button v-for="vp in vpList" :key="vp.name"
+                            @click="switchViewport(vp.name); sidebarOpen = false" :style="`
+                    display:flex; align-items:center; gap:10px;
+                    padding:10px 16px; font-size:12px; cursor:pointer;
+                    background:${activeViewport === vp.name ? 'rgba(99,102,241,0.1)' : 'transparent'};
+                    border:none;
+                    border-left:2px solid ${activeViewport === vp.name ? '#6366f1' : 'transparent'};
+                    color:${activeViewport === vp.name ? '#a5b4fc' : '#6b7280'};
+                    font-family:monospace; width:100%; text-align:left;
+                `">
+                            <span style="font-size:16px;">{{ vp.icon }}</span>
+                            <span>{{ vp.label }}</span>
+                            <span style="margin-left:auto; font-size:10px; opacity:0.4;">{{ vp.w }}</span>
+                        </button>
+                    </div>
+                    <!-- clicking outside closes sidebar -->
+                    <div style="flex:1;" @click="sidebarOpen = false"></div>
+                </div>
+            </transition>
+
             <!-- iframe -->
             <div style="
                     flex:1; display:flex;
                     align-items:flex-start;
                     justify-content:center;
-                    padding:20px 24px 0;
+                    padding:0px 24px 0;
                     overflow:hidden;
                 ">
                 <div :style="`
@@ -238,18 +293,14 @@ export default defineComponent({
                         overflow: hidden;
                         flex-shrink: 0;
                     `">
-                    <iframe
-                        :src="iframeSrc"
-                        :style="`
+                    <iframe :src="iframeSrc" :style="`
                             width: ${currentFrameWidth}px;
                             height: ${frameHeight}px;
                             border: none;
                             transform: scale(${iframeScale});
                             transform-origin: top left;
                             display: block;
-                        `"
-                        scrolling="yes"
-                    />
+                        `" scrolling="yes" />
                 </div>
             </div>
         </div>
@@ -291,17 +342,17 @@ export default defineComponent({
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-import Hero             from './components/Hero.vue';
-import Navbar           from './components/Navbar.vue';
-import Services         from './components/Services.vue';
-import About            from './components/About.vue';
+import Hero from './components/Hero.vue';
+import Navbar from './components/Navbar.vue';
+import Services from './components/Services.vue';
+import About from './components/About.vue';
 import ExperienceSkills from './components/ExperienceSkills.vue';
-import Projects         from './components/Projects.vue';
-import Contact          from './components/Contact.vue';
-import Testimonials     from './components/Testimonials.vue';
-import Footer           from './components/Footer.vue';
-import BackToTop        from './components/BackToTop.vue';
-import LoadingSpinner   from './components/LoadingSpinner.vue';
+import Projects from './components/Projects.vue';
+import Contact from './components/Contact.vue';
+import Testimonials from './components/Testimonials.vue';
+import Footer from './components/Footer.vue';
+import BackToTop from './components/BackToTop.vue';
+import LoadingSpinner from './components/LoadingSpinner.vue';
 
 import { ref, computed, nextTick, onMounted, onUnmounted, defineComponent } from 'vue';
 import { currentViewport, setViewport, viewportWidths } from './stores/viewport.js';
@@ -323,16 +374,16 @@ import { useHead } from '@vueuse/head'
 useHead({
     title: 'So Visalsing — Software Developer Portfolio',
     meta: [
-        { 
-            name: 'description', 
-            content: 'Full-stack developer specializing in Vue.js, Laravel, and modern web technologies. Based in Phnom Penh, Cambodia.' 
+        {
+            name: 'description',
+            content: 'Full-stack developer specializing in Vue.js, Laravel, and modern web technologies. Based in Phnom Penh, Cambodia.'
         },
         // Open Graph / Facebook / LinkedIn
         { property: 'og:title', content: 'So Visalsing — Software Developer Portfolio' },
         { property: 'og:description', content: 'Full-stack developer specializing in Vue.js, Laravel.' },
         { property: 'og:image', content: 'https://my-portfolio-sing.vercel.app/seo-photo.jpg' }, // ✅ Absolute link
         { property: 'og:url', content: 'https://my-portfolio-sing.vercel.app/' },
-        
+
         // Twitter
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'So Visalsing — Portfolio' },
@@ -363,10 +414,10 @@ export default defineComponent({
 
         // ── Device list for toolbar ──────────────────────────────────
         const vpList = [
-            { name: 'Mobile',  label: 'Mobile',  icon: '📱', w: '375px'  },
-            { name: 'Tablet',  label: 'Tablet',  icon: '📟', w: '768px'  },
-            { name: 'Laptop',  label: 'Laptop',  icon: '💻', w: '1024px' },
-            { name: 'Desktop', label: 'Desktop', icon: '🖥',  w: '1440px' },
+            { name: 'Mobile', label: 'Mobile', icon: '📱', w: '375px' },
+            { name: 'Tablet', label: 'Tablet', icon: '📟', w: '768px' },
+            { name: 'Laptop', label: 'Laptop', icon: '💻', w: '1024px' },
+            { name: 'Desktop', label: 'Desktop', icon: '🖥', w: '1440px' },
         ];
 
         // ── Reactive state ───────────────────────────────────────────
@@ -376,7 +427,8 @@ export default defineComponent({
         );
 
         const currentFrameWidth = ref(viewportWidths[currentViewport.value] || 375);
-        const frameHeight       = ref(window.innerHeight - 48 - 42 - 20);
+        // const frameHeight       = ref(window.innerHeight - 48 - 42 - 20);
+        const frameHeight = ref(window.innerHeight - 48 - 42);
 
         const iframeSrc = computed(() => window.location.origin + '/');
 
@@ -401,9 +453,14 @@ export default defineComponent({
             currentFrameWidth.value = Number(e.target.value);
         }
 
+        // function onResize() {
+        //     frameHeight.value = window.innerHeight - 48 - 42 - 20;
+        // }
         function onResize() {
-            frameHeight.value = window.innerHeight - 48 - 42 - 20;
+            frameHeight.value = window.innerHeight - 48 - 42;
         }
+
+        const sidebarOpen = ref(false);
 
         // ── Lifecycle (YOUR ORIGINAL — untouched) ────────────────────
         onMounted(async () => {
@@ -443,7 +500,49 @@ export default defineComponent({
             switchViewport,
             onWidthDrag,
             setViewport,
+            sidebarOpen,
         };
     },
 });
 </script>
+
+<style>
+/* Hide tab row + size pill on narrow screens, show hamburger */
+@media (max-width: 600px) {
+    .rp-tabs {
+        display: none !important;
+    }
+
+    .rp-size-pill {
+        display: none !important;
+    }
+}
+
+/* Show tab row, hide hamburger on wide screens */
+@media (min-width: 601px) {
+    .rp-menu-btn {
+        display: none !important;
+    }
+}
+
+/* Sidebar slide-in animation */
+.rp-sidebar-enter-active,
+.rp-sidebar-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.rp-sidebar-enter-active>div:first-child,
+.rp-sidebar-leave-active>div:first-child {
+    transition: transform 0.2s ease;
+}
+
+.rp-sidebar-enter-from,
+.rp-sidebar-leave-to {
+    opacity: 0;
+}
+
+.rp-sidebar-enter-from>div:first-child,
+.rp-sidebar-leave-to>div:first-child {
+    transform: translateX(-160px);
+}
+</style>

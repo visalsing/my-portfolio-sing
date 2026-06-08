@@ -103,6 +103,20 @@ function updateFavicon(name) {
     };
 }
 
+// Add this below your logoSchemeMap inside colorSchemes.js
+export const robotSchemeMap = {
+    'Blue-Cyan':      'robot-blue-cyan-rmbg.png',
+    'Red-Scarlet':    'robot-red-scarlet-rmbg.png',
+    'Purple-Pink':    'robot-pink-purple-rmbg.png',      // Rename to match your file names
+    'Green-Dark':     'robot-green-darkgreen-rmbg.png', // Rename to match your file names
+    'Orange-Yellow':  'robot-orange-yellow-rmbg.png',   // Rename to match your file names
+    'Black-Charcoal': 'robot-black-charcoal-rmbg.png',  // Rename to match your file names
+    'White-Smoke':    'robot-white-smoke-rmbg.png',     // Rename to match your file names
+    'Rainbow':        'robot-rainbow-rmbg.png',         // Rename to match your file names
+    'Bloody-Red':     'robot-bloody-red-rmbg.png',
+    'Midnight-Blue':  'robot-midnight-blue-rmbg.png',
+};
+
 const saved = localStorage.getItem('colorScheme') || 'Blue-Cyan';
 export const currentScheme = ref(saved);
 
