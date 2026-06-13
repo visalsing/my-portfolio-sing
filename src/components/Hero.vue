@@ -82,17 +82,31 @@
                     <div class="flex items-center justify-center lg:justify-start gap-8 pt-12" data-oas="fade-up"
                         data-aos-delay="400">
                         <div class="text-center">
-                            <div class="text-2xl font-bold text-[var(--accent-mid)]">{{t('amount3')}}+</div>
-                            <div class="text-[var(--accent-text-muted)] text-sm">{{t('projects')}}</div>
+                            <div class="text-2xl font-bold text-[var(--accent-mid)]">{{ t('amount3') }}+</div>
+                            <div class="text-[var(--accent-text-muted)] text-sm">{{ t('projects') }}</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-2xl font-bold text-[var(--accent-mid)]">{{t('amount2')}}+</div>
-                            <div class="text-[var(--accent-text-muted)] text-sm">{{t('years')}}</div>
+                            <div class="text-2xl font-bold text-[var(--accent-mid)]">{{ t('amount2') }}+</div>
+                            <div class="text-[var(--accent-text-muted)] text-sm">{{ t('years') }}</div>
                         </div>
                         <!-- <div class="text-center">
                             <div class="text-2xl font-bold text-[var(--accent-mid)]">0</div>
                             <div class="text-[var(--accent-text-muted)] text-sm">Clients</div>
                         </div> -->
+                        <!-- Share Trigger Button -->
+                        <div class="text-center native-share-btn">
+                            <button @click="openShareModal"
+                                class="mx-auto block group transition-transform duration-200 active:scale-95 cursor-pointer">
+                                <div
+                                    class="text-2xl font-bold text-[var(--accent-mid)] flex justify-center items-center h-8 group-hover:text-[var(--accent-text)] transition-colors">
+                                    <ShareIcon class="w-6 h-6" />
+                                </div>
+                                <div
+                                    class="text-[var(--accent-text-muted)] text-sm group-hover:text-[var(--accent-text)] transition-colors">
+                                    Share
+                                </div>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -168,6 +182,48 @@
             </div>
         </div>
     </section>
+
+    <!-- ── Share Modal Component overlay ── -->
+    <div v-if="isShareModalOpen"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity"
+        @click.self="closeShareModal">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-6 relative shadow-2xl text-center transform transition-all"
+            :style="{ borderColor: 'var(--accent-border)' }">
+
+            <!-- Close Button -->
+            <button @click="closeShareModal"
+                class="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-full hover:bg-slate-800 transition-colors cursor-pointer">
+                <XMarkIcon class="w-5 h-5" />
+            </button>
+
+            <h3 class="text-xl font-bold text-white mb-4">Share Portfolio</h3>
+
+            <!-- Explicit Portfolio Asset QR Code Link -->
+            <div class="bg-white p-4 rounded-xl inline-block mb-6 shadow-inner mx-auto">
+                <img src="../assets/images/qrcodes/sovisalsing-portfolio.png"
+                    alt="Sovisalsing Portfolio QR Code" class="w-40 h-40 object-contain mx-auto" />
+            </div>
+
+            <!-- Hardcoded Link Output Field -->
+            <div class="flex items-center gap-2 bg-slate-950 border border-slate-800 rounded-xl p-2 pl-3">
+                <input type="text" readonly :value="shareUrl"
+                    class="bg-transparent text-slate-300 text-sm w-full focus:outline-none select-all" />
+                
+                <button @click="copyShareLink"
+                    class="p-2 rounded-lg transition-all text-white font-medium flex items-center justify-center min-w-[40px] cursor-pointer"
+                    :class="{ 'bg-emerald-600': isCopied }"
+                    :style="{ background: isCopied ? '' : 'var(--cta-gradient)' }"
+                    @mouseenter="e => e.currentTarget.style.filter = 'brightness(1.15)'"
+                    @mouseleave="e => e.currentTarget.style.filter = 'brightness(1)'">
+                    <CheckIcon v-if="isCopied" class="w-5 h-5" />
+                    <DocumentDuplicateIcon v-else class="w-5 h-5" />
+                </button>
+            </div>
+
+            <p v-if="isCopied" class="text-xs text-emerald-400 mt-2 transition-opacity">Link copied to clipboard!</p>
+        </div>
+    </div>
+
 </template>
 
 <script setup>
@@ -179,6 +235,42 @@ import { t } from './../stores/languages';
 import { currentHeroBg, getHeroBgUrl } from './../stores/heroBg.js';
 import { currentTheme } from './../stores/themeMode.js';
 import { currentProfileFrame, FRAME_STYLES } from './../stores/profileFrame.js';
+import {
+    ShareIcon,
+    DocumentDuplicateIcon,
+    CheckIcon,
+    XMarkIcon
+} from '@heroicons/vue/24/outline';
+
+// Modal Share ---------------------------------------------------------------
+// Modal Reactive variables
+const isShareModalOpen = ref(false);
+const isCopied = ref(false);
+
+// Hardcoded target portfolio destination
+const shareUrl = ref('https://my-portfolio-sing.vercel.app/');
+
+const openShareModal = () => {
+    isShareModalOpen.value = true;
+};
+
+const closeShareModal = () => {
+    isShareModalOpen.value = false;
+    isCopied.value = false;
+};
+
+const copyShareLink = async () => {
+    try {
+        await navigator.clipboard.writeText(shareUrl.value);
+        isCopied.value = true;
+        setTimeout(() => {
+            isCopied.value = false;
+        }, 2500);
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
+    }
+};
+// -------------------------------------------------------------------------------
 
 // ── Hero Section Translations Data Structure ──────────────────────────────────
 const heroData = {
@@ -198,7 +290,7 @@ const heroData = {
 const localHeroText = computed(() => {
     // Falls back safely if the DOM element isn't rendered yet
     const activeLang = document.documentElement.getAttribute('data-lang') || 'en';
-    
+
     return {
         name: heroData.name[activeLang] || heroData.name['en'],
         intro: heroData.introtext[activeLang] || heroData.introtext['en']
