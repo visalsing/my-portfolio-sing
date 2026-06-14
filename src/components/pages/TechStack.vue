@@ -282,6 +282,10 @@ import kafkaLogo from '../../assets/techstack/kafka.svg';
 import vstudioLogo from '../../assets/techstack/vstudio.svg';
 import angularLogo from '../../assets/techstack/angular.svg';
 import fastapiLogo from '../../assets/techstack/fastapi.svg';
+import protonvpnLogo from '../../assets/techstack/protonvpn.svg';
+import protonpassLogo from '../../assets/techstack/protonpass.svg';
+import protondriveLogo from '../../assets/techstack/protondrive.svg';
+import protonmailLogo from '../../assets/techstack/protonmail.svg';
 
 // ── Modal state ──────────────────────────────────────────────────────────────
 const selectedTech = ref(null);
@@ -419,6 +423,10 @@ const techStack = ref([
   { id: 87, name: 'Gmail', category: 'Productivity', type: 'Email', logo: gmailLogo },
   { id: 100, name: 'Chrome', category: 'Productivity', type: 'Browser', logo: chromeLogo },
   { id: 101, name: 'Dropbox', category: 'Productivity', type: 'Storage', logo: dropboxLogo },
+  { id: 121, name: 'Proton Mail', category: 'Productivity', type: 'Email', logo: protonmailLogo },
+  { id: 122, name: 'Proton Drive', category: 'Productivity', type: 'Storage', logo: protondriveLogo },
+  { id: 123, name: 'Proton Pass', category: 'Productivity', type: 'Security', logo: protonpassLogo },
+  { id: 124, name: 'Proton VPN', category: 'Productivity', type: 'Security', logo: protonvpnLogo },
   // AI Tools
   { id: 88, name: 'Gemini', category: 'AI Tools', type: 'LLM', logo: geminiLogo },
   { id: 89, name: 'Claude', category: 'AI Tools', type: 'LLM', logo: claudeLogo },
