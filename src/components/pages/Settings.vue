@@ -611,15 +611,15 @@ const heroBackgrounds = [
     // { name: 'particles_bubbles', label: 'Bubbles', previewClass: 'preview-bubbles' },
     { name: 'particles-bubbles', label: 'Bubbles', previewClass: 'preview-bubbles' },
     { name: 'rain', label: 'Raindrops', previewClass: 'preview-rain' },
-    { name: 'nyan-cat', label: 'Nyan Cat', previewClass: 'preview-nyan-cat' },
+    // { name: 'nyan-cat', label: 'Nyan Cat', previewClass: 'preview-nyan-cat' },
     // { name: 'stars', label: 'Starry Night', icon: MoonIcon },
     // In heroBackgrounds array, update stars entry:
-    {
-        name: 'stars',
-        label: 'Starry Night',
-        previewUrl: null,  // handled dynamically
-        previewClass: 'preview-stars'
-    }
+    // {
+    //     name: 'stars',
+    //     label: 'Starry Night',
+    //     previewUrl: null,  // handled dynamically
+    //     previewClass: 'preview-stars'
+    // }
 ];
 
 // const heroBackgrounds = [
@@ -652,9 +652,9 @@ const themes = [
     { name: 'Light', label: 'Light', icon: SunIcon },
     { name: 'Dark', label: 'Dark', icon: MoonIcon },
     { name: 'Device', label: 'Device', icon: ComputerDesktopIcon },
-    { name: 'Black', label: 'Black', icon: StarIcon },
-    { name: 'White', label: 'White', icon: LightBulbIcon },
-    { name: 'Abyss', label: 'Abyss', icon: SparklesIcon },
+    // { name: 'Black', label: 'Black', icon: StarIcon },
+    // { name: 'White', label: 'White', icon: LightBulbIcon },
+    // { name: 'Abyss', label: 'Abyss', icon: SparklesIcon },
 ];
 
 const colorSchemes = [
@@ -667,8 +667,8 @@ const colorSchemes = [
         name: 'Rainbow',
         gradient: 'linear-gradient(to right, #f472b6, #ef4444, #f97316, #facc15, #22c55e, #06b6d4, #6366f1, #a855f7)'
     },
-    { name: 'Black-Charcoal', from: '#000000', to: '#36454F' },
-    { name: 'White-Smoke', from: '#ffffff', to: '#F5F5F5' },
+    // { name: 'Black-Charcoal', from: '#000000', to: '#36454F' },
+    // { name: 'White-Smoke', from: '#ffffff', to: '#F5F5F5' },
     { name: 'Bloody-Red', from: '#f87171', to: '#b91c1c' },
     { name: 'Midnight-Blue', from: '#60a5fa', to: '#1e3a8a' }
 ];
@@ -681,9 +681,9 @@ const languages = [
     { name: 'Lao', native: 'ພາສາລາວ', code: 'lo', flag: 'https://flagcdn.com/w80/la.png' },
     { name: 'Burmese', native: 'မြန်မာဘာသာ', code: 'my', flag: 'https://flagcdn.com/w80/mm.png' },
     { name: 'Thai', native: 'ภาษาไทย', code: 'th', flag: 'https://flagcdn.com/w80/th.png' },
-    // { name: 'Japanese', native: '日本語 / にほんご', code: 'ja', flag: 'https://flagcdn.com/w80/jp.png' },
-    // { name: 'Korean', native: '한국어', code: 'ko', flag: 'https://flagcdn.com/w80/kr.png' },
-    // { name: 'Filipino', native: 'Pilipino', code: 'fil', flag: 'https://flagcdn.com/w80/ph.png' },
+    { name: 'Filipino', native: 'Pilipino', code: 'fil', flag: 'https://flagcdn.com/w80/ph.png' },
+    { name: 'Japanese', native: '日本語 / にほんご', code: 'ja', flag: 'https://flagcdn.com/w80/jp.png' },
+    { name: 'Korean', native: '한국어', code: 'ko', flag: 'https://flagcdn.com/w80/kr.png' },
     // { name: 'German', native: 'Deutsch', code: 'de', flag: 'https://flagcdn.com/w80/de.png' },
     // { name: 'Spanish', native: 'Español', code: 'es', flag: 'https://flagcdn.com/w80/es.png' },
 ];
