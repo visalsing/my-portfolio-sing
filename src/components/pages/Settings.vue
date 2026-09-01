@@ -673,17 +673,26 @@ const colorSchemes = [
     { name: 'Midnight-Blue', from: '#60a5fa', to: '#1e3a8a' }
 ];
 
+import khmer from '../../assets/techstack/khmer.svg';
+import english from '../../assets/techstack/english.svg';
+import chinese from '../../assets/techstack/chinese.svg';
+import lao from '../../assets/techstack/lao.svg';
+
 const languages = [
-    { name: 'Khmer', native: 'ភាសាខ្មែរ', code: 'km', flag: 'https://flagcdn.com/w80/kh.png' },
-    { name: 'English', native: 'English', code: 'en', flag: 'https://flagcdn.com/w80/gb.png' },
-    { name: 'Chinese', native: '中文', code: 'zh', flag: 'https://flagcdn.com/w80/tw.png' },
-    { name: 'French', native: 'Français', code: 'fr', flag: 'https://flagcdn.com/w80/fr.png' },
-    { name: 'Lao', native: 'ພາສາລາວ', code: 'lo', flag: 'https://flagcdn.com/w80/la.png' },
-    { name: 'Burmese', native: 'မြန်မာဘာသာ', code: 'my', flag: 'https://flagcdn.com/w80/mm.png' },
-    { name: 'Thai', native: 'ภาษาไทย', code: 'th', flag: 'https://flagcdn.com/w80/th.png' },
-    { name: 'Filipino', native: 'Pilipino', code: 'fil', flag: 'https://flagcdn.com/w80/ph.png' },
-    { name: 'Japanese', native: '日本語 / にほんご', code: 'ja', flag: 'https://flagcdn.com/w80/jp.png' },
-    { name: 'Korean', native: '한국어', code: 'ko', flag: 'https://flagcdn.com/w80/kr.png' },
+    { name: 'Khmer', native: 'ភាសាខ្មែរ', code: 'km', flag: khmer },
+    { name: 'English', native: 'English', code: 'en', flag: english },
+    { name: 'Chinese', native: '中文', code: 'zh', flag: chinese },
+    { name: 'Lao', native: 'ພາສາລາວ', code: 'lo', flag: lao },
+    // { name: 'Khmer', native: 'ភាសាខ្មែរ', code: 'km', flag: 'https://flagcdn.com/w80/kh.png' },
+    // { name: 'English', native: 'English', code: 'en', flag: 'https://flagcdn.com/w80/gb.png' },
+    // { name: 'Chinese', native: '中文', code: 'zh', flag: 'https://flagcdn.com/w80/tw.png' },
+    // { name: 'Lao', native: 'ພາສາລາວ', code: 'lo', flag: 'https://flagcdn.com/w80/la.png' },
+    // { name: 'French', native: 'Français', code: 'fr', flag: 'https://flagcdn.com/w80/fr.png' },
+    // { name: 'Burmese', native: 'မြန်မာဘာသာ', code: 'my', flag: 'https://flagcdn.com/w80/mm.png' },
+    // { name: 'Thai', native: 'ภาษาไทย', code: 'th', flag: 'https://flagcdn.com/w80/th.png' },
+    // { name: 'Filipino', native: 'Pilipino', code: 'fil', flag: 'https://flagcdn.com/w80/ph.png' },
+    // { name: 'Japanese', native: '日本語 / にほんご', code: 'ja', flag: 'https://flagcdn.com/w80/jp.png' },
+    // { name: 'Korean', native: '한국어', code: 'ko', flag: 'https://flagcdn.com/w80/kr.png' },
     // { name: 'German', native: 'Deutsch', code: 'de', flag: 'https://flagcdn.com/w80/de.png' },
     // { name: 'Spanish', native: 'Español', code: 'es', flag: 'https://flagcdn.com/w80/es.png' },
 ];
