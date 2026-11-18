@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen text-white" :style="{ backgroundColor: 'var(--surface-bg-3)' }">
+    <div class="min-h-screen text-white">
         <section class="relative py-20 overflow-hidden" id="settings">
 
             <!-- Background glow -->
@@ -124,17 +124,16 @@
                                     ? { borderColor: 'var(--accent-text)', backgroundColor: 'var(--accent-bg)' }
                                     : { borderColor: 'rgba(75,85,99,1)' }" @click="setProfileFrame(frame.name)">
                                 <!-- Shape preview -->
-                                <div class="w-12 h-12 flex items-center justify-center">
-                                    <div class="w-10 h-10 transition-all duration-300" :style="{
-                                        background: currentProfileFrame === frame.name
-                                            ? 'var(--cta-gradient)'
-                                            : 'rgba(148,163,184,0.25)',
-                                        clipPath: frame.previewClip ?? undefined,
-                                        borderRadius: frame.previewClip ? '0' : frame.borderRadius,
-                                    }" />
+                                <div class="relative w-12 h-12 flex items-center justify-center">
+                                    <div class="w-10 h-10 transition-all duration-300"
+                                        :style="framePreviewStyle(frame, currentProfileFrame === frame.name)" />
+                                    <!-- HUD corners: only the ones this frame uses -->
+                                    <span v-for="c in frame.corners" :key="c" class="absolute w-3 h-3"
+                                        :class="CORNER_PREVIEW[c].cls"
+                                        :style="{ borderColor: CORNER_PREVIEW[c].color }" />
                                 </div>
 
-                                <span class="text-sm font-medium transition-colors"
+                                <span class="text-sm font-medium transition-colors text-center"
                                     :style="{ color: currentProfileFrame === frame.name ? 'var(--accent-text)' : 'var(--surface-text-sub)' }">
                                     {{ frame.label }}
                                 </span>
@@ -553,7 +552,7 @@ import { currentLoadingScreen, setLoadingScreen } from './../../stores/loadingSc
 import { currentViewport, setViewport } from './../../stores/viewport.js';
 
 import { currentHeroBg, setHeroBg } from './../../stores/heroBg.js';
-import { currentProfileFrame, setProfileFrame, FRAME_STYLES } from './../../stores/profileFrame.js';
+import { currentProfileFrame, setProfileFrame, PROFILE_FRAMES, DEFAULT_PROFILE_FRAME } from './../../stores/profileFrame.js';
 
 
 // ======================================================================
@@ -631,13 +630,43 @@ const heroBackgrounds = [
 
 // ================================================================================
 
-const profileFrames = [
-    { name: 'circle', label: 'Circle', previewClip: 'circle(50% at 50% 50%)', borderRadius: '9999px' },
-    { name: 'hexagon', label: 'Hexagon', previewClip: 'polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)', borderRadius: '0' },
-    { name: 'diamond', label: 'Diamond', previewClip: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', borderRadius: '0' },
-    { name: 'squircle', label: 'Squircle', previewClip: null, borderRadius: '30%' },
-    { name: 'shield', label: 'Shield', previewClip: 'polygon(50% 0%, 100% 18%, 100% 65%, 50% 100%, 0% 65%, 0% 18%)', borderRadius: '0' },
-];
+// Modern frames live in stores/profileFrame.js (shared with Hero.vue)
+const profileFrames = PROFILE_FRAMES;
+
+// Where each HUD corner bracket sits in the small preview (and its colour)
+const CORNER_PREVIEW = {
+    tl: { cls: 'top-0 left-0 border-t-2 border-l-2 rounded-tl-md', color: 'var(--accent-from)' },
+    tr: { cls: 'top-0 right-0 border-t-2 border-r-2 rounded-tr-md', color: 'var(--accent-mid, var(--accent-from))' },
+    bl: { cls: 'bottom-0 left-0 border-b-2 border-l-2 rounded-bl-md', color: 'var(--accent-mid, var(--accent-to))' },
+    br: { cls: 'bottom-0 right-0 border-b-2 border-r-2 rounded-br-md', color: 'var(--accent-to)' },
+};
+
+// Mini preview of one frame style (shape, glow, stack, double ring…)
+function framePreviewStyle(frame, active) {
+    const idle = 'rgba(148,163,184,0.25)';
+    const idleLine = 'rgba(148,163,184,0.55)';
+    const style = {
+        background: active ? 'var(--cta-gradient)' : idle,
+        borderRadius: frame.previewRadius,
+    };
+    if (frame.previewClip) style.clipPath = frame.previewClip;
+
+    if (frame.effect === 'spin' && active) {
+        style.background = 'conic-gradient(var(--accent-from), var(--accent-to), var(--accent-mid, var(--accent-from)), var(--accent-from))';
+    }
+    if (frame.effect === 'neon') {
+        style.background = 'transparent';
+        style.border = `2px solid ${active ? 'var(--accent-text)' : idleLine}`;
+        style.boxShadow = active ? '0 0 8px var(--accent-text)' : 'none';
+    }
+    if (frame.effect === 'stack') {
+        style.boxShadow = `4px 4px 0 -1px ${active ? 'var(--accent-from)' : idleLine}`;
+    }
+    if (frame.effect === 'double') {
+        style.boxShadow = `0 0 0 2px var(--surface-bg-3), 0 0 0 3.5px ${active ? 'var(--accent-from)' : idleLine}`;
+    }
+    return style;
+}
 // ================================================================================
 
 const loadingScreens = [
@@ -676,12 +705,14 @@ const colorSchemes = [
 import khmer from '../../assets/techstack/khmer.svg';
 import english from '../../assets/techstack/english.svg';
 import chinese from '../../assets/techstack/chinese.svg';
+import french from '../../assets/techstack/french.svg';
 import lao from '../../assets/techstack/lao.svg';
 
 const languages = [
     { name: 'Khmer', native: 'ភាសាខ្មែរ', code: 'km', flag: khmer },
     { name: 'English', native: 'English', code: 'en', flag: english },
     { name: 'Chinese', native: '中文', code: 'zh', flag: chinese },
+    { name: 'French', native: 'Français', code: 'fr', flag: french },
     { name: 'Lao', native: 'ພາສາລາວ', code: 'lo', flag: lao },
     // { name: 'Khmer', native: 'ភាសាខ្មែរ', code: 'km', flag: 'https://flagcdn.com/w80/kh.png' },
     // { name: 'English', native: 'English', code: 'en', flag: 'https://flagcdn.com/w80/gb.png' },
@@ -704,7 +735,7 @@ function resetSettings() {
     setLoadingScreen('bounce-dots');
     setViewport('Auto');
     setHeroBg('none');
-    setProfileFrame('circle');
+    setProfileFrame(DEFAULT_PROFILE_FRAME);
 }
 </script>
 

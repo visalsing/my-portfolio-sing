@@ -13,7 +13,7 @@
                 </p>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-12">
+            <div class="grid lg:grid-cols-2 gap-12 mb-16">
 
                 <!-- Left Column: Contact Info -->
                 <div data-aos="fade-right">
@@ -193,6 +193,38 @@
                     </form>
                 </div>
             </div>
+
+                        <!-- Map -->
+            <div class="w-full space-y-4" data-aos="fade-up">
+                <div class="flex justify-end">
+                    <button @click="toggleMapProvider"
+                        class="text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer text-[var(--surface-text-sub)] bg-[var(--surface-card)] hover:opacity-80"
+                        :style="{ borderColor: 'var(--section-border)' }">
+                        Active Map: {{ currentMapProvider === 'openstreetmap' ? 'OpenStreetMap' : 'Google Maps' }}
+                    </button>
+                </div>
+
+                <div class="w-full h-96 rounded-2xl overflow-hidden shadow-xl"
+                    :style="{ border: '1px solid var(--section-border)' }">
+
+                    <iframe v-if="currentMapProvider === 'openstreetmap'"
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=104.8354,11.5173,105.0067,11.5955&layer=mapnik&marker=11.5564,104.9282"
+                        class="w-full h-full border-0">
+                    </iframe>
+
+                    <iframe v-else
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d250151.16276883447!2d104.7253721257701!3d11.579654011430938!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109513dc76a6be3%3A0x9c010ee85ab525bb!2sPhnom%20Penh!5e0!3m2!1sen!2skh!4v1780732855651!5m2!1sen!2skh"
+                        class="w-full h-full border-0" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+                <div class="flex items-center gap-2 px-2 text-sm font-medium"
+                    :style="{ color: 'var(--surface-text-sub)' }">
+                    <MapPinIcon class="w-4 h-4 flex-shrink-0" :style="{ color: 'var(--accent-text)' }" />
+                    <span>Phnom Penh, Cambodia</span>
+                </div>
+            </div>
         </div>
 
         <!-- Custom Tailwind CSS Notification Modal Background Overlay -->
@@ -252,6 +284,18 @@ const contactInfo = [
     { icon: PhoneIcon, label: 'Phone', value: '+855 (0) 96 252 1705' },
     { icon: MapPinIcon, label: 'Location', value: 'Phnom Penh, Cambodia' },
 ];
+
+// --- Map Provider State ---
+// 1. Set the initial default state to 'google' (with fallback to localStorage if you are using it)
+const currentMapProvider = ref(localStorage.getItem("mapProvider") || 'google');
+
+// 2. Update the toggle function to flip between google and openstreetmap
+const toggleMapProvider = () => {
+    currentMapProvider.value = currentMapProvider.value === 'google' ? 'openstreetmap' : 'google';
+    
+    // Optional: Save preference if you persist it
+    localStorage.setItem("mapProvider", currentMapProvider.value);
+};
 
 // --- Form States ---
 const isSending = ref(false);

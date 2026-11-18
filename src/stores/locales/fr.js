@@ -11,7 +11,7 @@ export default {
   lets_talk: "Discutons",
 
   // Hero
-  hi_im: "Salut, je suis",
+  hello_im: "Salut, je suis",
   visalsing: "So Visalsing",
   hero_long_text:
     "Je suis Visalsing, développeur logiciel. Mes compétences incluent la création et le développement de sites web, le front-end, le back-end, le design réactif, l'email marketing et plus encore. Voici mon CV ci-dessous ! Cliquez sur le bouton pour le télécharger.",

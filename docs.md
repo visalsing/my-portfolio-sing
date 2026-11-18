@@ -26,3 +26,6 @@ In search bar of VS Code
 Copy URL: http://localhost:5173/
 >Simple Bowse: Show
 Input that URL in that search bar then.
+
+
+npm run dev -- --port 5180

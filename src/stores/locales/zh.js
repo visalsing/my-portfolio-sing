@@ -11,7 +11,7 @@ export default {
   lets_talk: "开始交谈",
 
   // Hero
-  hi_im: "你好，我是",
+  hello_im: "你好，我是",
   visalsing: "So Visalsing",
   hero_long_text:
     "我是 Visalsing，一名软件开发人员。我的技能包括网站创建与开发、前端、后端、响应式设计、邮件营销等。这是我的简历！您可以点击按钮下载。",

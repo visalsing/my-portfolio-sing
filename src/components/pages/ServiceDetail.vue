@@ -1,195 +1,360 @@
 <template>
-  <section v-if="currentService" class="min-h-screen pt-28 pb-20 relative overflow-hidden" 
-           :style="{ backgroundColor: 'var(--bg-color)', color: 'var(--surface-text)' }">
-    
-    <div class="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] opacity-20 blur-[150px] rounded-full pointer-events-none transition-all duration-1000" 
-         :style="{ backgroundColor: 'var(--accent-glow)' }"></div>
-    <div class="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] opacity-10 blur-[120px] rounded-full pointer-events-none" 
-         :style="{ backgroundColor: 'var(--icon-accent)' }"></div>
+  <section v-if="service" class="min-h-screen pt-28 pb-20 relative overflow-hidden"
+    :style="{ backgroundColor: 'var(--bg-color)', color: 'var(--surface-text)' }">
 
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-        <div data-aos="fade-down">
-          <router-link to="/services" class="group inline-flex items-center text-sm font-medium mb-6 opacity-60 hover:opacity-100 transition-all"
-                       :style="{ color: 'var(--surface-text-sub)' }">
-            <div class="p-2 rounded-full mr-3 border transition-colors group-hover:bg-[var(--accent-bg)]"
-                 :style="{ borderColor: 'var(--section-border)' }">
-                <ArrowLeftIcon class="w-4 h-4 group-hover:text-[var(--accent-text)]" />
-            </div>
-            Back to overview
-          </router-link>
-          
-          <div class="flex items-center gap-5">
-            <div class="p-4 rounded-2xl border backdrop-blur-xl transition-all duration-300 hover:scale-110 shadow-lg shadow-black/40" 
-                 :style="{ 
-                   borderColor: 'var(--accent-border)', 
-                   background: 'linear-gradient(to right, var(--icon-bg), var(--icon-bg-2))' 
-                 }">
-                <component :is="currentService.icon" class="w-10 h-10" :style="{ color: 'var(--icon-accent)' }" />
-            </div>
-            <div>
-                <span class="text-xs uppercase tracking-[0.2em] font-bold" :style="{ color: 'var(--accent-text)' }">
-                  {{ currentService.category }}
-                </span>
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight mt-1 text-[var(--surface-text)]">
-                  {{ currentService.name }}
-                </h1>
+    <!-- soft background glows -->
+    <div aria-hidden="true"
+      class="absolute top-[-12%] right-[-10%] w-[480px] h-[480px] opacity-20 blur-[140px] rounded-full pointer-events-none"
+      :style="{ backgroundColor: 'var(--accent-glow)' }"></div>
+    <div aria-hidden="true"
+      class="absolute bottom-[-8%] left-[-8%] w-[320px] h-[320px] opacity-10 blur-[120px] rounded-full pointer-events-none"
+      :style="{ backgroundColor: 'var(--icon-accent)' }"></div>
+
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 relative z-10">
+
+      <!-- Breadcrumb -->
+      <nav class="flex flex-wrap items-center gap-1.5 text-sm" aria-label="Breadcrumb"
+        :style="{ color: 'var(--surface-text-sub)' }">
+        <router-link to="/services" class="crumb inline-flex items-center gap-1.5">
+          <ArrowLeftIcon class="w-4 h-4" /> Services
+        </router-link>
+        <ChevronRightIcon class="w-3.5 h-3.5 opacity-50" />
+        <span>{{ category.name }}</span>
+      </nav>
+
+      <!-- Header -->
+      <header class="mt-6 flex items-start gap-4 sm:gap-5" data-aos="fade-up">
+        <span class="icon-tile shrink-0" aria-hidden="true">
+          <component :is="service.icon" class="w-7 h-7" />
+        </span>
+        <div class="min-w-0">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="eyebrow">{{ category.name }}</span>
+            <span class="status" :class="`st-${status.key}`">
+              <i class="status-dot"></i>{{ status.label }}
+            </span>
+          </div>
+          <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-2 leading-tight">
+            {{ service.name }}
+          </h1>
+          <p class="mt-3 text-base md:text-lg leading-relaxed max-w-2xl" :style="{ color: 'var(--surface-text-sub)' }">
+            {{ service.summary }}
+          </p>
+        </div>
+      </header>
+
+      <div class="mt-10 grid lg:grid-cols-[1fr_300px] gap-6 items-start">
+
+        <!-- ───────── Main column ───────── -->
+        <div class="flex flex-col gap-6">
+
+          <!-- What you get -->
+          <div class="panel" data-aos="fade-up">
+            <h2 class="panel-title">What you get</h2>
+            <ul class="mt-4 flex flex-col gap-3">
+              <li v-for="d in shownDetails" :key="d" class="flex items-start gap-3">
+                <span class="tick" aria-hidden="true"><CheckIcon class="w-3.5 h-3.5" /></span>
+                <span class="leading-relaxed">{{ d }}</span>
+              </li>
+            </ul>
+            <button v-if="service.details.length > DETAILS_PREVIEW" type="button" class="more-btn"
+              :aria-expanded="showAllDetails" @click="showAllDetails = !showAllDetails">
+              {{ showAllDetails ? 'See less' : `See more (${service.details.length - DETAILS_PREVIEW})` }}
+              <component :is="showAllDetails ? ChevronUpIcon : ChevronDownIcon" class="w-4 h-4" />
+            </button>
+          </div>
+
+          <!-- Tech & tools -->
+          <div v-if="service.stack.length" class="panel" data-aos="fade-up" data-aos-delay="80">
+            <h2 class="panel-title">{{ service.stackLabel }}</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span v-for="t in shownStack" :key="t" class="chip">{{ t }}</span>
+              <button v-if="service.stack.length > STACK_PREVIEW" type="button" class="chip chip-btn"
+                :aria-expanded="showAllStack" @click="showAllStack = !showAllStack">
+                {{ showAllStack ? 'See less' : `+${service.stack.length - STACK_PREVIEW} more` }}
+              </button>
             </div>
           </div>
         </div>
 
-        <div class="hidden md:block text-right" data-aos="fade-left">
-            <p class="text-xs opacity-40 font-mono mb-2 uppercase text-[var(--surface-text)]">Project Classification</p>
-            <p class="text-xl font-light italic" :style="{ color: 'var(--accent-text-muted)' }">
-              {{ currentService.type }} Solution
+        <!-- ───────── Side column ───────── -->
+        <aside class="flex flex-col gap-6" data-aos="fade-up" data-aos-delay="120">
+
+          <!-- Status + CTA -->
+          <div class="panel">
+            <div class="flex items-center justify-between gap-3">
+              <span class="status" :class="`st-${status.key}`"><i class="status-dot"></i>{{ status.label }}</span>
+              <span class="text-xs uppercase tracking-wider opacity-60">{{ service.type }}</span>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed" :style="{ color: 'var(--surface-text-sub)' }">
+              {{ status.hint }}
             </p>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div class="lg:col-span-7 group relative" data-aos="zoom-in">
-          <div class="absolute inset-0 rounded-[2.5rem] opacity-0 group-hover:opacity-30 transition-opacity duration-500 blur-xl"
-               :style="{ backgroundColor: 'var(--accent-glow)' }"></div>
-          
-          <div class="relative h-[400px] md:h-[600px] overflow-hidden rounded-[2.5rem] border shadow-2xl transition-all duration-500 group-hover:border-[var(--accent-border-hover)]"
-               :style="{ borderColor: 'var(--section-border)' }">
-            <img :src="currentService.image" 
-                 :alt="currentService.name"
-                 class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-            <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-color)] via-transparent to-transparent opacity-80"></div>
-          </div>
-        </div>
-
-        <div class="lg:col-span-5 flex flex-col gap-8">
-          <div class="p-8 rounded-[2rem] border backdrop-blur-2xl transition-all duration-300 hover:bg-white/[0.02]" 
-               :style="{ 
-                 borderColor: 'var(--section-border)', 
-                 background: 'linear-gradient(to bottom right, var(--card-bg-from), var(--section-grad-to))' 
-               }" data-aos="fade-left">
-            <h3 class="text-xl font-bold mb-4 text-[var(--surface-text)]">The Core Goal</h3>
-            <p class="leading-relaxed text-lg" :style="{ color: 'var(--surface-text-sub)' }">
-              {{ currentService.desc }}
-            </p>
+            <router-link :to="{ path: '/', hash: '#contact' }" class="cta-btn mt-5">
+              Let's collaborate <ArrowRightIcon class="w-4 h-4" />
+            </router-link>
           </div>
 
-          <div class="grid grid-cols-2 gap-4" data-aos="fade-up" data-aos-delay="200">
-            <div v-for="tag in ['Performance', 'Scalability', 'Modern UI', 'Security']" :key="tag"
-                 class="p-4 rounded-2xl border text-center text-sm font-semibold transition-all duration-300 hover:scale-[1.02]"
-                 :style="{ 
-                   borderColor: 'var(--section-border)', 
-                   backgroundColor: 'var(--card-bg-from)',
-                   color: 'var(--surface-text)'
-                 }">
-              {{ tag }}
-            </div>
+          <!-- More in this category -->
+          <div v-if="related.length" class="panel">
+            <h2 class="panel-title">More in {{ category.name }}</h2>
+            <ul class="mt-3 flex flex-col">
+              <li v-for="r in related" :key="r.id">
+                <router-link :to="`/services/detail/${r.id}`" class="related">
+                  <component :is="r.icon" class="w-4 h-4 shrink-0 opacity-70" />
+                  <span class="truncate">{{ r.name }}</span>
+                  <i class="status-dot ml-auto shrink-0" :class="`st-${STATUS[r.status].key}`"
+                    :title="STATUS[r.status].label"></i>
+                </router-link>
+              </li>
+            </ul>
           </div>
-
-          <div class="mt-auto p-[1px] rounded-[2.2rem]" :style="{ background: 'var(--cta-gradient)' }" data-aos="fade-up" data-aos-delay="300">
-            <div class="p-8 rounded-[2rem] flex flex-col items-center text-center backdrop-blur-3xl"
-                 :style="{ backgroundColor: 'var(--bg-color)' }">
-                <p class="text-sm mb-4" :style="{ color: 'var(--surface-text-sub)' }">Have a vision or concept in mind?</p>
-                <button class="w-full py-5 rounded-2xl text-white font-black text-lg transition-all duration-300 hover:scale-[1.02] active:scale-95 shadow-xl"
-                        :style="{ 
-                          background: 'var(--cta-gradient)',
-                          boxShadow: '0 10px 30px -10px var(--accent-shadow)'
-                        }">
-                    LET'S COLLABORATE
-                </button>
-            </div>
-          </div>
-        </div>
+        </aside>
       </div>
     </div>
   </section>
 
   <section v-else class="min-h-screen flex items-center justify-center" :style="{ backgroundColor: 'var(--bg-color)' }">
-      <div class="text-center">
-          <h2 class="text-2xl font-bold text-[var(--surface-text)]">Service not found</h2>
-          <router-link to="/#services" class="mt-4 inline-block text-[var(--accent-text)]">Return to Home</router-link>
-      </div>
+    <div class="text-center">
+      <h2 class="text-2xl font-bold text-[var(--surface-text)]">Service not found</h2>
+      <router-link to="/services" class="mt-4 inline-block text-[var(--accent-text)]">Back to all services</router-link>
+    </div>
   </section>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'; // Added "ref" import here
-import { useRoute } from 'vue-router'; 
-import { 
-    ArrowLeftIcon, CodeBracketIcon, CommandLineIcon, PaintBrushIcon, 
-    DocumentTextIcon, CpuChipIcon, EnvelopeIcon, VideoCameraIcon, 
-    DevicePhoneMobileIcon, WindowIcon, CloudArrowUpIcon, PhotoIcon, 
-    ChatBubbleBottomCenterTextIcon, MagnifyingGlassCircleIcon, 
-    ServerIcon, LanguageIcon, ArrowRightIcon, ChatBubbleLeftRightIcon // Added missing icon imports here
+import { computed, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import {
+  ArrowLeftIcon, ArrowRightIcon, CheckIcon,
+  ChevronDownIcon, ChevronRightIcon, ChevronUpIcon,
 } from '@heroicons/vue/24/outline';
+import { STATUS, getService, getCategory, servicesByCategory } from '../../data/services';
 
 const route = useRoute();
 
-const services = ref([
-  // --- Development: Web & Core ---
-  { id: 1, icon: CodeBracketIcon, name: 'Web Development', category: 'Development', type: 'Technical', desc: 'End-to-end website engineering focusing on responsive structures, compliance, and optimized web performance.', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80' },
-  { id: 2, icon: WindowIcon, name: 'Front-end Development', category: 'Development', type: 'Technical', desc: 'Building interactive and high-speed client-side interfaces using dynamic web technologies and frameworks.', image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=500&q=80' },
-  { id: 3, icon: CommandLineIcon, name: 'Back-end Development', category: 'Development', type: 'Technical', desc: 'Designing server logic, optimizing runtime performance, and handling application business algorithms.', image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=500&q=80' },
-  { id: 4, icon: CpuChipIcon, name: 'Full-stack Development', category: 'Development', type: 'Technical', desc: 'Managing both client and server architectures flawlessly to ship independent, fully functional systems.', image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=500&q=80' },
-  { id: 5, icon: DevicePhoneMobileIcon, name: 'Mobile Development', category: 'Development', type: 'Technical', desc: 'Crafting native and cross-platform mobile apps built for performance and high hardware compatibility.', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=500&q=80' },
-  { id: 6, icon: CodeBracketIcon, name: 'Software Development', category: 'Development', type: 'Technical', desc: 'Building custom operational desktop or enterprise software engineered for security and scaling.', image: 'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=500&q=80' },
+const service = computed(() => getService(route.params.id));
+const category = computed(() => (service.value ? getCategory(service.value.category) : null));
+const status = computed(() => STATUS[service.value?.status ?? 1]);
+const related = computed(() =>
+  service.value ? servicesByCategory(service.value.category).filter(x => x.id !== service.value.id) : []
+);
 
-  // --- Development: APIs ---
-  { id: 7, icon: ServerIcon, name: 'API Design', category: 'Development', type: 'Technical', desc: 'Architecting structured API schemas following strict RESTful, gRPC, or GraphQL design standards.', image: 'https://miro.medium.com/v2/resize:fit:1200/1*vWvkkgG6uvgmJT8GkId98A.png' },
-  { id: 8, icon: CpuChipIcon, name: 'API Development', category: 'Development', type: 'Technical', desc: 'Writing secure server endpoints, handling request routing, data parsing, and high-load traffic profiles.', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=500&q=80' },
-  { id: 9, icon: ArrowRightIcon, name: 'API Integration', category: 'Development', type: 'Technical', desc: 'Seamlessly weaving third-party web services, payment systems, and tools straight into your ecosystem.', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&w=500&q=80' },
-  { id: 10, icon: MagnifyingGlassCircleIcon, name: 'API Testing', category: 'Development', type: 'Technical', desc: 'Validating payload data structures, integration stress, and running endpoint vulnerability audits.', image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=500&q=80' },
+// "See more / See less"
+const DETAILS_PREVIEW = 2;
+const STACK_PREVIEW = 6;
+const showAllDetails = ref(false);
+const showAllStack = ref(false);
 
-  // --- Design & UX ---
-  { id: 11, icon: PaintBrushIcon, name: 'Web Design', category: 'Design & UX', type: 'Creative', desc: 'Creating visual layouts and design guidelines that accurately reflect and communicate modern brand identities.', image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=500&q=80' },
-  { id: 12, icon: WindowIcon, name: 'UI/UX Design', category: 'Design & UX', type: 'Creative', desc: 'Prototyping dynamic user paths, high-fidelity wireframes, and intuitive user experiences.', image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=500&q=80' },
-  { id: 13, icon: PhotoIcon, name: 'Graphic Design', category: 'Design & UX', type: 'Creative', desc: 'Delivering vector layouts, marketing collateral, custom branding elements, and visual communication assets.', image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=500&q=80' },
+const shownDetails = computed(() =>
+  showAllDetails.value ? service.value.details : service.value.details.slice(0, DETAILS_PREVIEW)
+);
+const shownStack = computed(() =>
+  showAllStack.value ? service.value.stack : service.value.stack.slice(0, STACK_PREVIEW)
+);
 
-  // --- DevOps & System Infrastructure ---
-  { id: 14, icon: CloudArrowUpIcon, name: 'Cloud Deployment', category: 'DevOps & Sys', type: 'Technical', desc: 'Configuring safe web setups and provisioning clean host architectures on top clouds like AWS.', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=500&q=80' },
-  { id: 15, icon: CpuChipIcon, name: 'DevOps Engineering', category: 'DevOps & Sys', type: 'Technical', desc: 'Automating build releases via continuous delivery pipes and building isolated software runtime containers.', image: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=500&q=80' },
-  { id: 16, icon: ServerIcon, name: 'System Administration', category: 'DevOps & Sys', type: 'Technical', desc: 'Tuning operating setups, controlling internal networks, and orchestrating server ecosystem stability.', image: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=500&q=80' },
-  { id: 17, icon: MagnifyingGlassCircleIcon, name: 'System Testing', category: 'DevOps & Sys', type: 'Technical', desc: 'Executing comprehensive smoke, functional, performance, and sanity test sweeps on active environments.', image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=500&q=80' },
-  { id: 18, icon: CloudArrowUpIcon, name: 'System Rollout', category: 'DevOps & Sys', type: 'Technical', desc: 'Managing final live release transitions safely with low downtime and setup rollback safeguards.', image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=500&q=80' },
-
-  // --- Automation & Intelligence ---
-  { id: 19, icon: ChatBubbleBottomCenterTextIcon, name: 'Automation Services', category: 'Development', type: 'Technical', desc: 'Scripting logical web actions to strip away manual business operations and speed up processing loops.', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=500&q=80' },
-  { id: 20, icon: ChatBubbleLeftRightIcon, name: 'ChatBot Engineering', category: 'Development', type: 'Technical', desc: 'Programming algorithmic instant assistants across communication services for modern customer triage.', image: 'https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?auto=format&fit=crop&w=500&q=80' },
-
-  // --- Content & Writing ---
-  { id: 21, icon: DocumentTextIcon, name: 'Technical Writing', category: 'Content & Write', type: 'Creative', desc: 'Authoring clean engine architectures, system operation logs, and onboarding material for development teams.', image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=500&q=80' },
-  { id: 22, icon: VideoCameraIcon, name: 'Content Creation', category: 'Content & Write', type: 'Creative', desc: 'Designing structural content, interactive tech reviews, and strategic media campaigns across social web profiles.', image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=500&q=80' },
-  { id: 23, icon: VideoCameraIcon, name: 'YouTube Content', category: 'Content & Write', type: 'Creative', desc: 'Producing tutorials and sharing languages learning tips and daily used vocabularies, conversations & grammar + sentece structures.', image: 'https://www.fluentforfree.com/wp-content/uploads/2020/04/shutterstock_293731811-320x202.jpg' },
-  { id: 24, icon: VideoCameraIcon, name: 'Video Editing', category: 'Content & Write', type: 'Creative', desc: 'Splicing high-retention technical footage, motion callouts, audio tuning, and cleaning up presentation clips.', image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=500&q=80' },
-
-  // --- Business Services & Localization ---
-  { id: 25, icon: EnvelopeIcon, name: 'Email Marketing', category: 'Business Services', type: 'Consulting', desc: 'Drafting high-conversion campaign workflows and maximizing message delivery pipelines.', image: 'https://images.unsplash.com/photo-1557200134-90327ee9fafa?auto=format&fit=crop&w=500&q=80' },
-  { id: 26, icon: LanguageIcon, name: 'Translation Services', category: 'Business Services', type: 'Consulting', desc: 'Providing fluent semantic context bridges across regional variants, documents, and assets.', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=500&q=80' },
-  { id: 27, icon: LanguageIcon, name: 'Polyglot Localization', category: 'Business Services', type: 'Consulting', desc: 'Adapting full platform environments to fit localized user habits, text boundaries, and currency metrics.', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=500&q=80' },
-  { id: 28, icon: ChatBubbleLeftRightIcon, name: 'Multilingual Support', category: 'Business Services', type: 'Consulting', desc: 'Assisting operations or development teams seamlessly across multiple business languages.', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=80' },
-
-  // --- IT Support & Operations ---
-  { id: 29, icon: CpuChipIcon, name: 'IT Support', category: 'DevOps & Sys', type: 'Technical', desc: 'Providing technical troubleshooting, hardware/software diagnostics, environment configuration, and workspace system maintenance.', image: 'https://cheekymunkey.co.uk/wp-content/uploads/2017/12/itsupp.png' },
-
-  // --- Database Lifecycle & Engineering ---
-  { id: 30, icon: ServerIcon, name: 'Database Design', category: 'Development', type: 'Technical', desc: 'Architecting relational and non-relational database schemas, normalization structures, and secure data relationship blueprints.', image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=500&q=80' },
-  { id: 31, icon: CommandLineIcon, name: 'Database Management', category: 'DevOps & Sys', type: 'Technical', desc: 'Optimizing query execution plans, setting up indexing strategies, managing data backups, and maintaining engine health.', image: 'https://assets.cioinsight.com/uploads/2022/05/Database-Management-Systems-scaled.jpeg' },
-  { id: 32, icon: MagnifyingGlassCircleIcon, name: 'Database Testing', category: 'DevOps & Sys', type: 'Technical', desc: 'Validating data integrity constraints, stress testing transactional throughput, and verifying ACID compliance or schema migrations.', image: 'https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=500&q=80' },
-
-  // --- IT Management & Strategy ---
-  { id: 33, icon: CpuChipIcon, name: 'MIS Management', category: 'Business Services', type: 'Consulting', desc: 'Overseeing corporate information system infrastructures, optimizing internal data workflows, and aligning technology assets with business goals.', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=500&q=80' },
-  { id: 34, icon: DocumentTextIcon, name: 'Project Management', category: 'Business Services', type: 'Consulting', desc: 'Leading agile development cycles, tracking sprint delivery metrics, managing technical scopes, and ensuring on-time project rollouts.', image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=500&q=80' }
-]);
-
-const currentService = computed(() => {
-  const id = route.params.id;
-  if (!id) return null;
-  return services.value.find(s => s.id === parseInt(id)) || null;
+// opening another service from the "More in …" list starts collapsed
+watch(() => route.params.id, () => {
+  showAllDetails.value = false;
+  showAllStack.value = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 </script>
 
 <style scoped>
-.backdrop-blur-2xl {
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
+.crumb {
+  transition: color 0.2s ease;
+}
+
+.crumb:hover {
+  color: var(--accent-text);
+}
+
+/* ── Header ── */
+.icon-tile {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1rem;
+  color: var(--icon-accent);
+  border: 1px solid var(--accent-border);
+  background: linear-gradient(to right, var(--icon-bg), var(--icon-bg-2));
+  box-shadow: 0 10px 24px -14px var(--accent-shadow);
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+/* ── Status badge ── */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+.st-available {
+  color: #34d399;
+  background: color-mix(in srgb, #34d399 14%, transparent);
+  border-color: color-mix(in srgb, #34d399 35%, transparent);
+}
+
+.st-learning {
+  color: #fbbf24;
+  background: color-mix(in srgb, #fbbf24 14%, transparent);
+  border-color: color-mix(in srgb, #fbbf24 35%, transparent);
+}
+
+.st-planned {
+  color: #94a3b8;
+  background: color-mix(in srgb, #94a3b8 14%, transparent);
+  border-color: color-mix(in srgb, #94a3b8 35%, transparent);
+}
+
+/* the dots in the related list use the same colors, without the pill */
+.status-dot.st-available,
+.status-dot.st-learning,
+.status-dot.st-planned {
+  background: currentColor;
+  border: 0;
+}
+
+/* ── Panels ── */
+.panel {
+  padding: 1.25rem 1.5rem;
+  border-radius: 1.25rem;
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+}
+
+.panel-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--surface-text-sub);
+}
+
+.tick {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-top: 0.1rem;
+  border-radius: 9999px;
+  color: var(--accent-text);
+  background: var(--accent-bg);
+}
+
+/* ── See more / See less ── */
+.more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-text);
+}
+
+.more-btn:hover {
+  text-decoration: underline;
+}
+
+/* ── Chips ── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--surface-text);
+  border: 1px solid var(--accent-border);
+  background: color-mix(in srgb, var(--accent-from) 7%, transparent);
+}
+
+.chip-btn {
+  cursor: pointer;
+  color: var(--accent-text);
+  border-style: dashed;
+  transition: background-color 0.2s ease;
+}
+
+.chip-btn:hover {
+  background: var(--accent-bg);
+}
+
+/* ── CTA ── */
+.cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--cta-gradient);
+  box-shadow: 0 10px 30px -12px var(--accent-shadow);
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.cta-btn:hover {
+  filter: brightness(1.12);
+  transform: translateY(-2px);
+}
+
+/* ── Related list ── */
+.related {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.5rem;
+  border-radius: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--surface-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.related:hover {
+  background: var(--accent-bg);
+  color: var(--accent-text);
+}
+
+.related .st-available { color: #34d399; background: currentColor; }
+.related .st-learning { color: #fbbf24; background: currentColor; }
+.related .st-planned { color: #94a3b8; background: currentColor; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-btn,
+  .crumb,
+  .related,
+  .chip-btn {
+    transition: none;
+  }
+
+  .cta-btn:hover {
+    transform: none;
+  }
 }
 </style>

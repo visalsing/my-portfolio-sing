@@ -61,23 +61,23 @@ html.theme-dark {
   --surface-bg: #000000;
 
   /* Specific to Hero.vue */
-  --surface-bg-2: #080c14;
-  --surface-bg-3: #111827; /* bg-gray-800 */
+  --surface-bg-2: #0a0a0a;
+  --surface-bg-3: #171717; /* bg-gray-800 */
   /* --surface-bg-3: #121212; */
-  --surface-card: rgba(31, 41, 55, 0.5); /* bg-grey-900/50 */
+  --surface-card: rgba(38, 38, 38, 0.5); /* bg-grey-900/50 */
   --surface-text: #ffffff;
-  --surface-text-sub: #9ca3af;
-  --surface-text-dim: #6b7280;
+  --surface-text-sub: #a3a3a3;
+  --surface-text-dim: #737373;
   --surface-border: rgba(255, 255, 255, 0.06);
-  --navbar-bg: #111827;
+  --navbar-bg: #171717;
 
   /* Specific to Experiences.vue */
   /* All themes */
-  --surface-input-bg: #374151; /* dark:  gray-700 — progress bar track  */
+  --surface-input-bg: #404040; /* dark:  gray-700 — progress bar track  */
   /* --text-gray: #f3f4f6; */
-  --card-bg-from: rgba(31, 41, 55, 0.5);
+  --card-bg-from: rgba(38, 38, 38, 0.5);
   /* --card-bg-to: rgba(17, 24, 39, 0.3); */
-  --bg-surface-percent: #374151; /* gray-700 */
+  --bg-surface-percent: #404040; /* gray-700 */
 
   /* Specific to Services.vue */
   /* --accent-glow-box: rgba(255, 255, 255, 0.06); */
@@ -88,7 +88,7 @@ html.theme-dark {
   /* Specific to Footer.vue */
   --footer-bg-color: rgba(var(--footer-rgb), 0.8);
   --surface-text: #ffffff;
-  --bg-color: #0f172a;
+  --bg-color: #0a0a0a;
   
 
   /* NEW VARIABLES FOUND IN DETAILS.VUE */
@@ -98,7 +98,7 @@ html.theme-dark {
     255,
     0.03
   ); /* Fallback block style background */
-  --bg-surface-percent-bar: #374151; /* gray-900 */
+  --bg-surface-percent-bar: #404040; /* gray-900 */
 
   /* Specific to Details / NavBar.vue */
   --nav-btn-border: rgba(255, 255, 255, 0.1);
@@ -107,7 +107,7 @@ html.theme-dark {
   --accent-to-pill-txt-dynamic: var(--accent-to-pill-txt);
 
   /* Specific to SoftSkills.vue */
-  --accent-node-bg: #0a0f1d;
+  --accent-node-bg: #0a0a0a;
 
   /* Specific to NavBar.vue */
 
@@ -116,7 +116,7 @@ html.theme-dark {
   .accent-card {
     background: linear-gradient(
       to bottom right,
-      rgba(31, 41, 55, 0.5),
+      rgba(38, 38, 38, 0.5),
       var(--section-grad-to)
     );
     border: 1px solid var(--section-border); /* see in style.css */
@@ -132,26 +132,26 @@ html.theme-light {
   --scrollbar-thumb-hover: #a8a8a8;
 
   /* Specific to App.vue */
-  --surface-bg: #f8fafc;
+  --surface-bg: #fafafa;
 
   /* Specific to Hero.vue */
-  --surface-bg-2: #f1f5f9;
-  /* --surface-bg-3: #e2e8f0; */
+  --surface-bg-2: #f5f5f5;
+  /* --surface-bg-3: #e5e5e5; */
   --surface-bg-3: #ffffff;
   --surface-card: rgba(255, 255, 255, 0.8);
-  --surface-text: #0f172a;
-  --surface-text-sub: #475569;
-  --surface-text-dim: #94a3b8;
+  --surface-text: #171717;
+  --surface-text-sub: #525252;
+  --surface-text-dim: #a3a3a3;
   --surface-border: rgba(0, 0, 0, 0.08);
   --navbar-bg: #ffffff;
 
   /* Specific to Experiences.vue */
   /* Light */
-  --surface-input-bg: #e2e8f0; /* light: slate-200 */
+  --surface-input-bg: #e5e5e5; /* light: slate-200 */
   /* --text-gray: #111827; */
   --card-bg-from: rgba(255, 255, 255, 0.75);
   /* --card-bg-to: rgba(255, 255, 255, 0.45); */
-  --bg-surface-percent: #d1d5db; /* gray-300 */
+  --bg-surface-percent: #d4d4d4; /* gray-300 */
 
   /* Specific to Services.vue */
   /* --accent-glow: rgba(0, 0, 0, 0.04); */
@@ -162,8 +162,8 @@ html.theme-light {
 
   /* Specific to Footer.vue */
   --footer-bg-color: rgba(var(--footer-rgb), 0.05); 
-  --surface-text: #1f2937;
-  --bg-color: #f8fafc;
+  --surface-text: #171717;
+  --bg-color: #fafafa;
 
   /* NEW VARIABLES FOUND IN DETAILS.VUE */
   --card-bg-fallback: rgba(
@@ -172,7 +172,7 @@ html.theme-light {
     0,
     0.02
   ); /* Soft light mode surface block background */
-  --bg-surface-percent-bar: #d1d5db; /* gray-300 */
+  --bg-surface-percent-bar: #d4d4d4; /* gray-300 */
 
   /* Specific to Details / NavBar.vue */
   --nav-btn-border: rgba(0, 0, 0, 0.1);
@@ -181,7 +181,7 @@ html.theme-light {
   --accent-to-pill-txt-dynamic: var(--accent-to-pill-txt-2);
 
     /* Specific to SoftSkills.vue */
-  --accent-node-bg: #e9ebee;
+  --accent-node-bg: #eeeeee;
 
   /* Specific to Navbar.vue */
 
@@ -189,7 +189,7 @@ html.theme-light {
   .accent-card {
     background: linear-gradient(
       to bottom right,
-      rgba(213, 225, 240, 0.5),
+      rgba(229, 229, 229, 0.5),
       var(--section-grad-to)
     );
     border: 1px solid var(--section-border); /* see in style.css */
@@ -354,34 +354,34 @@ html.theme-abyss {
     --surface-bg: #000000;
 
     /* Specific to Hero.vue */
-    --surface-bg-2: #080c14;
-    --surface-bg-3: #111827;
-    --surface-card: rgba(31, 41, 55, 0.5);
+    --surface-bg-2: #0a0a0a;
+    --surface-bg-3: #171717;
+    --surface-card: rgba(38, 38, 38, 0.5);
     --surface-text: #ffffff;
-    --surface-text-sub: #9ca3af;
-    --surface-text-dim: #6b7280;
+    --surface-text-sub: #a3a3a3;
+    --surface-text-dim: #737373;
     --surface-border: rgba(255, 255, 255, 0.06); /* border-gray-700 */
-    --navbar-bg: #111827;
+    --navbar-bg: #171717;
 
     /* Specific to Navbar.vue */
 
     /* Specific to Experiences.vue */
     /* All themes */
-    --surface-input-bg: #374151; /* dark:  gray-700 — progress bar track  */
+    --surface-input-bg: #404040; /* dark:  gray-700 — progress bar track  */
   }
 }
 @media (prefers-color-scheme: light) {
   html.theme-device {
     /* Specific to App.vue */
-    --surface-bg: #f8fafc;
+    --surface-bg: #fafafa;
 
     /* Specific to Hero.vue */
-    --surface-bg-2: #f1f5f9;
-    --surface-bg-3: #e2e8f0;
+    --surface-bg-2: #f5f5f5;
+    --surface-bg-3: #ffffff;
     --surface-card: rgba(255, 255, 255, 0.8);
-    --surface-text: #0f172a;
-    --surface-text-sub: #475569;
-    --surface-text-dim: #94a3b8;
+    --surface-text: #171717;
+    --surface-text-sub: #525252;
+    --surface-text-dim: #a3a3a3;
     --surface-border: rgba(0, 0, 0, 0.08);
     --navbar-bg: #ffffff;
 
@@ -389,6 +389,6 @@ html.theme-abyss {
 
     /* Specific to Experiences.vue */
     /* Light */
-    --surface-input-bg: #e2e8f0; /* light: slate-200 */
+    --surface-input-bg: #e5e5e5; /* light: slate-200 */
   }
 }

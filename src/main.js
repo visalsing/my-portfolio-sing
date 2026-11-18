@@ -28,6 +28,7 @@ import router from './router'
 
 import './style.css'
 import './themes.css'
+import './colorAccents.css'
 
 const app = createApp(App)
 

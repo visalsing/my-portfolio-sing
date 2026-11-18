@@ -314,24 +314,39 @@ export default defineComponent({
                 <LoadingSpinner />
             </div>
 
-            <div v-else>
+            <div v-else class="relative">
+                <!-- Site-wide animated background (Settings → Hero Background) -->
+                <BackgroundCanvas />
+
                 <!-- HOME PAGE -->
-                <div v-if="$route.path === '/'" class="min-h-screen bg-linear-to-b"
-                    :style="{ backgroundImage: 'var(--surface-bg)' }">
-                    <Navbar />
-                    <Hero />
-                    <About />
-                    <ExperienceSkills />
-                    <Services />
-                    <Projects />
-                    <Testimonials />
-                    <Contact />
-                    <Footer />
-                    <BackToTop />
+                <div v-if="$route.path === '/'" class="relative min-h-screen">
+                    <!-- Page gradient sits UNDER the canvas -->
+                    <div class="absolute inset-0 bg-linear-to-b" :style="{ backgroundImage: 'var(--surface-bg)' }"
+                        aria-hidden="true"></div>
+
+                    <!-- Content sits ABOVE the canvas -->
+                    <div class="relative z-10">
+                        <Navbar />
+                        <Hero />
+                        <About />
+                        <ExperienceSkills />
+                        <Services />
+                        <Projects />
+                        <Testimonials />
+                        <Contact />
+                        <Footer />
+                        <BackToTop />
+                    </div>
                 </div>
 
                 <!-- ALL OTHER PAGES (Settings, Details, etc.) -->
-                <router-view v-else />
+                <div v-else class="relative min-h-screen">
+                    <div class="absolute inset-0 bg-linear-to-b" :style="{ backgroundImage: 'var(--surface-bg)' }"
+                        aria-hidden="true"></div>
+                    <div class="relative z-10">
+                        <router-view />
+                    </div>
+                </div>
             </div>
         </template>
 
@@ -356,6 +371,7 @@ import LoadingSpinner from './components/LoadingSpinner.vue';
 
 import { ref, computed, nextTick, onMounted, onUnmounted, defineComponent } from 'vue';
 import { currentViewport, setViewport, viewportWidths } from './stores/viewport.js';
+import BackgroundCanvas from './components/BackgroundCanvas.vue';
 
 
 import { useHead } from '@vueuse/head'
@@ -402,7 +418,7 @@ export default defineComponent({
     components: {
         Navbar, Hero, About, ExperienceSkills,
         Services, Projects, Testimonials,
-        Contact, Footer, BackToTop, LoadingSpinner,
+        Contact, Footer, BackToTop, LoadingSpinner, BackgroundCanvas,
     },
 
     setup() {

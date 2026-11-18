@@ -12,16 +12,19 @@ export default {
   lets_talk: "Let's Talk",
 
   // Hero
-  hi_im: "Hi, I'm",
+  hello_im: "Hello, I'm",
   visalsing: "So Visalsing",
   hero_long_text:
-    "I\'m Visalsing, and a software developer. My skills are to create and develop website, front-end, back-end, responsive design, email marketing and more. Here is my CV below! You can click on the button to download my CV.",
+    "I'm a Software Developer passionate about building web applications and digital solutions. My background combines academic knowledge in computer science and information technology with hands-on experience in frontend and backend development, responsive web design, system rollouts, and data support. I enjoy learning new technologies, solving problems, and turning ideas into practical solutions. Here is my CV below! You can click on the button to download my CV.",
   contact_me: "Contact Me",
   download_cv: "Download CV",
   projects: "Projects",
   years: "Years",
+  clients: "Clients",
+  share: "Share",
   amount3: "3",
   amount2: "2",
+  amount1: "1",
 
   // About Me
   about_: "About",
