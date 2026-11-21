@@ -32,7 +32,7 @@
       </nav>
 
       <!-- ── Header ── -->
-      <div class="text-center mb-16" data-aos="fade-up">
+      <div class="text-center mb-12" data-aos="fade-up">
         <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: var(--surface-text);">
           My
           <span class="text-transparent bg-clip-text" :style="{ backgroundImage: 'var(--logo-gradient)' }">Tech
@@ -41,16 +41,30 @@
         <p class="text-lg max-w-2xl mx-auto" style="color: var(--surface-text-sub);">
           The tools and technologies I use to bring ideas to life.
         </p>
+
+        <!-- Status summary -->
+        <div class="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm"
+          style="color: var(--surface-text-sub);">
+          <span>
+            <strong style="color: var(--surface-text);">{{ techStack.length }}</strong> technologies
+          </span>
+          <span v-for="s in activeStatuses" :key="s" class="inline-flex items-center gap-2">
+            <span class="status-dot" :style="{ background: STATUS_META[s].color }"></span>
+            <span><strong style="color: var(--surface-text);">{{ statusCounts[s] }}</strong>
+              {{ STATUS_META[s].label.toLowerCase() }}</span>
+          </span>
+        </div>
       </div>
 
       <!-- ── Search & Filter Controls ── -->
-      <div class="mb-12 space-y-6" data-aos="fade-up">
+      <div class="mb-8" data-aos="fade-up">
         <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
 
           <!-- Search -->
           <div class="relative w-full md:w-96">
-            <input v-model="searchQuery" type="text" :placeholder="'Search technology...'"
-              class="search-input w-full rounded-xl px-4 py-3 focus:outline-none transition-all" />
+            <MagnifyingGlassIcon class="search-icon w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2" />
+            <input v-model="searchQuery" type="text" placeholder="Search technology..."
+              class="search-input w-full rounded-xl pl-11 pr-4 py-3 focus:outline-none transition-all" />
           </div>
 
           <!-- Buttons -->
@@ -68,38 +82,75 @@
           </div>
         </div>
 
-        <!-- Filter Panel -->
-        <transition name="fade">
-          <div v-if="showFilters" class="filter-panel grid grid-cols-1 md:grid-cols-2 gap-8 p-6 rounded-2xl">
+        <!-- Filter Panel (smooth height collapse) -->
+        <div class="filter-collapse" :class="{ 'is-open': showFilters }" :aria-hidden="!showFilters">
+          <div class="filter-collapse-inner">
+          <div class="filter-panel mt-6 p-6 rounded-2xl space-y-8">
+
+            <!-- Category -->
             <div>
               <label class="block text-xs uppercase mb-3 font-bold tracking-widest"
                 style="color: var(--surface-text-sub);">Filter by Category</label>
               <div class="flex flex-wrap gap-2">
                 <button v-for="cat in categories" :key="cat" @click="selectedCategory = cat"
                   class="filter-chip px-3 py-1.5 rounded-md text-xs transition-all"
-                  :class="selectedCategory === cat ? 'filter-chip-active' : 'filter-chip-idle'">{{ cat }}</button>
+                  :class="selectedCategory === cat ? 'filter-chip-active' : 'filter-chip-idle'">
+                  {{ cat }}<span class="chip-count">{{ categoryCounts[cat] }}</span>
+                </button>
               </div>
             </div>
-            <div>
-              <label class="block text-xs uppercase mb-3 font-bold tracking-widest"
-                style="color: var(--surface-text-sub);">Filter by Type</label>
-              <div class="flex flex-wrap gap-2">
-                <button v-for="tp in types" :key="tp" @click="selectedType = tp"
-                  class="filter-chip px-3 py-1.5 rounded-md text-xs transition-all"
-                  :class="selectedType === tp ? 'filter-chip-active' : 'filter-chip-idle'">{{ tp }}</button>
+
+            <!-- Type + Status -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <label class="block text-xs uppercase mb-3 font-bold tracking-widest"
+                  style="color: var(--surface-text-sub);">Filter by Type</label>
+                <div class="flex flex-wrap gap-2">
+                  <button v-for="tp in types" :key="tp" @click="selectedType = tp"
+                    class="filter-chip px-3 py-1.5 rounded-md text-xs transition-all"
+                    :class="selectedType === tp ? 'filter-chip-active' : 'filter-chip-idle'">
+                    {{ tp }}<span class="chip-count">{{ typeCounts[tp] }}</span>
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs uppercase mb-3 font-bold tracking-widest"
+                  style="color: var(--surface-text-sub);">Filter by Status</label>
+                <div class="flex flex-wrap gap-2">
+                  <button @click="selectedStatus = 'All'"
+                    class="filter-chip px-3 py-1.5 rounded-md text-xs transition-all"
+                    :class="selectedStatus === 'All' ? 'filter-chip-active' : 'filter-chip-idle'">
+                    All<span class="chip-count">{{ techStack.length }}</span>
+                  </button>
+                  <button v-for="s in activeStatuses" :key="s" @click="selectedStatus = s"
+                    class="filter-chip inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs transition-all"
+                    :class="selectedStatus === s ? 'filter-chip-active' : 'filter-chip-idle'">
+                    <span class="status-dot" :style="{ background: STATUS_META[s].color }"></span>
+                    {{ STATUS_META[s].label }}<span class="chip-count">{{ statusCounts[s] }}</span>
+                  </button>
+                </div>
               </div>
             </div>
+
           </div>
-        </transition>
+          </div>
+        </div>
+
+        <!-- Result count -->
+        <p class="text-center text-xs mt-6" style="color: var(--surface-text-dim);">
+          Showing {{ filteredStack.length }} of {{ techStack.length }} technologies
+        </p>
       </div>
 
-      <!-- ── Grouped View ── -->
-      <div v-if="isGrouped" class="space-y-16">
-        <div v-for="(items, category) in groupedStack" :key="category" data-aos="fade-up">
+      <!-- ── Grouped / Flat views (cross-fade between them) ── -->
+      <Transition name="view" mode="out-in">
+
+      <!-- Grouped View -->
+      <div v-if="isGrouped" key="grouped">
+        <TransitionGroup name="cat" tag="div" class="space-y-16" appear>
+        <div v-for="(items, category) in groupedStack" :key="category">
           <div class="flex items-center gap-4 mb-8">
-            <!-- <h3 class="text-xl font-bold whitespace-nowrap" style="color: var(--surface-text);">
-              {{ category }}
-            </h3> -->
             <h3 class="text-xl font-bold whitespace-nowrap bg-clip-text text-transparent"
               style="background-image: var(--logo-gradient); -webkit-background-clip: text;">
               {{ category }}
@@ -112,17 +163,25 @@
      ">
             </div>
           </div>
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-            <TechCard v-for="tech in items" :key="tech.id" :tech="tech" @select="openModal" />
-          </div>
+          <TransitionGroup name="tech" tag="div" appear
+            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+            <TechCard v-for="(tech, index) in items" :key="tech.id" :tech="tech"
+              :style="{ '--i': index }" @select="openModal" />
+          </TransitionGroup>
         </div>
+        </TransitionGroup>
       </div>
 
-      <!-- ── Flat Grid View ── -->
-      <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-        <TechCard v-for="(tech, index) in filteredStack" :key="tech.id" :tech="tech" data-aos="fade-up"
-          :data-aos-delay="index * 50" @select="openModal" />
+      <!-- Flat Grid View -->
+      <div v-else key="flat">
+        <TransitionGroup name="tech" tag="div" appear
+          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+          <TechCard v-for="(tech, index) in filteredStack" :key="tech.id" :tech="tech"
+            :style="{ '--i': index }" @select="openModal" />
+        </TransitionGroup>
       </div>
+
+      </Transition>
 
       <!-- ── Empty State ── -->
       <div v-if="filteredStack.length === 0" class="text-center py-20">
@@ -159,7 +218,8 @@ import { ref, computed } from 'vue';
 import TechCard from '../../stores/techcard.js';   // adjust path if needed
 import TechModal from './TechModal.vue';             // same folder as TechStack.vue
 import { t } from './../../stores/languages.js';
-import { ArrowLeftCircleIcon, HomeIcon } from '@heroicons/vue/24/outline';
+import { STATUS_META, STATUS_ORDER, getTechStatus } from '../../stores/techstatus.js';
+import { ArrowLeftCircleIcon, HomeIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline';
 
 // ── SVG logo imports ─────────────────────────────────────────────────────────
 import htmlLogo from '../../assets/techstack/html.svg';
@@ -286,6 +346,8 @@ import protonvpnLogo from '../../assets/techstack/protonvpn.svg';
 import protonpassLogo from '../../assets/techstack/protonpass.svg';
 import protondriveLogo from '../../assets/techstack/protondrive.svg';
 import protonmailLogo from '../../assets/techstack/protonmail.svg';
+import powerbiLogo from '../../assets/techstack/powerbi.svg';
+import tableauLogo from '../../assets/techstack/tableau.svg';
 
 // ── Modal state ──────────────────────────────────────────────────────────────
 const selectedTech = ref(null);
@@ -296,11 +358,14 @@ const closeModal = () => { selectedTech.value = null; };
 const searchQuery = ref('');
 const selectedCategory = ref('All');
 const selectedType = ref('All');
+const selectedStatus = ref('All');
 const isGrouped = ref(true);
-const showFilters = ref(false);
+const showFilters = ref(true);
 
 // ── Tech data ────────────────────────────────────────────────────────────────
-const techStack = ref([
+// Status is NOT set per row. It comes from getTechStatus() in stores/techstatus.js:
+// only the AVAILABLE list is green, special cases are in OVERRIDES, the rest is red.
+const rawStack = [
   // Frontend: Languages
   { id: 1, name: 'HTML5', category: 'Frontend', type: 'Language', logo: htmlLogo },
   { id: 2, name: 'CSS3', category: 'Frontend', type: 'Language', logo: cssLogo },
@@ -327,8 +392,6 @@ const techStack = ref([
   { id: 20, name: 'Java', category: 'Backend', type: 'Language', logo: javaLogo },
   { id: 21, name: 'C#', category: 'Backend', type: 'Language', logo: csharpLogo },
   { id: 22, name: 'Python', category: 'Backend', type: 'Language', logo: pythonLogo },
-  { id: 23, name: 'C', category: 'Backend', type: 'Language', logo: cLogo },
-  { id: 24, name: 'C++', category: 'Backend', type: 'Language', logo: cplusplusLogo },
   { id: 120, name: 'FastAPI', category: 'Backend', type: 'Standard', logo: fastapiLogo },
   // Backend: Frameworks & Runtimes
   { id: 25, name: 'Laravel', category: 'Backend', type: 'Framework', logo: laravelLogo },
@@ -341,6 +404,9 @@ const techStack = ref([
   { id: 32, name: 'Django', category: 'Backend', type: 'Framework', logo: djangoLogo },
   { id: 110, name: 'Fastify', category: 'Backend', type: 'Framework', logo: fastifyLogo },
   { id: 118, name: 'Kafka', category: 'Backend', type: 'Distributed Event Streaming Platform', logo: kafkaLogo },
+  // Programming
+  { id: 23, name: 'C', category: 'Programming', type: 'Language', logo: cLogo },
+  { id: 24, name: 'C++', category: 'Programming', type: 'Language', logo: cplusplusLogo },
   // Mobile
   { id: 33, name: 'Flutter', category: 'Mobile', type: 'Framework', logo: flutterLogo },
   { id: 34, name: 'Dart', category: 'Mobile', type: 'Language', logo: dartLogo },
@@ -352,6 +418,9 @@ const techStack = ref([
   { id: 38, name: 'SQLite', category: 'Database', type: 'Relational', logo: sqliteLogo },
   { id: 39, name: 'Neon DB', category: 'Database', type: 'Serverless', logo: neondbLogo },
   { id: 40, name: 'Prisma', category: 'Database', type: 'ORM', logo: prismaLogo },
+  // Data Analytics
+  { id: 126, name: 'Power BI', category: 'Data Analytics', type: 'BI Tool', logo: powerbiLogo },
+  { id: 127, name: 'Tableau', category: 'Data Analytics', type: 'BI Tool', logo: tableauLogo },
   // Data Interchange
   { id: 109, name: 'JSON', category: 'Data Interchange', type: 'Data Format', logo: jsonLogo },
   // API
@@ -389,14 +458,14 @@ const techStack = ref([
   { id: 64, name: 'Ubuntu', category: 'DevOps', type: 'OS', logo: ubuntuLogo },
   // Dev Tools
   { id: 65, name: 'VS Code', category: 'Dev Tools', type: 'Editor', logo: vscodeLogo },
-  { id: 65, name: 'Visual Studio', category: 'Dev Tools', type: 'Editor', logo: vstudioLogo },
+  { id: 125, name: 'Visual Studio', category: 'Dev Tools', type: 'Editor', logo: vstudioLogo }, // was a duplicate id 65
   { id: 66, name: 'WAMP', category: 'Dev Tools', type: 'Server', logo: wampLogo },
   { id: 67, name: 'XAMPP', category: 'Dev Tools', type: 'Server', logo: xamppLogo },
   { id: 68, name: 'Laragon', category: 'Dev Tools', type: 'Server', logo: laragonLogo },
   { id: 69, name: 'Ngrok', category: 'Dev Tools', type: 'Tunnel', logo: ngrokLogo },
   { id: 70, name: 'Navicat', category: 'Dev Tools', type: 'DB Client', logo: navicatLogo },
   { id: 71, name: 'phpMyAdmin', category: 'Dev Tools', type: 'DB Client', logo: phpmyadminLogo },
-  { id: 105, name: 'npm', category: 'Dev Tools', type: 'Package Managert', logo: npmLogo },
+  { id: 105, name: 'npm', category: 'Dev Tools', type: 'Package Manager', logo: npmLogo },
   { id: 106, name: 'npx', category: 'Dev Tools', type: 'Package Executor', logo: npxLogo },
   { id: 107, name: 'pnpm', category: 'Dev Tools', type: 'Package Manager', logo: pnpmLogo },
   { id: 108, name: 'Turborepo', category: 'Dev Tools', type: 'Build System', logo: turborepoLogo },
@@ -441,18 +510,39 @@ const techStack = ref([
   { id: 97, name: 'Thai', category: 'Languages', type: 'Learning', logo: thaiLogo },
   { id: 98, name: 'Lao', category: 'Languages', type: 'Learning', logo: laoLogo },
   { id: 99, name: 'Burmese', category: 'Languages', type: 'Learning', logo: burmeseLogo },
-]);
+];
 
-// ── Computed ─────────────────────────────────────────────────────────────────
+// Attach status to every item (default: available)
+const techStack = ref(
+  rawStack.map(item => ({ ...item, status: getTechStatus(item.name) }))
+);
+
+// ── Computed: options ────────────────────────────────────────────────────────
 const categories = computed(() => ['All', ...new Set(techStack.value.map(t => t.category))]);
 const types = computed(() => ['All', ...new Set(techStack.value.map(t => t.type))]);
 
+// ── Computed: counts (totals, like the Services page) ────────────────────────
+const countBy = (key) =>
+  techStack.value.reduce((acc, item) => {
+    acc[item[key]] = (acc[item[key]] || 0) + 1;
+    return acc;
+  }, {});
+
+const categoryCounts = computed(() => ({ All: techStack.value.length, ...countBy('category') }));
+const typeCounts = computed(() => ({ All: techStack.value.length, ...countBy('type') }));
+const statusCounts = computed(() => countBy('status'));
+
+// Only show statuses that actually have items
+const activeStatuses = computed(() => STATUS_ORDER.filter(s => statusCounts.value[s] > 0));
+
+// ── Computed: filtering ──────────────────────────────────────────────────────
 const filteredStack = computed(() =>
   techStack.value.filter(tech => {
     const matchesSearch = tech.name.toLowerCase().includes(searchQuery.value.toLowerCase());
     const matchesCategory = selectedCategory.value === 'All' || tech.category === selectedCategory.value;
     const matchesType = selectedType.value === 'All' || tech.type === selectedType.value;
-    return matchesSearch && matchesCategory && matchesType;
+    const matchesStatus = selectedStatus.value === 'All' || tech.status === selectedStatus.value;
+    return matchesSearch && matchesCategory && matchesType && matchesStatus;
   })
 );
 
@@ -468,24 +558,101 @@ const resetFilters = () => {
   searchQuery.value = '';
   selectedCategory.value = 'All';
   selectedType.value = 'All';
+  selectedStatus.value = 'All';
   isGrouped.value = false;
 };
 </script>
 
 <style scoped>
-/* ── Fade transition (filter panel) ── */
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.3s ease-out;
+/* ── Filter panel: smooth height collapse ── */
+.filter-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows 0.4s ease, opacity 0.3s ease, visibility 0s linear 0.4s;
 }
 
-.fade-enter-from,
-.fade-leave-to {
+.filter-collapse.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition: grid-template-rows 0.4s ease, opacity 0.3s ease 0.05s, visibility 0s;
+}
+
+.filter-collapse-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── Cross-fade between grouped / flat view ── */
+.view-enter-active,
+.view-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.view-enter-from,
+.view-leave-to {
   opacity: 0;
-  transform: translateY(-10px);
+}
+
+/* ── Category sections (grouped view) ── */
+.cat-enter-active {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.cat-enter-from {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.cat-move {
+  transition: transform 0.35s ease;
+}
+
+/* ── Tech cards: short capped stagger + smooth reflow when filtering ── */
+.tech-enter-active {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition-delay: calc(min(var(--i, 0), 14) * 30ms);
+}
+
+.tech-enter-from {
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+}
+
+.tech-move {
+  transition: transform 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-collapse,
+  .filter-collapse.is-open,
+  .view-enter-active,
+  .view-leave-active,
+  .cat-enter-active,
+  .cat-move,
+  .tech-enter-active,
+  .tech-move {
+    transition: none !important;
+  }
+}
+
+/* ── Status dot ── */
+.status-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  flex-shrink: 0;
 }
 
 /* ── Search input ── */
+.search-icon {
+  color: var(--surface-text-dim);
+  pointer-events: none;
+}
+
 .search-input {
   background: var(--surface-card);
   border: 1px solid var(--surface-border);
@@ -541,6 +708,16 @@ const resetFilters = () => {
   background: var(--accent-mid);
   color: #fff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.chip-count {
+  margin-left: 0.4rem;
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+.filter-chip-active .chip-count {
+  opacity: 0.85;
 }
 
 /* ── Breadcrumb hover: text gradient ── */

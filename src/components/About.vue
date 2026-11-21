@@ -11,7 +11,8 @@
 
         <!-- ───────── LEFT: text + other elements ───────── -->
         <div class="text-center lg:text-left" data-aos="fade-right">
-          <h2 class="font-bold text-4xl md:text-5xl lg:text-6xl leading-loose" :style="{ color: 'var(--surface-text)' }">
+          <h2 class="font-bold text-4xl md:text-5xl lg:text-6xl leading-loose"
+            :style="{ color: 'var(--surface-text)' }">
             {{ t('about_') }}<span class="inline-block py-2 text-transparent bg-clip-text"
               :style="{ backgroundImage: 'var(--logo-gradient)' }">{{ t('_me') }}</span>
           </h2>
@@ -21,8 +22,8 @@
             Full-Stack Developer &amp; UI/UX Designer
           </p>
 
-          <p class="mt-6 text-lg leading-relaxed" :style="{ color: 'var(--surface-text-sub)' }"
-            data-aos="fade-right" data-aos-delay="200">
+          <p class="mt-6 text-lg leading-relaxed" :style="{ color: 'var(--surface-text-sub)' }" data-aos="fade-right"
+            data-aos-delay="200">
             {{ t('about_me_long_text') }}
           </p>
 
@@ -62,10 +63,10 @@
 
         <!-- ───────── RIGHT: images + slide pagination ───────── -->
         <div class="flex justify-center lg:justify-end" data-aos="fade-left">
-          <div class="carousel relative w-full max-w-sm sm:max-w-md" :class="{ 'is-paused': isPaused }"
-            role="region" aria-roledescription="carousel" aria-label="About me photos" tabindex="0"
-            @mouseenter="hovered = true" @mouseleave="hovered = false" @focusin="hovered = true"
-            @focusout="hovered = false" @keydown.left.prevent="prev" @keydown.right.prevent="next">
+          <div class="carousel relative w-full max-w-sm sm:max-w-md" :class="{ 'is-paused': isPaused }" role="region"
+            aria-roledescription="carousel" aria-label="About me photos" tabindex="0" @mouseenter="hovered = true"
+            @mouseleave="hovered = false" @focusin="hovered = true" @focusout="hovered = false"
+            @keydown.left.prevent="prev" @keydown.right.prevent="next">
 
             <!-- Experience badge -->
             <div class="exp-badge absolute -top-4 -left-2 sm:-left-4 z-40 rounded-2xl px-4 py-2 shadow-xl border">
@@ -113,8 +114,8 @@
 
               <div class="flex flex-1 items-center justify-center gap-1.5" role="tablist" aria-label="Choose slide">
                 <button v-for="(image, i) in slides" :key="image.id" type="button" class="dot" role="tab"
-                  :class="{ 'is-active': i === active }" :aria-selected="i === active"
-                  :aria-label="`Show ${image.alt}`" @click="go(i)">
+                  :class="{ 'is-active': i === active }" :aria-selected="i === active" :aria-label="`Show ${image.alt}`"
+                  @click="go(i)">
                   <span v-if="i === active" :key="active" class="dot-fill" @animationend="next"></span>
                 </button>
               </div>
@@ -291,9 +292,9 @@ watch(total, n => { if (active.value >= n) active.value = 0; });
 
 // Stacked-deck look: front card + two tilted cards peeking out behind it.
 const DECK = [
-  { x: 0,  y: 0, s: 1,    r: 0, o: 1,    z: 30 },
-  { x: 6,  y: 3, s: 0.95, r: 3, o: 0.9,  z: 20 },
-  { x: 12, y: 6, s: 0.9,  r: 6, o: 0.6,  z: 10 },
+  { x: 0, y: 0, s: 1, r: 0, o: 1, z: 30 },
+  { x: 6, y: 3, s: 0.95, r: 3, o: 0.9, z: 20 },
+  { x: 12, y: 6, s: 0.9, r: 6, o: 0.6, z: 10 },
 ];
 const HIDDEN = { x: 16, y: 8, s: 0.85, r: 8, o: 0, z: 0 };
 
@@ -319,91 +320,85 @@ const onPointerUp = e => {
   if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
 };
 
-/* ───────── Tech logos from the internet (CDN) ─────────
-   Each item has a list of sources; if one fails to load the next is tried,
-   and finally a dot is shown. */
+/* ───────── Tech logos: your own SVG files ─────────
+   Put them in  src/assets/techstack/  . The file name only has to be close to the tech name:
+   vue.svg, vuejs.svg, Vue.js.svg, vue-js.svg … all match "Vue.js" (case, dots, dashes, spaces ignored).
+   Vite bundles them, so nothing is loaded from a CDN.
+   In dev, the browser console lists techs with no matching file and files that were not used,
+   so you can rename them. A tech with no file shows a letter badge. */
 
-const DEVICON = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons';
-const SIMPLE = 'https://cdn.simpleicons.org';
-const dv = (slug, v = 'original') => `${DEVICON}/${slug}/${slug}-${v}.svg`;
-const si = (slug) => `${SIMPLE}/${slug}`;
-const DASH = 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg';
-const di = (slug) => `${DASH}/${slug}.svg`;
-const sh = (slug) => `https://cdn.jsdelivr.net/gh/selfhst/icons/svg/${slug}.svg`;
-const svgData = (body, color = '#38bdf8') =>
-  'data:image/svg+xml;utf8,' + encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`
-  );
-const DB_ICON = svgData('<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>', '#0ea5e9');
-const API_ICON = svgData('<path d="M8 4C5 4 6 9 4 12c2 3 1 8 4 8"/><path d="M16 4c3 0 2 5 4 8-2 3-1 8-4 8"/>', '#f97316');
-const MAIL_ICON = svgData('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>', '#f59e0b');
+const LOGO_FILES = import.meta.glob('../assets/techstack/**/*.{svg,png,webp}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
 
-const TECH_ICON_SOURCES = {
-  'HTML': [dv('html5')],
-  'CSS': [dv('css3')],
-  'JavaScript': [dv('javascript')],
-  'TypeScript': [dv('typescript')],
-  'Python': [dv('python')],
-  'Java': [dv('java')],
-  'C': [dv('c')],
-  'C++': [dv('cplusplus')],
-  'C#': [dv('csharp')],
-  'Dart': [dv('dart')],
-  'SQL': [DB_ICON],
-  'Vue.js': [dv('vuejs')],
-  'React.js': [dv('react')],
-  'jQuery': [dv('jquery')],
-  'Bootstrap': [dv('bootstrap')],
-  'Tailwind CSS': [dv('tailwindcss')],
-  'Flutter': [dv('flutter')],
-  'Node.js': [dv('nodejs')],
-  'Express.js': [dv('express'), si('express')],
-  'Laravel': [dv('laravel'), si('laravel')],
-  'REST API': [API_ICON],
-  'MySQL': [dv('mysql')],
-  'PostgreSQL': [dv('postgresql')],
-  'MongoDB': [dv('mongodb')],
-  'NeonDB': [si('neon')],
-  'PrismaORM': [dv('prisma'), si('prisma')],
-  'Firebase': [dv('firebase')],
-  'Git': [dv('git')],
-  'GitHub': [dv('github')],
-  'GitLab': [dv('gitlab')],
-  'Docker': [dv('docker')],
-  'Vercel': [dv('vercel'), si('vercel')],
-  'Render': [si('render')],
-  'Netlify': [dv('netlify'), si('netlify')],
-  'Postman': [dv('postman')],
-  'EmailJS': [si('emailjs'), MAIL_ICON],
-  'TelegramBot': [si('telegram')],
-  'WordPress': [dv('wordpress', 'plain'), si('wordpress')],
-  'Mautic': [si('mautic')],
-  'OneSignal': [si('onesignal')],
-  'Claude': [si('claude'), di('claude-ai')],
-  'ChatGPT': [di('chatgpt'), si('openai')],
-  'Gemini': [si('googlegemini'), di('google-gemini')],
-  'Figma': [dv('figma')],
-  'Canva': [dv('canva'), si('canva')],
-  'Power BI': [di('powerbi')],
-  'Tableau': [sh('tableau'), dv('tableau'), si('tableau')],
-  'VS Code': [dv('vscode')],
-  'Photoshop': [dv('photoshop', 'plain'), si('adobephotoshop')],
-  'Microsoft Office': [si('microsoftoffice')],
-  'Google Workspace': [si('googleworkspace')],
-  'YouTube': [si('youtube')],
-  // Navicat and WAMP have no logo source → they show the dot
+const norm = (s) =>
+  s.toLowerCase().replace(/\+/g, 'plus').replace(/#/g, 'sharp').replace(/[^a-z0-9]/g, '');
+
+// normalized file name → url     ('Vue.js.svg' → 'vuejs')
+const LOGOS = {};
+for (const [file, url] of Object.entries(LOGO_FILES)) {
+  LOGOS[norm(file.split('/').pop().replace(/\.[^.]+$/, ''))] = url;
+}
+
+// Other file names to try when a file is not named exactly like the chip.
+const ALIASES = {
+  'HTML': ['html5'],
+  'CSS': ['css3'],
+  'C++': ['cpp'],
+  'C#': ['cs', 'dotnet'],
+  'SQL': ['database', 'db'],
+  'Tailwind CSS': ['tailwind', 'tailwindcss'],
+  'REST API': ['api', 'rest', 'restful'],
+  'NeonDB': ['neon'],
+  'PrismaORM': ['prisma'],
+  'TelegramBot': ['telegram'],
+  'ChatGPT': ['openai', 'gpt'],
+  'Gemini': ['googlegemini'],
+  'VS Code': ['vscode', 'visualstudiocode'],
+  'Power BI': ['powerbi'],
+  'WAMP': ['wampserver'],
+  'Word': ['msword', 'microsoftword'],
+  'Excel': ['msexcel', 'microsoftexcel'],
+  'PowerPoint': ['ppt', 'mspowerpoint', 'microsoftpowerpoint'],
+  'Microsoft Office': ['office', 'office365', 'microsoft365', 'm365'],
+  'Google Docs': ['docs'],
+  'Google Sheets': ['googlesheet', 'sheets', 'sheet'],
+  'Google Slides': ['slides'],
+  'Google Workspace': ['googledrive', 'google'],
+  'Google Workspace': ['workspace', 'gsuite'],
+  'Photoshop': ['adobephotoshop', 'ps'],
 };
-const iconTry = ref({});   // name → index of the source being tried
-const iconFor = (name) => {
-  const list = TECH_ICON_SOURCES[name] || [];
-  return list[iconTry.value[name] || 0] || null;
+
+// Tries: exact name, aliases, then the name without a trailing "js"/"css" (Vue.js → vue)
+const logoUrl = (name) => {
+  const keys = [name, ...(ALIASES[name] || [])].map(norm);
+  keys.push(norm(name).replace(/(js|css)$/, ''));
+  const hit = keys.find((k) => k && LOGOS[k]);
+  return hit ? LOGOS[hit] : null;
 };
-const iconFail = (name) => {
-  iconTry.value = { ...iconTry.value, [name]: (iconTry.value[name] || 0) + 1 };
-};
+
+const iconBad = ref(new Set());   // files that failed to load → letter badge
+const iconFor = (name) => (iconBad.value.has(name) ? null : logoUrl(name));
+const iconFail = (name) => { iconBad.value = new Set(iconBad.value).add(name); };
+
+// Dev helper: tells you which names/files don't line up (runs once, after setup)
+function reportLogos() {
+  const names = TECH_ROWS.flatMap((r) => r.groups.flatMap((g) => g.items));
+  const missing = names.filter((n) => !logoUrl(n));
+  const used = new Set(names.map(logoUrl).filter(Boolean));
+  const unused = Object.entries(LOGO_FILES)
+    .filter(([, url]) => !used.has(url))
+    .map(([file]) => file.split('/').pop());
+  if (missing.length) console.warn('[About] no logo file in src/assets/techstack/ for:', missing.join(', '));
+  if (unused.length) console.info('[About] files in techstack/ that no chip uses:', unused.join(', '));
+}
+if (import.meta.env.DEV) queueMicrotask(reportLogos);
 
 /* ───────── Tech stack (organized by area) ─────────
-   speed = pixels per second (higher = faster). Row 2 moves the opposite way. */
+   speed = pixels per second (higher = faster). Row 2 moves the opposite way.
+   Each item is matched to a file in src/assets/techstack/ (see the logo section above). */
 
 const TECH_ROWS = [
   {
@@ -425,7 +420,7 @@ const TECH_ROWS = [
       { label: 'AI tools', items: ['Claude', 'ChatGPT', 'Gemini'] },
       { label: 'Design & Data', items: ['Figma', 'Canva', 'Power BI', 'Tableau'] },
       { label: 'Dev tools', items: ['VS Code', 'Navicat', 'WAMP'] },
-      { label: 'Office & Media', items: ['Microsoft Office', 'Google Workspace', 'Photoshop', 'YouTube'] },
+      { label: 'Office & Media', items: ['Word', 'Excel', 'PowerPoint', 'Microsoft Office', 'Google Docs', 'Google Sheets', 'Google Slides', 'Google Workspace', 'Photoshop', 'YouTube', 'Notion'] },
     ],
   },
 ];
@@ -762,9 +757,11 @@ html {
 /* ── Tech marquee (moved by JS, not CSS animation) ── */
 .marquee {
   overflow: hidden;
-  padding: 6px 0;                    /* room for the hover lift + glow */
+  padding: 6px 0;
+  /* room for the hover lift + glow */
   cursor: grab;
-  touch-action: pan-y;               /* swipe sideways = drag, vertical = scroll page */
+  touch-action: pan-y;
+  /* swipe sideways = drag, vertical = scroll page */
   -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
   mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
 }
@@ -850,9 +847,14 @@ html {
 
 /* light tile so dark logos (GitHub, Express…) stay visible on dark themes */
 .marquee-icon.has-img {
+  /*
   background: rgba(255, 255, 255, 0.94);
   padding: 4px;
   box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.06);
+  */
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
 }
 
 .marquee-icon img {
@@ -861,7 +863,7 @@ html {
   object-fit: contain;
 }
 
-/* no logo (Navicat, WAMP) or every source failed → letter badge in the accent gradient */
+/* no logo or every source failed → letter badge in the accent gradient */
 .marquee-icon.is-mono {
   background: var(--cta-gradient);
   box-shadow: 0 4px 12px -6px var(--accent-shadow);

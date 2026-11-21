@@ -170,6 +170,8 @@ const starsLight = new URL('../assets/images/heroBackgrounds/starynight_light.pn
 export const backgroundImages = {
     none:                '',
     particles:           '',
+    'script-drift':      '',
+    'binary-stream':     '',
     'particles-bubbles': '',
     rain:                '',
     'nyan-cat':          nyanCat,

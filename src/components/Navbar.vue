@@ -1,11 +1,11 @@
 <template>
   <header :class="[
-    'w-full z-[100] transition-all duration-300 px-4 py-4 sm:px-6 flex justify-between items-center',
+    'w-full z-[1000] transition-all duration-300 px-4 py-4 sm:px-6 flex justify-between items-center',
     'fixed top-0 left-0',
     isMenuOpen ? 'bg-transparent' : 'backdrop-blur-md'
   ]" :style="!isMenuOpen ? { backgroundColor: 'color-mix(in srgb, var(--surface-bg-3))' } : {}" id="primary-nav">
 
-    <div class="flex items-center gap-2 relative z-[110]">
+    <div class="flex items-center gap-2 relative z-[1100]">
       <img :src="logoSrc" alt="Logo" class="w-8 h-8 object-contain rounded-xl" />
       <div class="text-xl sm:text-2xl font-bold bg-clip-text text-transparent"
         :style="{ backgroundImage: 'var(--logo-gradient)' }">
@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="hamburger-btn relative z-[110]">
+    <div class="hamburger-btn relative z-[1100]">
       <button type="button"
         class="block focus:outline-none p-1.5 sm:p-2 rounded-lg backdrop-blur-sm border transition-all duration-300 shadow-lg"
         :style="{
@@ -32,8 +32,8 @@
     </div>
 
 <nav :class="[
-  'fixed inset-0 z-[80] flex flex-col items-center justify-start transition-all duration-500 ease-in-out overflow-y-auto pt-24 pb-24',
-  isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+  'fixed inset-0 z-[1001] flex flex-col items-center justify-start transition-all duration-500 ease-in-out overflow-y-auto pt-24 pb-24',
+  isMenuOpen ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-full opacity-0 pointer-events-none'
 ]" :style="{ backgroundColor: isMenuOpen ? 'var(--surface-bg)' : 'transparent' }" id="mobile-nav">
 
     <!-- <nav :class="[

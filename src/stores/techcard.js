@@ -1,11 +1,11 @@
 // ── TechCard.js ──
 // Save to: src/stores/techcard.js  (or wherever you import it from)
 //
-// NEW theme.css variables used here — add these to your theme.css if missing:
-//
-//   (none — only uses existing --surface-* vars)
+// Needs: src/stores/techstatus.js (same folder) for STATUS_META.
+// theme.css variables: none new — only uses existing --surface-* vars.
 
 import { defineComponent, h, ref } from 'vue';
+import { STATUS_META } from './techstatus.js';
 
 // ── Image Analyzer ──────────────────────────────────────────────────────────
 function analyzeImage(imgEl) {
@@ -131,6 +131,7 @@ const TechCard = defineComponent({
 
     return () => {
       const s = getStyles(analysis.value);
+      const status = STATUS_META[props.tech.status] ?? null;
 
       return h('div', {
         class: 'tech-card group relative p-4 sm:p-6 rounded-xl transition-all duration-300 hover:-translate-y-2 text-center cursor-pointer',
@@ -148,6 +149,25 @@ const TechCard = defineComponent({
         },
         onClick: () => emit('select', { ...props.tech, _styles: s }),
       }, [
+
+        // ── Status pill (top-right): dot always, label from sm and up ──
+        status
+          ? h('div', {
+              class: 'absolute z-20 top-2 right-2 sm:top-2.5 sm:right-2.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[8px] sm:text-[9px] font-semibold uppercase tracking-wide',
+              title: status.label,
+              style: {
+                background: `rgba(${status.rgb},0.12)`,
+                color:      status.color,
+                border:     `1px solid rgba(${status.rgb},0.30)`,
+              },
+            }, [
+              h('span', {
+                class: 'inline-block w-1.5 h-1.5 rounded-full flex-shrink-0',
+                style: { background: status.color },
+              }),
+              h('span', { class: 'hidden sm:inline' }, status.label),
+            ])
+          : null,
 
         // ── Logo box ──
         h('div', { class: 'relative z-10 flex justify-center mb-3 sm:mb-4' }, [

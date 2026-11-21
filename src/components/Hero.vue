@@ -1,6 +1,6 @@
 <template>
     <section id="home_hero"
-        class="relative w-full overflow-hidden min-h-screen flex flex-col justify-center py-20 md:py-24"
+        class="relative w-full overflow-hidden min-h-screen flex flex-col justify-center pt-20 pb-32 md:pt-24 md:pb-36"
         :style="heroBgStyle">
 
         <!-- ── Backdrop: soft glows only (no page grid) ── -->
@@ -222,10 +222,10 @@
                         </button>
 
                         <!-- Status badge: rotates "currently working" ⇄ "open to freelance" · click → Contact -->
-                        <router-link to="/contact"
+                        <button type="button" @click="nextStatus"
                             class="status-badge badge-float absolute -bottom-6 -left-3 sm:-left-8 z-20 block min-w-[235px] rounded-2xl border px-5 py-3.5 backdrop-blur-xl shadow-2xl text-left cursor-pointer"
                             :class="{ 'is-hidden': hideStatus }" :tabindex="hideStatus ? -1 : 0"
-                            :style="glassStyle" :aria-label="`${status.label}: ${status.text}`">
+                            :style="glassStyle" :aria-label="`${status.label}: ${status.text}. Click to show the next status`">
                             <Transition name="status" mode="out-in">
                                 <div :key="statusIndex">
                                     <p class="text-sm" :style="{ color: 'var(--accent-text)' }">{{ status.label }}</p>
@@ -247,7 +247,7 @@
                                 <i v-for="(_, i) in STATUSES" :key="i" class="status-pip"
                                     :class="{ on: i === statusIndex }"></i>
                             </span>
-                        </router-link>
+                        </button>
                     </div>
                 </div>
 
@@ -443,6 +443,9 @@ const STATUSES = [
 const statusIndex = ref(0);
 const status = computed(() => STATUSES[statusIndex.value]);
 let statusTimer = null;
+const nextStatus = () => {
+    statusIndex.value = (statusIndex.value + 1) % STATUSES.length;
+};
 
 const glassStyle = {
     background: 'color-mix(in srgb, var(--surface-bg-3) 75%, transparent)',
@@ -907,7 +910,7 @@ const MESH = (() => {
 })();
 
 onMounted(() => {
-    statusTimer = setInterval(() => { statusIndex.value = (statusIndex.value + 1) % STATUSES.length; }, 4200);
+    statusTimer = setInterval(nextStatus, 4200);
 });
 
 onUnmounted(() => {
@@ -1049,6 +1052,8 @@ h1 {
     transform: translateX(-50%);
     z-index: 30;
     display: inline-flex;
+    width: max-content;
+    white-space: nowrap;
     align-items: center;
     gap: 6px;
     padding: 6px 14px 6px 11px;
@@ -1872,4 +1877,5 @@ h1 {
         animation: none;
     }
 }
+
 </style>

@@ -7,7 +7,7 @@
         @click.self="$emit('close')"
       >
         <div
-          class="modal-card relative w-full max-w-sm rounded-2xl overflow-hidden"
+          class="modal-card relative flex flex-col w-full max-w-md max-h-[90vh] rounded-2xl overflow-hidden"
           :style="cardStyle"
         >
           <!-- Inner glow ring -->
@@ -27,7 +27,7 @@
           <div class="h-1 w-full flex-shrink-0" :style="{ background: accentBar }" />
 
           <!-- Body -->
-          <div class="px-8 pb-8 pt-6 flex flex-col items-center gap-5">
+          <div class="modal-body px-8 pb-8 pt-6 flex flex-col items-center gap-5 overflow-y-auto">
 
             <!-- Big logo -->
             <div
@@ -63,6 +63,41 @@
                   {{ tech.type }}
                 </span>
               </div>
+
+              <!-- Status badge -->
+              <div v-if="status" class="flex justify-center pt-1">
+                <span
+                  class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider"
+                  :style="statusBadgeStyle"
+                >
+                  <span
+                    class="inline-block w-2 h-2 rounded-full"
+                    :style="{ background: status.color }"
+                  />
+                  {{ status.label }}
+                </span>
+              </div>
+            </div>
+
+            <!-- About: description + bullet points -->
+            <div v-if="info" class="w-full space-y-4 text-left">
+              <p class="text-sm leading-relaxed" style="color: var(--surface-text);">
+                {{ info.about }}
+              </p>
+              <ul class="space-y-2.5">
+                <li
+                  v-for="(point, i) in info.points"
+                  :key="i"
+                  class="flex items-start gap-3 text-sm leading-relaxed"
+                  style="color: var(--surface-text-sub);"
+                >
+                  <span
+                    class="mt-[0.5rem] w-1.5 h-1.5 rounded-full flex-shrink-0"
+                    :style="{ background: `rgb(${rgb})` }"
+                  />
+                  <span>{{ point }}</span>
+                </li>
+              </ul>
             </div>
 
             <!-- Divider -->
@@ -89,6 +124,8 @@
 
 <script setup>
 import { computed } from 'vue';
+import { STATUS_META } from '../../stores/techstatus.js'; // adjust path if needed
+import { TECH_INFO } from '../../data/techDescriptions.js'; // adjust path if needed
 
 // ── Props & emits ──
 const props = defineProps({
@@ -98,6 +135,12 @@ defineEmits(['close']);
 
 // ── Derived color ──
 const rgb = computed(() => props.tech?._styles?.rgb ?? '99,102,241');
+
+// ── Status ──
+const status = computed(() => STATUS_META[props.tech?.status] ?? null);
+
+// ── Description (looked up by exact tech name) ──
+const info = computed(() => TECH_INFO[props.tech?.name] ?? null);
 
 // ── Computed styles ──
 const cardStyle = computed(() => ({
@@ -129,6 +172,16 @@ const categoryBadgeStyle = computed(() => ({
   color:      `rgb(${rgb.value})`,
   border:     `1px solid rgba(${rgb.value},0.30)`,
 }));
+
+const statusBadgeStyle = computed(() => {
+  const s = status.value;
+  if (!s) return {};
+  return {
+    background: `rgba(${s.rgb},0.12)`,
+    color:      s.color,
+    border:     `1px solid rgba(${s.rgb},0.30)`,
+  };
+});
 
 const closeBtnStyle = computed(() => ({
   background: `rgba(${rgb.value},0.12)`,

@@ -280,7 +280,7 @@ html.theme-white {
   --accent-node-bg: #fdfdfd;
 
   /* Grid Adjustments */
-  --grid-opacity: 0.08; 
+  --grid-opacity: 0.08;
   --accent-glow: hsla(var(--hue), var(--grid-opacity));
 
   --footer-bg-color: rgba(255, 255, 255, 0.95);

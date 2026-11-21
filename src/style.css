@@ -2,39 +2,61 @@
 @import url("https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Cham&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Lao+Looped:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Tagalog&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 
 @import "tailwindcss";
 
-/* Language variables */
+/* UI language primary font plus fallbacks for every script used in the site. */
 :root {
-  --font-body: "Inter", sans-serif;
+  --font-script-fallbacks:
+    "Kantumruy Pro",
+    "Noto Sans Cham",
+    "Noto Sans Devanagari",
+    "Noto Sans SC",
+    "Noto Sans TC",
+    "Noto Sans JP",
+    "Noto Sans KR",
+    "Noto Sans Lao Looped",
+    "Mali",
+    "Noto Sans Myanmar",
+    "Noto Sans Tagalog",
+    "Noto Sans",
+    sans-serif;
+  --font-primary: "Inter";
+  --font-body: var(--font-primary), var(--font-script-fallbacks);
 }
 
 :root[data-lang="km"] {
-  --font-body: "Kantumruy Pro", sans-serif;
+  --font-primary: "Kantumruy Pro";
 }
 
 :root[data-lang="en"] {
-  --font-body: "Inter", sans-serif;
+  --font-primary: "Inter";
 }
 
 :root[data-lang="zh"] {
-  --font-body: "Noto Sans SC", sans-serif;
+  --font-primary: "Noto Sans SC";
 }
 
 :root[data-lang="th"] {
-  --font-body: "Mali", sans-serif;
+  --font-primary: "Mali";
 }
 
 :root[data-lang="lo"] {
-  --font-body: "Noto Sans Lao Looped", sans-serif;
+  --font-primary: "Noto Sans Lao Looped";
 }
 
 :root[data-lang="ph"] {
-  --font-body: "Noto Sans Tagalog", sans-serif;
+  --font-primary: "Noto Sans Tagalog";
 }
 
 /* Add this to force Tailwind to respect it */
@@ -46,6 +68,33 @@ body, div, span, button {
 *, ::before, ::after, button, input, select, textarea {
   font-family: var(--font-body) !important;
 }
+
+/* Keep each language's native name in a font with the right glyphs,
+   regardless of which language is selected for the site UI. */
+.font-native-km,
+.font-native-km * {
+  font-family: "Kantumruy Pro", "Inter", sans-serif !important;
+  line-height: 1.7;
+}
+
+.font-native-en,
+.font-native-en *,
+.font-native-fr,
+.font-native-fr * {
+  font-family: "Inter", sans-serif !important;
+}
+
+.font-native-zh,
+.font-native-zh * {
+  font-family: "Noto Sans SC", sans-serif !important;
+}
+
+.font-native-lo,
+.font-native-lo * {
+  font-family: "Noto Sans Lao Looped", "Inter", sans-serif !important;
+  line-height: 1.7;
+}
+
 /* Latin text inside Khmer pages stays unaffected
    because 'Kantumruy Pro' only has glyphs for Khmer —
    Latin chars automatically fall back to the next font */

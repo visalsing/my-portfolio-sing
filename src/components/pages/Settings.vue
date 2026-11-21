@@ -1,13 +1,13 @@
 <template>
     <div class="min-h-screen text-white">
-        <section class="relative py-20 overflow-hidden" id="settings">
+        <section class="relative py-20 overflow-x-clip" id="settings">
 
             <!-- Background glow -->
-            <div class="pointer-events-none absolute inset-0 opacity-10"
+            <div class="settings-background-glow pointer-events-none absolute inset-0 opacity-10"
                 :style="{ background: 'radial-gradient(ellipse 80% 60% at 50% 0%, var(--accent-mid), transparent)' }">
             </div>
 
-            <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-12 lg:px-8">
 
                 <!-- ── Breadcrumb ── -->
                 <nav class="flex mb-8" aria-label="Breadcrumb" data-aos="fade-down">
@@ -62,10 +62,21 @@
                     </p>
                 </div>
 
-                <div class="space-y-8">
+                <div class="settings-layout">
+                    <nav class="settings-section-nav" aria-label="Settings sections">
+                        <span class="settings-nav-label">On this page</span>
+                        <a v-for="item in settingsSections" :key="item.id" :href="`#${item.id}`"
+                            class="settings-section-link" :class="{ active: activeSettingsSection === item.id }"
+                            :aria-current="activeSettingsSection === item.id ? 'location' : undefined"
+                            @click="activeSettingsSection = item.id">
+                            {{ item.label }}
+                        </a>
+                    </nav>
+
+                    <div class="settings-cards space-y-8">
 
                     <!-- ── 1. Portfolio Themes ── -->
-                    <div class="rounded-3xl p-8 accent-card">
+                    <div id="settings-themes" class="settings-section rounded-3xl p-8 accent-card">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="p-3 rounded-2xl icon-box-1">
                                 <SunIcon class="w-6 h-6" />
@@ -103,7 +114,7 @@
                     </div>
 
                     <!-- ── Profile Frame Style ── -->
-                    <div class="rounded-3xl p-8 accent-card">
+                    <div id="settings-frame" class="settings-section rounded-3xl p-8 accent-card">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="p-3 rounded-2xl" style="background: rgba(168, 85, 247, 0.1);">
                                 <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" stroke-width="2"
@@ -149,10 +160,11 @@
                                 </div>
                             </button>
                         </div>
+
                     </div>
 
                     <!-- ── 2. Accent Colors ── -->
-                    <div class="rounded-3xl p-8 accent-card">
+                    <div id="settings-accents" class="settings-section rounded-3xl p-8 accent-card">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="p-3 rounded-2xl icon-box-2">
                                 <SwatchIcon class="w-6 h-6" />
@@ -228,10 +240,11 @@
                                 </div>
                             </button>
                         </div>
+
                     </div>
 
                     <!-- ── 3. Loading Screen ── -->
-                    <div class="rounded-3xl p-8 accent-card">
+                    <div id="settings-loading" class="settings-section rounded-3xl p-8 accent-card">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="p-3 rounded-2xl icon-box-3">
                                 <ArrowPathIcon class="w-6 h-6" />
@@ -297,15 +310,16 @@
                                     :style="{ backgroundColor: 'var(--accent-text)' }">
                                     <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="3"
                                         viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
                             </button>
                         </div>
+
                     </div>
 
                     <!-- ── 3.5. Hero Background Choice ── -->
-                    <div class="rounded-3xl p-8 accent-card">
+                    <div id="settings-background" class="settings-section rounded-3xl p-8 accent-card">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="p-3 rounded-2xl icon-box-1" style="background: rgba(244, 63, 94, 0.1);">
                                 <!-- Temporary inline SVG or any icon from your package -->
@@ -316,11 +330,11 @@
                                 </svg>
                             </div>
                             <h3 class="text-2xl font-semibold" :style="{ color: 'var(--surface-text)' }">
-                                {{ t('hero_background') || 'Hero Background' }}
+                                {{ t('hero_background') === 'hero_background' ? 'Hero Background' : t('hero_background') }}
                             </h3>
                         </div>
 
-                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
                             <button v-for="bg in heroBackgrounds" :key="bg.name"
                                 class="relative p-3 rounded-xl border transition-all duration-300 flex flex-col items-center gap-3 overflow-hidden group"
                                 :style="currentHeroBg === bg.name
@@ -329,10 +343,12 @@
 
                                 <!-- Thumbnail Preview Box -->
                                 <div
-                                    class="w-full h-16 rounded-lg overflow-hidden border border-gray-700/50 flex items-center justify-center">
+                                    class="relative isolate w-full h-16 rounded-lg overflow-hidden border border-gray-700/50 flex items-center justify-center">
                                     <img v-if="bg.previewUrl" :src="bg.previewUrl" :alt="bg.label"
                                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                                    <div v-else class="w-full h-full" :class="bg.previewClass"></div>
+                                    <div v-else-if="bg.name === 'none'" class="absolute inset-0"
+                                        :class="bg.previewClass"></div>
+                                    <BackgroundCanvas v-else :effect="bg.name" preview />
                                 </div>
 
                                 <!-- Text Label -->
@@ -352,10 +368,18 @@
                                 </div>
                             </button>
                         </div>
+                        <button type="button"
+                            class="mt-6 inline-flex items-center gap-2 rounded-xl border px-5 py-3 font-semibold transition-colors"
+                            :style="{ borderColor: 'var(--accent-text)', color: 'var(--accent-text)' }"
+                            @click="isBackgroundPreviewOpen = true">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m8 5 12 7-12 7V5Z" />
+                            </svg>
+                            Preview full screen
+                        </button>
                     </div>
 
-                    <!-- ── 4. Languages ── -->
-                    <div class="rounded-3xl p-8 accent-card">
+                    <div id="settings-languages" class="settings-section rounded-3xl p-8 accent-card">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="p-3 rounded-2xl icon-box-3">
                                 <LanguageIcon class="w-6 h-6" />
@@ -409,7 +433,7 @@
                     </div>
 
                     <!-- ── 5. System Actions ── -->
-                    <div class="rounded-3xl p-8 accent-card">
+                    <div id="settings-actions" class="settings-section rounded-3xl p-8 accent-card">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="p-3 rounded-2xl icon-box-1" style="background: rgba(148, 163, 184, 0.1);">
                                 <CommandLineIcon class="w-6 h-6" />
@@ -453,7 +477,7 @@
                     </div>
 
                     <!-- 6. Responsive Views -->
-                    <div class="rounded-3xl p-8 accent-card">
+                    <div id="settings-responsive" class="settings-section rounded-3xl p-8 accent-card">
                         <div class="flex items-center gap-4 mb-2">
                             <div class="p-3 rounded-2xl icon-box-2" style="background: rgba(96, 165, 250, 0.1);">
                                 <ComputerDesktopIcon class="w-6 h-6 text-blue-400" />
@@ -499,6 +523,8 @@
 
                 </div>
 
+                </div>
+
                 <!-- ── Footer actions ── -->
                 <div class="text-center mt-16">
                     <div class="inline-flex flex-col sm:flex-row gap-4 items-center">
@@ -520,10 +546,29 @@
                             {{ t('reset') }}
                         </button>
                     </div>
+
                 </div>
 
             </div>
         </section>
+        <div v-if="isBackgroundPreviewOpen"
+            class="fixed inset-0 z-[999] overflow-hidden bg-[var(--surface-bg)]"
+            role="dialog" aria-modal="true" aria-label="Hero background preview"
+            @click.self="isBackgroundPreviewOpen = false" @keydown.esc="isBackgroundPreviewOpen = false" tabindex="-1">
+            <div class="pointer-events-none absolute inset-0"
+                :style="{ background: 'radial-gradient(ellipse at 50% 45%, var(--accent-bg), transparent 72%)' }"></div>
+            <BackgroundCanvas :effect="currentHeroBg" preview />
+            <div class="absolute left-5 top-5 z-10 rounded-full border px-4 py-2 text-sm font-medium backdrop-blur-md"
+                :style="{ borderColor: 'var(--accent-border)', color: 'var(--surface-text)', backgroundColor: 'var(--surface-card)' }">
+                Hero Background · {{ heroBackgrounds.find(bg => bg.name === currentHeroBg)?.label || 'Preview' }}
+            </div>
+            <button type="button" aria-label="Close full-screen preview"
+                class="absolute right-5 top-5 z-10 grid h-12 w-12 place-items-center rounded-full border text-2xl transition-transform hover:scale-105"
+                :style="{ borderColor: 'var(--accent-text)', color: 'var(--surface-text)', backgroundColor: 'var(--surface-card)' }"
+                @click="isBackgroundPreviewOpen = false">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
     </div>
 </template>
 
@@ -552,12 +597,34 @@ import { currentLoadingScreen, setLoadingScreen } from './../../stores/loadingSc
 import { currentViewport, setViewport } from './../../stores/viewport.js';
 
 import { currentHeroBg, setHeroBg } from './../../stores/heroBg.js';
+import BackgroundCanvas from '../BackgroundCanvas.vue';
 import { currentProfileFrame, setProfileFrame, PROFILE_FRAMES, DEFAULT_PROFILE_FRAME } from './../../stores/profileFrame.js';
 
 
 // ======================================================================
 // State for Fullscreen
 const isFullscreen = ref(false);
+const settingsSections = [
+    { id: 'settings-themes', label: 'Themes' },
+    { id: 'settings-frame', label: 'Profile Frame' },
+    { id: 'settings-accents', label: 'Color Accents' },
+    { id: 'settings-loading', label: 'Loading Screen' },
+    { id: 'settings-background', label: 'Hero Background' },
+    { id: 'settings-languages', label: 'Languages' },
+    { id: 'settings-actions', label: 'System Actions' },
+    { id: 'settings-responsive', label: 'Responsive Preview' },
+];
+const activeSettingsSection = ref(settingsSections[0].id);
+const isBackgroundPreviewOpen = ref(false);
+
+function updateActiveSettingsSection() {
+    for (const item of settingsSections) {
+        const section = document.getElementById(item.id);
+        if (section && section.getBoundingClientRect().top <= 180) {
+            activeSettingsSection.value = item.id;
+        }
+    }
+}
 
 // Function to handle Fullscreen toggle
 function toggleFullscreen() {
@@ -584,10 +651,13 @@ function updateFullscreenState() {
 
 onMounted(() => {
     document.addEventListener('fullscreenchange', updateFullscreenState);
+    window.addEventListener('scroll', updateActiveSettingsSection, { passive: true });
+    updateActiveSettingsSection();
 });
 
 onUnmounted(() => {
     document.removeEventListener('fullscreenchange', updateFullscreenState);
+    window.removeEventListener('scroll', updateActiveSettingsSection);
 });
 // ================================================================================
 
@@ -607,6 +677,8 @@ const viewports = [
 const heroBackgrounds = [
     { name: 'none', label: 'Solid / None', previewClass: 'bg-slate-900' },
     { name: 'particles', label: 'Particles', previewClass: 'preview-particles' },
+    { name: 'script-drift', label: 'Script Drift', previewClass: 'preview-scripts' },
+    { name: 'binary-stream', label: 'Binary Stream', previewClass: 'preview-binary' },
     // { name: 'particles_bubbles', label: 'Bubbles', previewClass: 'preview-bubbles' },
     { name: 'particles-bubbles', label: 'Bubbles', previewClass: 'preview-bubbles' },
     { name: 'rain', label: 'Raindrops', previewClass: 'preview-rain' },
@@ -781,12 +853,13 @@ function resetSettings() {
 /* --- Dot Network preview --- */
 .preview-particles {
     background:
-        radial-gradient(circle at 20% 30%, rgba(96, 165, 250, 0.35) 0%, transparent 50%),
-        radial-gradient(circle at 75% 65%, rgba(168, 85, 247, 0.25) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.15) 0%, transparent 60%),
-        #0b1120;
+        radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--accent-mid) 52%, transparent) 0%, transparent 50%),
+        radial-gradient(circle at 75% 65%, color-mix(in srgb, var(--accent-text) 38%, transparent) 0%, transparent 45%),
+        #101016;
     position: relative;
     overflow: hidden;
+    background-size: 140% 140%;
+    animation: particle-preview-glow 6s ease-in-out infinite alternate;
 }
 
 /* Dot grid to hint at the particle network */
@@ -794,17 +867,58 @@ function resetSettings() {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(148, 163, 184, 0.6) 1px, transparent 1px);
+    background-image: radial-gradient(circle, color-mix(in srgb, var(--accent-text) 82%, white) 1px, transparent 1.5px);
     background-size: 12px 12px;
-    opacity: 0.5;
+    opacity: 0.68;
+    animation: particle-preview-drift 5s linear infinite;
+}
+
+@keyframes particle-preview-glow {
+    to { background-position: 100% 35%; }
+}
+
+@keyframes particle-preview-drift {
+    to { transform: translate(6px, -4px); }
+}
+
+.preview-binary {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 70% 35%, color-mix(in srgb, var(--accent-mid) 46%, transparent), transparent 58%),
+        #101016;
+}
+
+.preview-binary::before {
+    position: absolute;
+    inset: -18px 6px 0;
+    color: color-mix(in srgb, var(--accent-text) 82%, white);
+    content: "1 0 1 1 0 0 1 0 1\A0 1 1 0 1 0 0 1 1\A1 0 0 1 0 1 1 0 1";
+    font: 9px/20px ui-monospace, monospace;
+    letter-spacing: 4px;
+    white-space: pre;
+    animation: binary-preview-fall 4s linear infinite;
+}
+
+.preview-binary::after {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, color-mix(in srgb, var(--accent-text) 65%, white) 1px, transparent 1px);
+    background-size: 24px 20px;
+    content: "";
+    opacity: 0.35;
+}
+
+@keyframes binary-preview-fall {
+    to { transform: translateY(18px); }
 }
 
 /* --- Bubbles preview --- */
 .preview-bubbles {
     background:
-        radial-gradient(circle at 25% 75%, rgba(96, 165, 250, 0.25) 0%, transparent 55%),
-        radial-gradient(circle at 70% 30%, rgba(34, 211, 238, 0.15) 0%, transparent 45%),
-        #0b1120;
+        radial-gradient(circle at 25% 75%, color-mix(in srgb, var(--accent-mid) 40%, transparent) 0%, transparent 55%),
+        radial-gradient(circle at 70% 30%, color-mix(in srgb, var(--accent-text) 24%, transparent) 0%, transparent 45%),
+        #101016;
     position: relative;
     overflow: hidden;
 }
@@ -817,9 +931,10 @@ function resetSettings() {
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    border: 1.5px solid rgba(150, 200, 255, 0.65);
+    border: 1.5px solid color-mix(in srgb, var(--accent-text) 78%, white);
     bottom: 18%;
     left: 22%;
+    animation: bubble-preview-rise 3.2s ease-in-out infinite;
     box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.08);
 }
 
@@ -830,9 +945,10 @@ function resetSettings() {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 1.5px solid rgba(150, 200, 255, 0.40);
+    border: 1.5px solid color-mix(in srgb, var(--accent-text) 52%, white);
     top: 28%;
     left: 48%;
+    animation: bubble-preview-rise 4.2s ease-in-out -1.4s infinite;
     box-shadow: inset -3px -3px 6px rgba(255, 255, 255, 0.06);
 }
 
@@ -846,6 +962,11 @@ function resetSettings() {
         24px 30px 0 -8px rgba(150, 200, 255, 0.3),
         /* third bubble offset */
         inset -3px -3px 6px rgba(255, 255, 255, 0.06);
+}
+
+@keyframes bubble-preview-rise {
+    0%, 100% { transform: translateY(5px); opacity: 0.55; }
+    50% { transform: translateY(-8px); opacity: 1; }
 }
 
 /* ====================================================== */
@@ -905,7 +1026,7 @@ function resetSettings() {
 
 /* --- Rain preview (Monochrome) --- */
 .preview-rain {
-    background: #0f172a;
+    background: #101016;
     /* Deep charcoal/navy */
     position: relative;
     overflow: hidden;
@@ -915,9 +1036,8 @@ function resetSettings() {
     content: '';
     position: absolute;
     inset: 0;
-    /* Use white-to-transparent for the preview streaks */
     background: linear-gradient(transparent 0%,
-            rgba(255, 255, 255, 0.2) 50%,
+            color-mix(in srgb, var(--accent-text) 78%, transparent) 50%,
             transparent 100%);
     background-size: 1.5px 25px;
     width: 100%;
@@ -974,6 +1094,100 @@ function resetSettings() {
         border-color: rgba(20, 60, 150, 0.45);
     }
 }
+
+.settings-layout {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.settings-section-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+    gap: 0.5rem;
+    overflow: visible;
+    padding: 0.5rem;
+    margin: 0 0 0.25rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--surface-bg-3) 94%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+}
+
+.settings-nav-label {
+    grid-column: 1 / -1;
+    padding: 0.25rem 0.45rem 0.1rem;
+    color: var(--accent-text-muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.settings-section-link {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid transparent;
+    border-radius: 0.7rem;
+    color: var(--surface-text-sub);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1.25;
+    text-align: center;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.settings-section-link:hover,
+.settings-section-link.active {
+    color: var(--surface-text);
+    border-color: var(--accent-border);
+    background: var(--accent-bg);
+}
+
+.settings-section {
+    scroll-margin-top: 6rem;
+}
+
+@media (min-width: 1024px) {
+    .settings-layout {
+        grid-template-columns: 13rem minmax(0, 1fr);
+        align-items: start;
+        gap: 2rem;
+    }
+
+    .settings-section-nav {
+        display: flex;
+        position: sticky;
+        top: 5rem;
+        z-index: 30;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        overflow: visible;
+        margin: 0;
+    }
+
+    .settings-nav-label {
+        padding: 0.35rem 0.85rem 0.25rem;
+    }
+
+    .settings-section-link {
+        justify-content: flex-start;
+        text-align: left;
+    }
+}
+
+@media (min-width: 1150px) {
+    .settings-section-nav {
+        top: 1.5rem;
+    }
+}
+
 </style>
 
 <!-- <style scoped>

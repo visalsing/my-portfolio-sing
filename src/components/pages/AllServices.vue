@@ -6,7 +6,8 @@
       <nav class="flex mb-8" aria-label="Breadcrumb" data-aos="fade-down">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
-            <router-link to="/#services" class="group inline-flex items-center text-sm font-medium transition-all duration-300"
+            <router-link to="/#services"
+              class="group inline-flex items-center text-sm font-medium transition-all duration-300"
               style="color: var(--surface-text-sub);">
               <div class="mr-2">
                 <HomeIcon class="breadcrumb-home-icon w-4 h-4" />
@@ -30,37 +31,54 @@
 
       <!-- ── Heading ── -->
       <div class="text-center mb-16" data-aos="fade-up">
-        <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: var(--surface-text);">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4" style="color: var(--surface-text);">
           {{ t('my1_') }}
           <span class="text-transparent bg-clip-text" :style="{ backgroundImage: 'var(--logo-gradient)' }">
             {{ t('services') }}
           </span>{{ t('_my2') }}
-        </h2>
+        </h1>
         <p class="text-lg max-w-2xl mx-auto" style="color: var(--surface-text-sub);" data-aos="fade-up"
           data-aos-delay="100">
           {{ t('services_subtitle') }}
         </p>
+
+        <!-- quick numbers -->
+        <p class="mt-5 inline-flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-sm"
+          style="color: var(--surface-text-sub);">
+          <span><b style="color: var(--surface-text);">{{ SERVICES.length }}</b> services</span>
+          <span v-for="o in statusOptions.slice(1)" :key="o.value" class="inline-flex items-center gap-1.5">
+            <i class="dot" :class="`st-${STATUS[o.value].key}`"></i>
+            <b style="color: var(--surface-text);">{{ o.count }}</b> {{ o.label.toLowerCase() }}
+          </span>
+        </p>
       </div>
 
       <!-- ── Search & Filter Controls ── -->
-      <div class="mb-12 space-y-6" data-aos="fade-up">
+      <div class="mb-12" data-aos="fade-up">
         <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
 
           <!-- Search -->
           <div class="relative w-full md:w-96">
             <MagnifyingGlassIcon class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5"
               style="color: var(--surface-text-dim);" />
-            <input v-model="searchQuery" type="text" placeholder="Search service..."
-              class="search-input w-full rounded-xl py-3 pl-10 pr-4 focus:outline-none transition-all text-sm" />
+            <input v-model="searchQuery" type="search" placeholder="Search services or tools…"
+              aria-label="Search services" autocomplete="off"
+              class="search-input w-full rounded-xl py-3 pl-10 pr-10 focus:outline-none transition-all text-sm" />
+            <button v-if="searchQuery" type="button" aria-label="Clear search" class="search-clear"
+              @click="searchQuery = ''">
+              <XMarkIcon class="w-4 h-4" />
+            </button>
           </div>
 
           <!-- Buttons -->
           <div class="flex flex-wrap gap-3 items-center justify-center">
-            <button @click="showFilters = !showFilters" class="ctrl-btn px-4 py-2 rounded-lg text-sm transition-all">
+            <button @click="showFilters = !showFilters" :aria-expanded="showFilters"
+              class="ctrl-btn px-4 py-2 rounded-lg text-sm transition-all inline-flex items-center gap-2">
               {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+              <span v-if="activeFilterCount" class="filter-badge">{{ activeFilterCount }}</span>
             </button>
             <button @click="isGrouped = !isGrouped" class="ctrl-btn px-4 py-2 rounded-lg text-sm transition-all"
-              :class="{ 'ctrl-btn-active': isGrouped }">
+              :class="{ 'ctrl-btn-active': isGrouped }" :aria-pressed="isGrouped">
               {{ isGrouped ? 'Ungroup' : 'Group by Category' }}
             </button>
             <button @click="resetFilters" class="px-4 py-2 text-sm text-red-400 hover:text-red-300 transition-colors">
@@ -69,132 +87,164 @@
           </div>
         </div>
 
-        <!-- ── Expandable Filter Panel ── -->
-        <transition name="fade">
-          <div v-if="showFilters" class="filter-panel grid grid-cols-1 md:grid-cols-2 gap-8 p-6 rounded-2xl">
-            <div>
-              <label class="block text-xs uppercase mb-3 font-bold tracking-widest"
-                style="color: var(--surface-text-sub);">
-                Filter by Category
-              </label>
-              <div class="flex flex-wrap gap-2">
-                <button v-for="cat in serviceCategories" :key="cat" @click="selectedCategory = cat"
-                  class="filter-chip px-3 py-1.5 rounded-md text-xs transition-all"
-                  :class="selectedCategory === cat ? 'filter-chip-active' : 'filter-chip-idle'">{{ cat }}</button>
-              </div>
-            </div>
-            <div>
-              <label class="block text-xs uppercase mb-3 font-bold tracking-widest"
-                style="color: var(--surface-text-sub);">
-                Filter by Type
-              </label>
-              <div class="flex flex-wrap gap-2">
-                <button v-for="tp in serviceTypes" :key="tp" @click="selectedType = tp"
-                  class="filter-chip px-3 py-1.5 rounded-md text-xs transition-all"
-                  :class="selectedType === tp ? 'filter-chip-active' : 'filter-chip-idle'">{{ tp }}</button>
-              </div>
-            </div>
-          </div>
-        </transition>
-      </div>
+        <!-- ── Expandable Filter Panel (slides open/closed) ── -->
+        <div class="panel-wrap" :class="{ 'is-open': showFilters }" :inert="!showFilters ? '' : null">
+          <div class="panel-inner">
+            <div class="panel-pad">
+              <div class="filter-panel grid grid-cols-1 md:grid-cols-3 gap-8 p-6 rounded-2xl">
 
-      <!-- ── Grouped View ── -->
-      <div v-if="filteredServices.length > 0">
-        <div v-for="group in groupedServices" :key="group.name" class="mb-12">
-
-          <!-- Group header (only when grouped) -->
-          <div v-if="isGrouped" class="flex items-center gap-4 mb-8 mt-12" data-aos="fade-right">
-            <h3 class="text-xl font-bold whitespace-nowrap bg-clip-text text-transparent"
-              :style="{ backgroundImage: 'var(--logo-gradient)', WebkitBackgroundClip: 'text' }">{{ group.name }}</h3>
-            <div class="h-[1px] w-full" style="
-                background: var(--logo-gradient);
-                mask-image: linear-gradient(to right, black, transparent);
-                -webkit-mask-image: linear-gradient(to right, black, transparent);
-                opacity: 0.5;
-              " />
-          </div>
-
-          <!-- ── Service Cards ── -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div v-for="(service, index) in group.services" :key="service.id" data-aos="fade-up"
-              :data-aos-delay="index * 100"
-              class="group relative rounded-2xl backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 cursor-default overflow-hidden flex flex-col justify-between"
-              :style="{
-                background: 'linear-gradient(to bottom right, var(--surface-card), var(--section-grad-to))',
-                border: '1px solid var(--surface-border)',
-              }" @mouseenter="e => e.currentTarget.style.borderColor = 'var(--accent-border-hover)'"
-              @mouseleave="e => e.currentTarget.style.borderColor = 'var(--surface-border)'">
-
-              <div
-                class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                :style="{ backgroundColor: 'var(--accent-glow)' }" />
-
-              <div>
-                <div class="relative w-full h-48 overflow-hidden bg-neutral-800">
-                  <img :src="service.image" :alt="service.name"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                    loading="lazy" />
-                  <div class="absolute bottom-4 left-4 z-10">
-                    <div
-                      class="inline-flex items-center justify-center w-12 h-12 rounded-xl border backdrop-blur-md shadow-lg"
-                      :style="{
-                        background: 'linear-gradient(to right, rgba(var(--icon-bg), 0.8), rgba(var(--icon-bg-2), 0.8))',
-                        borderColor: 'var(--accent-border)',
-                      }">
-                      <component :is="service.icon" class="w-6 h-6" :style="{ color: 'var(--icon-accent)' }" />
-                    </div>
+                <div class="md:col-span-3">
+                  <label class="block text-xs uppercase mb-3 font-bold tracking-widest"
+                    style="color: var(--surface-text-sub);">
+                    Filter by Category
+                  </label>
+                  <div class="flex flex-wrap gap-2">
+                    <button v-for="c in categoryOptions" :key="c.id" @click="selectedCategory = c.id"
+                      :disabled="!c.count && selectedCategory !== c.id"
+                      class="filter-chip px-3 py-1.5 rounded-md text-xs transition-all inline-flex items-center gap-1.5"
+                      :class="selectedCategory === c.id ? 'filter-chip-active' : 'filter-chip-idle'">
+                      {{ c.name }}
+                      <span class="chip-count">{{ c.count }}</span>
+                    </button>
                   </div>
                 </div>
 
-                <div class="relative z-10 p-6">
-                  <h3
-                    class="text-xl font-bold mb-3 transition-colors duration-300 group-hover:text-[var(--accent-text)]"
-                    style="color: var(--surface-text);">{{ service.name }}</h3>
-                  <p class="leading-relaxed text-sm" style="color: var(--surface-text-sub);">
-                    {{ service.desc }}
-                  </p>
+                <div class="md:col-span-2">
+                  <label class="block text-xs uppercase mb-3 font-bold tracking-widest"
+                    style="color: var(--surface-text-sub);">
+                    Filter by Type
+                  </label>
+                  <div class="flex flex-wrap gap-2">
+                    <button v-for="o in typeOptions" :key="o.id" @click="selectedType = o.id"
+                      :disabled="!o.count && selectedType !== o.id"
+                      class="filter-chip px-3 py-1.5 rounded-md text-xs transition-all inline-flex items-center gap-1.5"
+                      :class="selectedType === o.id ? 'filter-chip-active' : 'filter-chip-idle'">
+                      {{ o.name }}
+                      <span class="chip-count">{{ o.count }}</span>
+                    </button>
+                  </div>
                 </div>
+
+                <div>
+                  <label class="block text-xs uppercase mb-3 font-bold tracking-widest"
+                    style="color: var(--surface-text-sub);">
+                    Filter by Status
+                  </label>
+                  <div class="flex flex-wrap gap-2">
+                    <button v-for="o in statusChips" :key="o.id" @click="selectedStatus = o.id"
+                      :disabled="!o.count && selectedStatus !== o.id"
+                      class="filter-chip px-3 py-1.5 rounded-md text-xs transition-all inline-flex items-center gap-1.5"
+                      :class="selectedStatus === o.id ? 'filter-chip-active' : 'filter-chip-idle'">
+                      <i v-if="o.key" class="dot" :class="`st-${o.key}`"></i>
+                      {{ o.name }}
+                      <span class="chip-count">{{ o.count }}</span>
+                    </button>
+                  </div>
+                </div>
+
               </div>
-
-              <div class="relative z-10 px-6 pb-6 pt-2 flex items-center justify-between mt-auto">
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-2 py-1 rounded text-[10px] font-semibold uppercase tracking-wider"
-                    :style="{ background: 'var(--accent-bg)', border: '1px solid var(--accent-border)', color: 'var(--accent-text)' }">
-                    {{ service.category }}
-                  </span>
-                  <span class="px-2 py-1 rounded text-[10px] uppercase tracking-wider"
-                    style="background: var(--surface-bg-3); border: 1px solid var(--surface-border); color: var(--surface-text-dim);">
-                    {{ service.type }}
-                  </span>
-                </div>
-
-                <div
-                  class="opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300">
-                  <!-- <router-link to="/services/detail/"> -->
-                  <router-link :to="'/services/detail/' + service.id">
-                    <ArrowRightIcon class="w-5 h-5" :style="{ color: 'var(--icon-accent-2)' }" />
-                  </router-link>
-                </div>
-              </div>
-
             </div>
           </div>
-
         </div>
+
+        <p class="mt-4 text-center text-xs" style="color: var(--surface-text-dim);" aria-live="polite">
+          Showing {{ filteredServices.length }} of {{ SERVICES.length }} services
+        </p>
       </div>
 
-      <!-- ── Empty State ── -->
-      <div v-else class="text-center py-20">
-        <p class="text-lg" style="color: var(--surface-text-dim);">
-          No services found matching your criteria.
-        </p>
-        <button @click="resetFilters" class="mt-4 text-sm underline" style="color: var(--accent-text);">
-          Clear all filters
-        </button>
+      <!-- ── Results (its height is animated whenever the content changes) ── -->
+      <div ref="resultsEl">
+        <TransitionGroup name="block" tag="div" class="relative" @before-leave="pinLeaving">
+          <div v-for="block in blocks" :key="block.id" class="mb-12">
+
+            <!-- Group header (only when grouped) -->
+            <div v-if="block.name" class="flex items-center gap-4 mb-8 mt-12">
+              <h3 class="text-xl font-bold whitespace-nowrap bg-clip-text text-transparent"
+                :style="{ backgroundImage: 'var(--logo-gradient)', WebkitBackgroundClip: 'text' }">
+                {{ block.name }}
+              </h3>
+              <span class="block-count">{{ block.items.length }}</span>
+              <div class="h-[1px] w-full" style="
+                  background: var(--logo-gradient);
+                  mask-image: linear-gradient(to right, black, transparent);
+                  -webkit-mask-image: linear-gradient(to right, black, transparent);
+                  opacity: 0.5;
+                " />
+            </div>
+
+            <!-- ── Service Cards ── -->
+            <TransitionGroup name="card" tag="div"
+              class="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" @before-leave="pinLeaving">
+              <router-link v-for="(service, i) in block.items" :key="service.id"
+                :to="`/services/detail/${service.id}`" class="svc-card group"
+                :class="{ 'is-dim': service.status === 0 || service.status === 3 }" :style="{ '--i': i }">
+
+                <span class="svc-glow" aria-hidden="true"></span>
+
+                <div>
+                  <!-- Image -->
+                  <div class="relative w-full h-48 overflow-hidden bg-neutral-800">
+                    <img v-if="imageFor(service)" :src="imageFor(service)" :alt="service.name"
+                      class="svc-img w-full h-full object-cover" loading="lazy" @error="failed[service.id] = true" />
+                    <div v-else class="img-fallback" aria-hidden="true">
+                      <component :is="service.icon" class="w-16 h-16" />
+                    </div>
+
+                    <!-- Status badge -->
+                    <span class="status status-float" :class="`st-${STATUS[service.status].key}`">
+                      <i class="dot"></i>{{ STATUS[service.status].label }}
+                    </span>
+
+                    <!-- Icon -->
+                    <div class="absolute bottom-4 left-4 z-10">
+                      <div class="img-icon">
+                        <component :is="service.icon" class="w-6 h-6" :style="{ color: 'var(--icon-accent)' }" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="relative z-10 p-6">
+                    <h4 class="svc-name text-xl font-bold mb-3">{{ service.name }}</h4>
+                    <p class="svc-sum leading-relaxed text-sm">{{ service.summary }}</p>
+                  </div>
+                </div>
+
+                <div class="relative z-10 px-6 pb-6 pt-2 flex items-center justify-between mt-auto">
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-2 py-1 rounded text-[10px] font-semibold uppercase tracking-wider"
+                      :style="{ background: 'var(--accent-bg)', border: '1px solid var(--accent-border)', color: 'var(--accent-text)' }">
+                      {{ getCategory(service.category)?.name }}
+                    </span>
+                    <span class="px-2 py-1 rounded text-[10px] uppercase tracking-wider"
+                      style="background: var(--surface-bg-3); border: 1px solid var(--surface-border); color: var(--surface-text-dim);">
+                      {{ service.type }}
+                    </span>
+                  </div>
+
+                  <span class="svc-go">
+                    <ArrowRightIcon class="w-5 h-5" :style="{ color: 'var(--icon-accent-2)' }" />
+                  </span>
+                </div>
+              </router-link>
+            </TransitionGroup>
+          </div>
+        </TransitionGroup>
+
+        <!-- ── Empty State ── -->
+        <Transition name="fade">
+          <div v-if="!blocks.length" class="text-center py-20">
+            <p class="text-lg" style="color: var(--surface-text-dim);">
+              No services found matching your criteria.
+            </p>
+            <button @click="resetFilters" class="mt-4 text-sm underline" style="color: var(--accent-text);">
+              Clear all filters
+            </button>
+          </div>
+        </Transition>
       </div>
 
       <!-- ── CTA ── -->
-      <div class="text-center mt-16" data-aos="fade-up" data-aos-delay="800">
+      <div class="text-center mt-16" data-aos="fade-up">
         <div class="inline-flex flex-col sm:flex-row gap-4 items-center">
 
           <router-link to="/#services"
@@ -206,13 +256,14 @@
             Back to Home Page
           </router-link>
 
-          <button class="px-8 py-4 rounded-xl border-2 font-semibold transition-all duration-300 flex items-center"
+          <router-link :to="{ path: '/', hash: '#contact' }"
+            class="px-8 py-4 rounded-xl border-2 font-semibold transition-all duration-300 flex items-center"
             :style="{ borderColor: 'var(--accent-text)', color: 'var(--accent-text)' }"
             @mouseenter="e => e.currentTarget.style.backgroundColor = 'var(--accent-bg)'"
             @mouseleave="e => e.currentTarget.style.backgroundColor = 'transparent'">
             Get In Touch
             <ChatBubbleLeftRightIcon class="w-5 h-5 ml-2" />
-          </button>
+          </router-link>
 
         </div>
       </div>
@@ -222,205 +273,201 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, reactive, computed, watch, nextTick } from 'vue';
 import { t } from './../../stores/languages.js';
 import {
-  CloudArrowUpIcon, ArrowRightIcon, ChatBubbleLeftRightIcon,
-  CodeBracketIcon, CommandLineIcon, PaintBrushIcon, DocumentTextIcon,
-  CpuChipIcon, EnvelopeIcon, VideoCameraIcon, DevicePhoneMobileIcon,
-  WindowIcon, PhotoIcon, ChatBubbleBottomCenterTextIcon,
-  MagnifyingGlassCircleIcon, ServerIcon, LanguageIcon,
-  ArrowLeftCircleIcon, HomeIcon, MagnifyingGlassIcon,
+  ArrowRightIcon, ArrowLeftCircleIcon, ChatBubbleLeftRightIcon,
+  HomeIcon, MagnifyingGlassIcon, XMarkIcon,
 } from '@heroicons/vue/24/outline';
+import { SERVICES, CATEGORIES, STATUS, getCategory } from '../../data/services';
 
-// ── Filter state ──
+/* ───────── Card images (by service id) ─────────
+   Kept here so services.js stays untouched. Services without an entry
+   (or whose image fails to load) show an icon placeholder instead.
+   Later you can move these into services.js as an `image` field. */
+const unsplash = (photo) => `https://images.unsplash.com/${photo}?auto=format&fit=crop&w=500&q=80`;
+
+const IMAGES = {
+  1: unsplash('photo-1460925895917-afdab827c52f'),
+  2: unsplash('photo-1547082299-de196ea013d6'),
+  3: unsplash('photo-1555066931-4365d14bab8c'),
+  4: unsplash('photo-1531403009284-440f080d1e12'),
+  5: unsplash('photo-1512941937669-90a1b58e7e9c'),
+  6: unsplash('photo-1571171637578-41bc2dd41cd2'),
+  7: 'https://miro.medium.com/v2/resize:fit:1200/1*vWvkkgG6uvgmJT8GkId98A.png',
+  8: unsplash('photo-1526374965328-7f61d4dc18c5'),
+  9: unsplash('photo-1558494949-ef010cbdcc31'),
+  10: unsplash('photo-1517694712202-14dd9538aa97'),
+  11: unsplash('photo-1507238691740-187a5b1d37b8'),
+  12: unsplash('photo-1581291518633-83b4ebd1d83e'),
+  13: unsplash('photo-1626785774573-4b799315345d'),
+  14: unsplash('photo-1451187580459-43490279c0fa'),
+  15: unsplash('photo-1618401471353-b98afee0b2eb'),
+  16: unsplash('photo-1600132806370-bf17e65e942f'),
+  17: unsplash('photo-1563986768609-322da13575f3'),
+  18: unsplash('photo-1504384308090-c894fdcc538d'),
+  19: unsplash('photo-1518770660439-4636190af475'),
+  20: unsplash('photo-1531747118685-ca8fa6e08806'),
+  21: unsplash('photo-1455390582262-044cdead277a'),
+  22: unsplash('photo-1611162617213-7d7a39e9b1d7'),
+  23: 'https://www.fluentforfree.com/wp-content/uploads/2020/04/shutterstock_293731811-320x202.jpg',
+  24: unsplash('photo-1574717024653-61fd2cf4d44d'),
+  25: unsplash('photo-1557200134-90327ee9fafa'),
+  26: unsplash('photo-1451187580459-43490279c0fa'),
+  27: unsplash('photo-1523240795612-9a054b0db644'),
+  28: unsplash('photo-1522071820081-009f0129c71c'),
+  29: 'https://cheekymunkey.co.uk/wp-content/uploads/2017/12/itsupp.png',
+  30: unsplash('photo-1544383835-bda2bc66a55d'),
+  31: 'https://assets.cioinsight.com/uploads/2022/05/Database-Management-Systems-scaled.jpeg',
+  32: unsplash('photo-1607799279861-4dd421887fb3'),
+  33: unsplash('photo-1451187580459-43490279c0fa'),
+  34: unsplash('photo-1531403009284-440f080d1e12'),
+  35: unsplash('photo-1551288049-bebda4e38f71'),   // Data Analysis
+  36: unsplash('photo-1544197150-b99a580bb7a8'),   // Networking
+  37: unsplash('photo-1504868584819-f8e8b4b6d7e3'), // Data Support
+  38: unsplash('photo-1432888498266-38ffec3eaf0a'), // Digital Marketing
+};
+
+const failed = reactive({});                       // ids whose image failed to load
+const imageFor = (s) => (failed[s.id] ? null : IMAGES[s.id] || null);
+
+/* ───────── Filter state ───────── */
 const searchQuery = ref('');
-const selectedCategory = ref('All');
-const selectedType = ref('All');
+const selectedCategory = ref('all');
+const selectedType = ref('all');
+const selectedStatus = ref('all');
 const isGrouped = ref(false);
 const showFilters = ref(false);
 
-// // ── Filter options ──
-// // Categories map to logical groupings of the 15 services
-// const serviceCategories = ['All', 'Development', 'Design', 'Content', 'Infrastructure', 'Services'];
-// const serviceTypes      = ['All', 'Technical', 'Creative', 'Consulting'];
-// //
-// // ── Service data ──
-// // Each service has a category + type so the filter works
-// const services = ref([
-//   { id: 1,  icon: CodeBracketIcon,                  name: 'Web Frontend Development',  category: 'Development',    type: 'Technical',   desc: 'Creating beautiful, responsive, and fast user interfaces using modern tools like Vue.js, React, and Tailwind CSS.' },
-//   { id: 2,  icon: CommandLineIcon,                  name: 'Web Backend Development',   category: 'Development',    type: 'Technical',   desc: 'Building the "brains" of your application, handling server logic, and managing secure databases with Laravel and Node.js.' },
-//   { id: 3,  icon: PaintBrushIcon,                   name: 'Web Designing',             category: 'Design',         type: 'Creative',    desc: 'Designing modern and professional website layouts that look great on both desktop and mobile screens.' },
-//   { id: 4,  icon: DocumentTextIcon,                 name: 'Technical Writing',         category: 'Content',        type: 'Creative',    desc: 'Writing clear, easy-to-understand guides, documentation, and tutorials for software and coding projects.' },
-//   { id: 5,  icon: CpuChipIcon,                      name: 'API Integration & Dev',     category: 'Development',    type: 'Technical',   desc: 'Connecting different software services together and building custom APIs to share data between platforms.' },
-//   { id: 6,  icon: EnvelopeIcon,                     name: 'Email Marketing',           category: 'Services',       type: 'Consulting',  desc: 'Setting up automated email systems and newsletters to keep your customers engaged and informed.' },
-//   { id: 7,  icon: VideoCameraIcon,                  name: 'Content Creation',          category: 'Content',        type: 'Creative',    desc: 'Making educational videos and social media content to explain technology and teach coding skills.' },
-//   { id: 8,  icon: DevicePhoneMobileIcon,            name: 'Mobile App Development',    category: 'Development',    type: 'Technical',   desc: 'Building useful and smooth mobile applications for iOS and Android using Flutter and Dart.' },
-//   { id: 9,  icon: WindowIcon,                       name: 'UI/UX Design',              category: 'Design',         type: 'Creative',    desc: 'Focusing on how users interact with your app to make sure it is easy, intuitive, and enjoyable to use.' },
-//   { id: 10, icon: CloudArrowUpIcon,                 name: 'DevOps & Deployment',       category: 'Infrastructure', type: 'Technical',   desc: 'Moving your code to the cloud and managing servers on AWS or DigitalOcean to keep your site online 24/7.' },
-//   { id: 11, icon: PhotoIcon,                        name: 'Graphic Design',            category: 'Design',         type: 'Creative',    desc: 'Creating visual assets, logos, and digital graphics using Photoshop and Canva to boost your brand identity.' },
-//   { id: 12, icon: ChatBubbleBottomCenterTextIcon,   name: 'Automation & ChatBot',      category: 'Development',    type: 'Technical',   desc: 'Creating smart Telegram bots and automated workflows to save time and handle tasks automatically.' },
-//   { id: 13, icon: MagnifyingGlassCircleIcon,        name: 'System Testing',            category: 'Infrastructure', type: 'Technical',   desc: 'Testing software to find bugs and ensure everything works perfectly before it reaches your users.' },
-//   { id: 14, icon: ServerIcon,                       name: 'System Administration',     category: 'Infrastructure', type: 'Technical',   desc: 'Setting up and maintaining computers, local networks, and development environments like XAMPP or Docker.' },
-//   { id: 15, icon: LanguageIcon,                     name: 'Translation Services',      category: 'Services',       type: 'Consulting',  desc: 'Providing accurate translation and localization between Khmer, English, Chinese, and other regional languages.' },
-// ]);
+/* `skip` lets each chip row count results while ignoring its own filter. */
+const matches = (s, skip = null) => {
+  if (skip !== 'category' && selectedCategory.value !== 'all' && s.category !== selectedCategory.value) return false;
+  if (skip !== 'type' && selectedType.value !== 'all' && s.type !== selectedType.value) return false;
+  if (skip !== 'status' && selectedStatus.value !== 'all' && s.status !== selectedStatus.value) return false;
+  const q = searchQuery.value.trim().toLowerCase();
+  if (!q) return true;
+  return (
+    s.name.toLowerCase().includes(q) ||
+    s.summary.toLowerCase().includes(q) ||
+    s.stack.some(x => x.toLowerCase().includes(q))
+  );
+};
 
-// ── Filter options ──
-const serviceCategories = ['All', 'Development', 'Design & UX', 'DevOps & Sys', 'Content & Write', 'Business Services'];
-const serviceTypes = ['All', 'Technical', 'Creative', 'Consulting'];
+const STATUS_ORDER = [1, 2, 3, 0];   // Available, Learning, Paused, Not yet
+const TYPES = [...new Set(SERVICES.map(s => s.type))];
 
-// // ── Service data (28 Granular Services) ──
-// const services = ref([
-//   // --- Development: Web & Core ---
-//   { id: 1, icon: CodeBracketIcon, name: 'Web Development', category: 'Development', type: 'Technical', desc: 'End-to-end website engineering focusing on responsive structures, compliance, and optimized web performance.' },
-//   { id: 2, icon: WindowIcon, name: 'Front-end Development', category: 'Development', type: 'Technical', desc: 'Building interactive and high-speed client-side interfaces using dynamic web technologies and frameworks.' },
-//   { id: 3, icon: CommandLineIcon, name: 'Back-end Development', category: 'Development', type: 'Technical', desc: 'Designing server logic, optimizing runtime performance, and handling application business algorithms.' },
-//   { id: 4, icon: CpuChipIcon, name: 'Full-stack Development', category: 'Development', type: 'Technical', desc: 'Managing both client and server architectures flawlessly to ship independent, fully functional systems.' },
-//   { id: 5, icon: DevicePhoneMobileIcon, name: 'Mobile Development', category: 'Development', type: 'Technical', desc: 'Crafting native and cross-platform mobile apps built for performance and high hardware compatibility.' },
-//   { id: 6, icon: CodeBracketIcon, name: 'Software Development', category: 'Development', type: 'Technical', desc: 'Building custom operational desktop or enterprise software engineered for security and scaling.' },
-
-//   // --- Development: APIs ---
-//   { id: 7, icon: ServerIcon, name: 'API Design', category: 'Development', type: 'Technical', desc: 'Architecting structured API schemas following strict RESTful, gRPC, or GraphQL design standards.' },
-//   { id: 8, icon: CpuChipIcon, name: 'API Development', category: 'Development', type: 'Technical', desc: 'Writing secure server endpoints, handling request routing, data parsing, and high-load traffic profiles.' },
-//   { id: 9, icon: ArrowRightIcon, name: 'API Integration', category: 'Development', type: 'Technical', desc: 'Seamlessly weaving third-party web services, payment systems, and tools straight into your ecosystem.' },
-//   { id: 10, icon: MagnifyingGlassCircleIcon, name: 'API Testing', category: 'Development', type: 'Technical', desc: 'Validating payload data structures, integration stress, and running endpoint vulnerability audits.' },
-
-//   // --- Design & UX ---
-//   { id: 11, icon: PaintBrushIcon, name: 'Web Design', category: 'Design & UX', type: 'Creative', desc: 'Creating visual layouts and design guidelines that accurately reflect and communicate modern brand identities.' },
-//   { id: 12, icon: WindowIcon, name: 'UI/UX Design', category: 'Design & UX', type: 'Creative', desc: 'Prototyping dynamic user paths, high-fidelity wireframes, and intuitive user experiences.' },
-//   { id: 13, icon: PhotoIcon, name: 'Graphic Design', category: 'Design & UX', type: 'Creative', desc: 'Delivering vector layouts, marketing collateral, custom branding elements, and visual communication assets.' },
-
-//   // --- DevOps & System Infrastructure ---
-//   { id: 14, icon: CloudArrowUpIcon, name: 'Cloud Deployment', category: 'DevOps & Sys', type: 'Technical', desc: 'Configuring safe web setups and provisioning clean host architectures on top clouds like AWS.' },
-//   { id: 15, icon: CpuChipIcon, name: 'DevOps Engineering', category: 'DevOps & Sys', type: 'Technical', desc: 'Automating build releases via continuous delivery pipes and building isolated software runtime containers.' },
-//   { id: 16, icon: ServerIcon, name: 'System Administration', category: 'DevOps & Sys', type: 'Technical', desc: 'Tuning operating setups, controlling internal networks, and orchestrating server ecosystem stability.' },
-//   { id: 17, icon: MagnifyingGlassCircleIcon, name: 'System Testing', category: 'DevOps & Sys', type: 'Technical', desc: 'Executing comprehensive smoke, functional, performance, and sanity test sweeps on active environments.' },
-//   { id: 18, icon: CloudArrowUpIcon, name: 'System Rollout', category: 'DevOps & Sys', type: 'Technical', desc: 'Managing final live release transitions safely with low downtime and setup rollback safeguards.' },
-
-//   // --- Automation & Intelligence ---
-//   { id: 19, icon: ChatBubbleBottomCenterTextIcon, name: 'Automation Services', category: 'Development', type: 'Technical', desc: 'Scripting logical web actions to strip away manual business operations and speed up processing loops.' },
-//   { id: 20, icon: ChatBubbleLeftRightIcon, name: 'ChatBot Engineering', category: 'Development', type: 'Technical', desc: 'Programming algorithmic instant assistants across communication services for modern customer triage.' },
-
-//   // --- Content & Writing ---
-//   { id: 21, icon: DocumentTextIcon, name: 'Technical Writing', category: 'Content & Write', type: 'Creative', desc: 'Authoring clean engine architectures, system operation logs, and onboarding material for development teams.' },
-//   { id: 22, icon: VideoCameraIcon, name: 'Content Creation', category: 'Content & Write', type: 'Creative', desc: 'Designing structural content, interactive tech reviews, and strategic media campaigns across social web profiles.' },
-//   { id: 23, icon: VideoCameraIcon, name: 'YouTube Tech Content', category: 'Content & Write', type: 'Creative', desc: 'Producing tech tutorials and sharing tech insights with clear breakdowns across video platforms.' },
-//   { id: 24, icon: VideoCameraIcon, name: 'Video Editing', category: 'Content & Write', type: 'Creative', desc: 'Splicing high-retention technical footage, motion callouts, audio tuning, and cleaning up presentation clips.' },
-
-//   // --- Business Services & Localization ---
-//   { id: 25, icon: EnvelopeIcon, name: 'Email Marketing', category: 'Business Services', type: 'Consulting', desc: 'Drafting high-conversion campaign workflows and maximizing message delivery pipelines.' },
-//   { id: 26, icon: LanguageIcon, name: 'Translation Services', category: 'Business Services', type: 'Consulting', desc: 'Providing fluent semantic context bridges across regional variants, documents, and assets.' },
-//   { id: 27, icon: LanguageIcon, name: 'Polyglot Localization', category: 'Business Services', type: 'Consulting', desc: 'Adapting full platform environments to fit localized user habits, text boundaries, and currency metrics.' },
-//   { id: 28, icon: ChatBubbleLeftRightIcon, name: 'Multilingual Support', category: 'Business Services', type: 'Consulting', desc: 'Assisting operations or development teams seamlessly across multiple business languages.' },
-
-//   // --- IT Support & Operations ---
-//   { id: 29, icon: CpuChipIcon, name: 'IT Support', category: 'DevOps & Sys', type: 'Technical', desc: 'Providing technical troubleshooting, hardware/software diagnostics, environment configuration, and workspace system maintenance.' },
-
-//   // --- Database Lifecycle & Engineering ---
-//   { id: 30, icon: ServerIcon, name: 'Database Design', category: 'Development', type: 'Technical', desc: 'Architecting relational and non-relational database schemas, normalization structures, and secure data relationship blueprints.' },
-//   { id: 31, icon: CommandLineIcon, name: 'Database Management', category: 'DevOps & Sys', type: 'Technical', desc: 'Optimizing query execution plans, setting up indexing strategies, managing data backups, and maintaining engine health.' },
-//   { id: 32, icon: MagnifyingGlassCircleIcon, name: 'Database Testing', category: 'DevOps & Sys', type: 'Technical', desc: 'Validating data integrity constraints, stress testing transactional throughput, and verifying ACID compliance or schema migrations.' },
-// ]);
-const services = ref([
-  // --- Development: Web & Core ---
-  { id: 1, icon: CodeBracketIcon, name: 'Web Development', category: 'Development', type: 'Technical', desc: 'End-to-end website engineering focusing on responsive structures, compliance, and optimized web performance.', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80' },
-  { id: 2, icon: WindowIcon, name: 'Front-end Development', category: 'Development', type: 'Technical', desc: 'Building interactive and high-speed client-side interfaces using dynamic web technologies and frameworks.', image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=500&q=80' },
-  { id: 3, icon: CommandLineIcon, name: 'Back-end Development', category: 'Development', type: 'Technical', desc: 'Designing server logic, optimizing runtime performance, and handling application business algorithms.', image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=500&q=80' },
-  { id: 4, icon: CpuChipIcon, name: 'Full-stack Development', category: 'Development', type: 'Technical', desc: 'Managing both client and server architectures flawlessly to ship independent, fully functional systems.', image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=500&q=80' },
-  { id: 5, icon: DevicePhoneMobileIcon, name: 'Mobile Development', category: 'Development', type: 'Technical', desc: 'Crafting native and cross-platform mobile apps built for performance and high hardware compatibility.', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=500&q=80' },
-  { id: 6, icon: CodeBracketIcon, name: 'Software Development', category: 'Development', type: 'Technical', desc: 'Building custom operational desktop or enterprise software engineered for security and scaling.', image: 'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=500&q=80' },
-
-  // --- Development: APIs ---
-  { id: 7, icon: ServerIcon, name: 'API Design', category: 'Development', type: 'Technical', desc: 'Architecting structured API schemas following strict RESTful, gRPC, or GraphQL design standards.', image: 'https://miro.medium.com/v2/resize:fit:1200/1*vWvkkgG6uvgmJT8GkId98A.png' },
-  { id: 8, icon: CpuChipIcon, name: 'API Development', category: 'Development', type: 'Technical', desc: 'Writing secure server endpoints, handling request routing, data parsing, and high-load traffic profiles.', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=500&q=80' },
-  { id: 9, icon: ArrowRightIcon, name: 'API Integration', category: 'Development', type: 'Technical', desc: 'Seamlessly weaving third-party web services, payment systems, and tools straight into your ecosystem.', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=500&q=80' },
-  { id: 10, icon: MagnifyingGlassCircleIcon, name: 'API Testing', category: 'Development', type: 'Technical', desc: 'Validating payload data structures, integration stress, and running endpoint vulnerability audits.', image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=500&q=80' },
-
-  // --- Design & UX ---
-  { id: 11, icon: PaintBrushIcon, name: 'Web Design', category: 'Design & UX', type: 'Creative', desc: 'Creating visual layouts and design guidelines that accurately reflect and communicate modern brand identities.', image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=500&q=80' },
-  { id: 12, icon: WindowIcon, name: 'UI/UX Design', category: 'Design & UX', type: 'Creative', desc: 'Prototyping dynamic user paths, high-fidelity wireframes, and intuitive user experiences.', image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=500&q=80' },
-  { id: 13, icon: PhotoIcon, name: 'Graphic Design', category: 'Design & UX', type: 'Creative', desc: 'Delivering vector layouts, marketing collateral, custom branding elements, and visual communication assets.', image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=500&q=80' },
-
-  // --- DevOps & System Infrastructure ---
-  { id: 14, icon: CloudArrowUpIcon, name: 'Cloud Deployment', category: 'DevOps & Sys', type: 'Technical', desc: 'Configuring safe web setups and provisioning clean host architectures on top clouds like AWS.', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=500&q=80' },
-  { id: 15, icon: CpuChipIcon, name: 'DevOps Engineering', category: 'DevOps & Sys', type: 'Technical', desc: 'Automating build releases via continuous delivery pipes and building isolated software runtime containers.', image: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=500&q=80' },
-  { id: 16, icon: ServerIcon, name: 'System Administration', category: 'DevOps & Sys', type: 'Technical', desc: 'Tuning operating setups, controlling internal networks, and orchestrating server ecosystem stability.', image: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=500&q=80' },
-  { id: 17, icon: MagnifyingGlassCircleIcon, name: 'System Testing', category: 'DevOps & Sys', type: 'Technical', desc: 'Executing comprehensive smoke, functional, performance, and sanity test sweeps on active environments.', image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=500&q=80' },
-  { id: 18, icon: CloudArrowUpIcon, name: 'System Rollout', category: 'DevOps & Sys', type: 'Technical', desc: 'Managing final live release transitions safely with low downtime and setup rollback safeguards.', image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=500&q=80' },
-
-  // --- Automation & Intelligence ---
-  { id: 19, icon: ChatBubbleBottomCenterTextIcon, name: 'Automation Services', category: 'Development', type: 'Technical', desc: 'Scripting logical web actions to strip away manual business operations and speed up processing loops.', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=500&q=80' },
-  { id: 20, icon: ChatBubbleLeftRightIcon, name: 'ChatBot Engineering', category: 'Development', type: 'Technical', desc: 'Programming algorithmic instant assistants across communication services for modern customer triage.', image: 'https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?auto=format&fit=crop&w=500&q=80' },
-
-  // --- Content & Writing ---
-  { id: 21, icon: DocumentTextIcon, name: 'Technical Writing', category: 'Content & Write', type: 'Creative', desc: 'Authoring clean engine architectures, system operation logs, and onboarding material for development teams.', image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=500&q=80' },
-  { id: 22, icon: VideoCameraIcon, name: 'Content Creation', category: 'Content & Write', type: 'Creative', desc: 'Designing structural content, interactive tech reviews, and strategic media campaigns across social web profiles.', image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=500&q=80' },
-  { id: 23, icon: VideoCameraIcon, name: 'YouTube Content', category: 'Content & Write', type: 'Creative', desc: 'Producing tutorials and sharing languages learning tips and daily used vocabularies, conversations & grammar + sentece structures.', image: 'https://www.fluentforfree.com/wp-content/uploads/2020/04/shutterstock_293731811-320x202.jpg' },
-  { id: 24, icon: VideoCameraIcon, name: 'Video Editing', category: 'Content & Write', type: 'Creative', desc: 'Splicing high-retention technical footage, motion callouts, audio tuning, and cleaning up presentation clips.', image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=500&q=80' },
-
-  // --- Business Services & Localization ---
-  { id: 25, icon: EnvelopeIcon, name: 'Email Marketing', category: 'Business Services', type: 'Consulting', desc: 'Drafting high-conversion campaign workflows and maximizing message delivery pipelines.', image: 'https://images.unsplash.com/photo-1557200134-90327ee9fafa?auto=format&fit=crop&w=500&q=80' },
-  { id: 26, icon: LanguageIcon, name: 'Translation Services', category: 'Business Services', type: 'Consulting', desc: 'Providing fluent semantic context bridges across regional variants, documents, and assets.', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=500&q=80' },
-  { id: 27, icon: LanguageIcon, name: 'Polyglot Localization', category: 'Business Services', type: 'Consulting', desc: 'Adapting full platform environments to fit localized user habits, text boundaries, and currency metrics.', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=500&q=80' },
-  { id: 28, icon: ChatBubbleLeftRightIcon, name: 'Multilingual Support', category: 'Business Services', type: 'Consulting', desc: 'Assisting operations or development teams seamlessly across multiple business languages.', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=80' },
-
-  // --- IT Support & Operations ---
-  { id: 29, icon: CpuChipIcon, name: 'IT Support', category: 'DevOps & Sys', type: 'Technical', desc: 'Providing technical troubleshooting, hardware/software diagnostics, environment configuration, and workspace system maintenance.', image: 'https://cheekymunkey.co.uk/wp-content/uploads/2017/12/itsupp.png' },
-
-  // --- Database Lifecycle & Engineering ---
-  { id: 30, icon: ServerIcon, name: 'Database Design', category: 'Development', type: 'Technical', desc: 'Architecting relational and non-relational database schemas, normalization structures, and secure data relationship blueprints.', image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=500&q=80' },
-  { id: 31, icon: CommandLineIcon, name: 'Database Management', category: 'DevOps & Sys', type: 'Technical', desc: 'Optimizing query execution plans, setting up indexing strategies, managing data backups, and maintaining engine health.', image: 'https://assets.cioinsight.com/uploads/2022/05/Database-Management-Systems-scaled.jpeg' },
-  { id: 32, icon: MagnifyingGlassCircleIcon, name: 'Database Testing', category: 'DevOps & Sys', type: 'Technical', desc: 'Validating data integrity constraints, stress testing transactional throughput, and verifying ACID compliance or schema migrations.', image: 'https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=500&q=80' },
-
-// --- IT Management & Strategy ---
-  { id: 33, icon: CpuChipIcon, name: 'MIS Management', category: 'Business Services', type: 'Consulting', desc: 'Overseeing corporate information system infrastructures, optimizing internal data workflows, and aligning technology assets with business goals.', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=500&q=80' },
-  { id: 34, icon: DocumentTextIcon, name: 'Project Management', category: 'Business Services', type: 'Consulting', desc: 'Leading agile development cycles, tracking sprint delivery metrics, managing technical scopes, and ensuring on-time project rollouts.', image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=500&q=80' }
+/* header numbers (not affected by filters) */
+const statusOptions = computed(() => [
+  { value: 'all', label: 'All', count: SERVICES.length },
+  ...STATUS_ORDER
+    .filter(v => SERVICES.some(s => s.status === v))
+    .map(v => ({ value: v, label: STATUS[v].label, count: SERVICES.filter(s => s.status === v).length })),
 ]);
 
-// ── Computed ──
-const filteredServices = computed(() =>
-  services.value.filter(s => {
-    const matchesSearch = s.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      s.desc.toLowerCase().includes(searchQuery.value.toLowerCase());
-    const matchesCategory = selectedCategory.value === 'All' || s.category === selectedCategory.value;
-    const matchesType = selectedType.value === 'All' || s.type === selectedType.value;
-    return matchesSearch && matchesCategory && matchesType;
-  })
+/* chip rows (counts react to the other filters) */
+const categoryOptions = computed(() => [
+  { id: 'all', name: 'All', count: SERVICES.filter(s => matches(s, 'category')).length },
+  ...CATEGORIES.map(c => ({
+    id: c.id, name: c.name,
+    count: SERVICES.filter(s => s.category === c.id && matches(s, 'category')).length,
+  })),
+]);
+
+const typeOptions = computed(() => [
+  { id: 'all', name: 'All', count: SERVICES.filter(s => matches(s, 'type')).length },
+  ...TYPES.map(tp => ({
+    id: tp, name: tp,
+    count: SERVICES.filter(s => s.type === tp && matches(s, 'type')).length,
+  })),
+]);
+
+const statusChips = computed(() => [
+  { id: 'all', name: 'All', key: null, count: SERVICES.filter(s => matches(s, 'status')).length },
+  ...STATUS_ORDER
+    .filter(v => SERVICES.some(s => s.status === v))
+    .map(v => ({
+      id: v, name: STATUS[v].label, key: STATUS[v].key,
+      count: SERVICES.filter(s => s.status === v && matches(s, 'status')).length,
+    })),
+]);
+
+const activeFilterCount = computed(() =>
+  (searchQuery.value.trim() ? 1 : 0) +
+  (selectedCategory.value !== 'all' ? 1 : 0) +
+  (selectedType.value !== 'all' ? 1 : 0) +
+  (selectedStatus.value !== 'all' ? 1 : 0)
 );
 
-const groupedServices = computed(() => {
-  if (!isGrouped.value) {
-    return [{ name: 'All Services', services: filteredServices.value }];
-  }
-  const groups = {};
-  filteredServices.value.forEach(s => {
-    if (!groups[s.category]) groups[s.category] = [];
-    groups[s.category].push(s);
-  });
-  return Object.keys(groups).map(name => ({ name, services: groups[name] }));
+/* ───────── Results ───────── */
+const filteredServices = computed(() => SERVICES.filter(s => matches(s)));
+
+const blocks = computed(() => {
+  if (!filteredServices.value.length) return [];
+  if (!isGrouped.value) return [{ id: 'all', name: null, items: filteredServices.value }];
+  return CATEGORIES
+    .map(c => ({ id: c.id, name: c.name, items: filteredServices.value.filter(s => s.category === c.id) }))
+    .filter(b => b.items.length);
 });
 
 const resetFilters = () => {
   searchQuery.value = '';
-  selectedCategory.value = 'All';
-  selectedType.value = 'All';
+  selectedCategory.value = 'all';
+  selectedType.value = 'all';
+  selectedStatus.value = 'all';
   isGrouped.value = false;
 };
+
+/* ───────── Animation helpers ───────── */
+const resultsEl = ref(null);
+
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Before an element leaves, freeze its size and position so it can fade out
+   in place (position: absolute) while the others slide into their new spots. */
+function pinLeaving(el) {
+  el.style.width = el.offsetWidth + 'px';
+  el.style.height = el.offsetHeight + 'px';
+  el.style.left = el.offsetLeft + 'px';
+  el.style.top = el.offsetTop + 'px';
+}
+
+/* Smoothly animate the results area from its old height to its new height,
+   so the CTA below glides instead of jumping. */
+let heightAnim = null;
+
+async function animateHeightFrom(before) {
+  await nextTick();
+  const el = resultsEl.value;
+  if (!el || prefersReducedMotion()) return;
+
+  heightAnim?.cancel();
+  const after = el.offsetHeight;
+  if (Math.abs(after - before) < 2) return;
+
+  el.style.overflow = 'hidden';
+  const anim = el.animate(
+    [{ height: before + 'px' }, { height: after + 'px' }],
+    { duration: 450, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+  );
+  heightAnim = anim;
+  const done = () => {
+    if (heightAnim === anim) {
+      heightAnim = null;
+      el.style.overflow = '';
+    }
+  };
+  anim.onfinish = done;
+  anim.oncancel = done;
+}
+
+/* flush: 'sync' runs this BEFORE the DOM updates, so we can read the old height. */
+watch([searchQuery, selectedCategory, selectedType, selectedStatus, isGrouped], () => {
+  animateHeightFrom(resultsEl.value ? resultsEl.value.offsetHeight : 0);
+}, { flush: 'sync' });
 </script>
 
 <style scoped>
-/* ── Fade transition (filter panel) ── */
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.3s ease-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
 /* ── Search input ── */
 .search-input {
   background: var(--surface-card);
@@ -434,6 +481,36 @@ const resetFilters = () => {
 
 .search-input::placeholder {
   color: var(--surface-text-dim);
+}
+
+/* hide the browser's built-in clear (white X): we use our own on the right */
+.search-input::-webkit-search-cancel-button,
+.search-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+.search-input::-ms-clear {
+  display: none;
+}
+
+.search-clear {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+  color: var(--surface-text-sub);
+}
+
+.search-clear:hover {
+  background: var(--accent-bg);
+  color: var(--accent-text);
 }
 
 /* ── Control buttons ── */
@@ -454,7 +531,39 @@ const resetFilters = () => {
   color: #fff !important;
 }
 
-/* ── Filter panel ── */
+.filter-badge {
+  min-width: 1.25rem;
+  padding: 0.02rem 0.35rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  background: var(--accent-mid);
+}
+
+/* ── Filter panel: slides open/closed ── */
+.panel-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+
+.panel-wrap.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.panel-pad {
+  padding-top: 1.5rem;
+}
+
 .filter-panel {
   background: var(--surface-card);
   border: 1px solid var(--surface-border);
@@ -468,15 +577,307 @@ const resetFilters = () => {
   color: var(--surface-text-sub);
 }
 
-.filter-chip-idle:hover {
+.filter-chip-idle:hover:not(:disabled) {
   background: var(--surface-bg-2);
   color: var(--surface-text);
+}
+
+.filter-chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .filter-chip-active {
   background: var(--accent-mid);
   color: #fff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.chip-count {
+  font-size: 0.65rem;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+/* ── Group header count ── */
+.block-count {
+  padding: 0.05rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-text);
+  background: var(--accent-bg);
+}
+
+/* ── Cards ── */
+.svc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border-radius: 1rem;
+  backdrop-filter: blur(4px);
+  background: linear-gradient(to bottom right, var(--surface-card), var(--section-grad-to));
+  border: 1px solid var(--surface-border);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.svc-card:hover,
+.svc-card:focus-visible {
+  transform: translateY(-6px);
+  border-color: var(--accent-border-hover);
+  box-shadow: 0 16px 34px -20px var(--accent-shadow);
+}
+
+.svc-card:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+.svc-card.is-dim {
+  opacity: 0.6;
+}
+
+.svc-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-color: var(--accent-glow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.svc-card:hover .svc-glow {
+  opacity: 1;
+}
+
+.svc-img {
+  opacity: 0.8;
+  transition: transform 0.7s ease, opacity 0.7s ease;
+}
+
+.svc-card:hover .svc-img {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.img-fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--icon-accent);
+  background: linear-gradient(135deg, var(--icon-bg), var(--icon-bg-2));
+}
+
+.img-fallback svg {
+  opacity: 0.35;
+}
+
+.img-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--accent-border);
+  background: linear-gradient(to right, var(--icon-bg), var(--icon-bg-2));
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.4);
+}
+
+.svc-name {
+  color: var(--surface-text);
+  transition: color 0.3s ease;
+}
+
+.svc-card:hover .svc-name {
+  color: var(--accent-text);
+}
+
+.svc-sum {
+  color: var(--surface-text-sub);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.svc-go {
+  opacity: 0;
+  transform: translateX(1rem);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.svc-card:hover .svc-go,
+.svc-card:focus-visible .svc-go {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* touch devices have no hover: keep the arrow visible */
+@media (hover: none) {
+  .svc-go {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Status badge ── */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.18rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.status-float {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+.st-available {
+  color: #34d399;
+}
+
+.st-learning {
+  color: #fbbf24;
+}
+
+.st-planned {
+  color: #f87171;
+}
+
+.st-paused {
+  color: #94a3b8;
+}
+
+.status.st-available {
+  background: color-mix(in srgb, #34d399 22%, rgba(0, 0, 0, 0.35));
+  border-color: color-mix(in srgb, #34d399 40%, transparent);
+}
+
+.status.st-learning {
+  background: color-mix(in srgb, #fbbf24 22%, rgba(0, 0, 0, 0.35));
+  border-color: color-mix(in srgb, #fbbf24 40%, transparent);
+}
+
+.status.st-planned {
+  background: color-mix(in srgb, #f87171 22%, rgba(0, 0, 0, 0.35));
+  border-color: color-mix(in srgb, #f87171 40%, transparent);
+}
+
+.status.st-paused {
+  background: color-mix(in srgb, #94a3b8 22%, rgba(0, 0, 0, 0.35));
+  border-color: color-mix(in srgb, #94a3b8 40%, transparent);
+}
+
+/* ───────── Filter animations ───────── */
+
+/* cards: fade + scale out in place, slide into new spots, fade in with a small stagger */
+.svc-card.card-enter-active {
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(min(var(--i, 0), 8) * 35ms);
+}
+
+.svc-card.card-leave-active {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.svc-card.card-move {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-enter-from {
+  opacity: 0;
+  transform: translateY(14px) scale(0.97);
+}
+
+.card-leave-to {
+  opacity: 0;
+  transform: scale(0.94);
+}
+
+/* category blocks (grouped view) */
+.block-enter-active {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.block-leave-active {
+  position: absolute;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.block-move {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.block-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.block-leave-to {
+  opacity: 0;
+}
+
+/* empty state */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .panel-wrap,
+  .svc-card,
+  .svc-img,
+  .svc-go,
+  .svc-card.card-enter-active,
+  .svc-card.card-leave-active,
+  .svc-card.card-move,
+  .block-enter-active,
+  .block-leave-active,
+  .block-move,
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: none;
+    transition-delay: 0s;
+  }
+
+  .svc-card:hover,
+  .svc-card:hover .svc-img {
+    transform: none;
+  }
 }
 
 /* ── Breadcrumb hover: text ── */
