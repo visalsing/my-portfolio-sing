@@ -29,6 +29,8 @@ const deviconAssetNames = { html5: "html", css3: "css", react: "reactjs" };
 
 const color = (src) => ({ src, mono: false });
 const mono = (src) => ({ src, mono: true });
+const assetColor = (name, fallback) =>
+  techSvgByName[name] ? color(techSvgByName[name]) : fallback;
 const dev = (name) => {
   const assetName = deviconAssetNames[name] || name;
   return color(
@@ -264,19 +266,21 @@ const LOGOS = {
   microsoftoffice: OFFICE,
   microsoft365: OFFICE,
   office365: OFFICE,
-  microsoftword: WORD,
-  microsoftexcel: EXCEL,
-  microsoftpowerpoint: POWERPOINT,
+  microsoftword: assetColor("word", WORD),
+  microsoftexcel: assetColor("excel", EXCEL),
+  microsoftpowerpoint: assetColor("powerpoint", POWERPOINT),
+  powerbi: assetColor("power-bi", null),
+  tableau: assetColor("tableau", null),
   googleworkspace: dev("google"),
-  googledocs: GDOCS,
-  googlesheets: GSHEETS,
-  googleslides: GSLIDES,
-  notion: NOTION,
+  googledocs: assetColor("googledocs", GDOCS),
+  googlesheets: assetColor("googlesheets", GSHEETS),
+  googleslides: assetColor("googleslides", GSLIDES),
+  notion: assetColor("notion", NOTION),
 
   // LLMs & AI assistants
-  claude: lobe("claude-color"),
-  gemini: lobe("gemini-color"),
-  chatgpt: OPENAI,
+  claude: assetColor("claude", lobe("claude-color")),
+  gemini: assetColor("gemini", lobe("gemini-color")),
+  chatgpt: assetColor("chatgpt", OPENAI),
   openai: OPENAI,
   copilot: lobe("copilot-color"),
   microsoftcopilot: lobe("copilot-color"),
@@ -287,4 +291,7 @@ const normalize = (name) =>
     .toLowerCase()
     .replace(/[\s.\-_]/g, "");
 
-export const logoFor = (name) => LOGOS[normalize(name)] || null;
+export const logoFor = (name) => {
+  const key = normalize(name);
+  return LOGOS[key] || (techSvgByName[key] ? color(techSvgByName[key]) : null);
+};

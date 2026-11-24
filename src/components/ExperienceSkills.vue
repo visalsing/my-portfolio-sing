@@ -25,7 +25,9 @@
                     </h3>
 
                     <div class="space-y-6">
-                        <div v-for="skill in skills" :key="skill.id" class="group">
+                        <div v-for="skill in skills" :key="skill.id" class="group"
+                            :ref="registerProgressTarget" :data-progress-key="`technical-${skill.id}`"
+                            :data-progress-target="skill.percentage">
                             <div class="flex items-center justify-between mb-3">
                                 <span class="font-semibold flex items-center gap-2"
                                     :style="{ color: 'var(--accent-text-muted)' }">
@@ -35,13 +37,13 @@
                                 </span>
                                 <span class="text-sm"
                                     :style="{ color: skill.useAccent2 ? 'var(--icon-accent-2)' : 'var(--icon-accent)' }">
-                                    {{ skill.percentage }} %
+                                    {{ animatedPercent(`technical-${skill.id}`) }} %
                                 </span>
                             </div>
                             <div class="h-2 bg-[var(--bg-surface-percent)] rounded-full overflow-hidden">
-                                <div class="h-full rounded-full transition-all duration-1000 group-hover:brightness-125"
+                                <div class="h-full rounded-full group-hover:brightness-125"
                                     :style="{
-                                        width: skill.percentage + '%',
+                                        width: animatedPercent(`technical-${skill.id}`) + '%',
                                         background: 'var(--cta-gradient)'
                                     }"></div>
                             </div>
@@ -79,20 +81,22 @@
                             </router-link>
                         </h3>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
-                            <div v-for="skill in softSkills" :key="skill.id" class="flex flex-col items-center group">
+                            <div v-for="skill in softSkills" :key="skill.id" class="flex flex-col items-center group"
+                                :ref="registerProgressTarget" :data-progress-key="`soft-${skill.id}`"
+                                :data-progress-target="skill.percentage">
                                 <div class="relative w-24 h-24 mb-4">
                                     <svg class="w-full h-full transform -rotate-90">
                                         <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6"
                                             fill="transparent" class="text-[var(--bg-surface-percent)]" />
                                         <circle cx="48" cy="48" r="40" stroke-width="6" fill="transparent"
                                             :stroke-dasharray="2 * Math.PI * 40"
-                                            :stroke-dashoffset="2 * Math.PI * 40 * (1 - skill.percentage / 100)"
+                                            :stroke-dashoffset="2 * Math.PI * 40 * (1 - animatedPercent(`soft-${skill.id}`) / 100)"
                                             stroke-linecap="round"
-                                            class="transition-all duration-1000 group-hover:brightness-125"
+                                            class="group-hover:brightness-125"
                                             :style="{ stroke: skill.useAccent2 ? 'var(--icon-accent-2)' : 'var(--icon-accent)' }" />
                                     </svg>
                                     <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                        <span class="text-[var(--surface-text)] font-bold text-lg">{{ skill.percentage
+                                        <span class="text-[var(--surface-text)] font-bold text-lg">{{ animatedPercent(`soft-${skill.id}`)
                                         }}%</span>
                                     </div>
                                 </div>
@@ -111,7 +115,9 @@
                     </h3>
 
                     <div class="space-y-6">
-                        <div v-for="language in languages" :key="language.id" class="group">
+                        <div v-for="language in languages" :key="language.id" class="group"
+                            :ref="registerProgressTarget" :data-progress-key="`language-${language.id}`"
+                            :data-progress-target="language.percentage">
                             <div class="flex items-center justify-between mb-3">
                                 <span class="font-semibold flex items-center gap-2"
                                     :style="{ color: 'var(--accent-text-muted)' }">
@@ -123,13 +129,13 @@
                                 </span>
                                 <span class="text-sm"
                                     :style="{ color: language.useAccent2 ? 'var(--icon-accent-2)' : 'var(--icon-accent)' }">
-                                    {{ language.percentage }} %
+                                    {{ animatedPercent(`language-${language.id}`) }} %
                                 </span>
                             </div>
                             <div class="h-2 bg-[var(--bg-surface-percent)] rounded-full overflow-hidden">
-                                <div class="h-full rounded-full transition-all duration-1000 group-hover:brightness-125"
+                                <div class="h-full rounded-full group-hover:brightness-125"
                                     :style="{
-                                        width: language.percentage + '%',
+                                        width: animatedPercent(`language-${language.id}`) + '%',
                                         background: 'var(--cta-gradient)'
                                     }"></div>
                             </div>
@@ -247,13 +253,13 @@
                 </div>
 
                 <!-- Work Experience -->
-                <div data-aos="fade-left">
+                <div ref="experienceRoot" data-aos="fade-left">
                     <h3 class="text-2xl font-bold text-[var(--surface-text)] mb-8 flex items-center gap-3">
                         <BriefcaseIcon class="w-8 h-8" :style="{ color: 'var(--icon-accent-2)' }" />
                         {{ t('work_experience') }}
                     </h3>
                     <div class="timeline-list space-y-8">
-                        <div v-for="exp in experiences" :key="exp.id" data-exp-card
+                        <div v-for="exp in experiences.slice(0, showMoreExperience ? experiences.length : 3)" :key="exp.id" data-exp-card
                             class="timeline-item group scroll-mt-24">
                             <div class="timeline-node rounded-full group-hover:scale-110 transition-transform duration-300"
                                 :style="{ backgroundColor: exp.useAccent2 ? 'var(--icon-accent-2)' : 'var(--icon-accent)' }">
@@ -263,15 +269,15 @@
                                 borderColor: exp.useAccent2 ? 'var(--accent-border-2-soft)' : 'var(--section-border)'
                             }" @mouseenter="e => e.currentTarget.style.borderColor = 'var(--accent-border-hover)'"
                                 @mouseleave="e => e.currentTarget.style.borderColor = exp.useAccent2 ? 'var(--accent-border-2-soft)' : 'var(--section-border)'">
-                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
-                                    <h4 class="text-lg font-bold text-[var(--surface-text)]">{{ exp.position }}</h4>
-                                    <div class="mt-1 sm:mt-0 flex flex-wrap items-center gap-2">
-                                        <span class="text-sm font-semibold"
+                                <div class="flex items-start justify-between gap-3 mb-3">
+                                    <h4 class="min-w-0 flex-1 text-lg font-bold text-[var(--surface-text)]">{{ exp.position }}</h4>
+                                    <div class="shrink-0 flex flex-col items-end gap-2 text-right">
+                                        <span class="whitespace-nowrap text-xs sm:text-sm font-semibold"
                                             :style="{ color: exp.useAccent2 ? 'var(--icon-accent-2)' : 'var(--icon-accent)' }">
                                             {{ exp.period }}
                                         </span>
                                         <span v-if="exp.working_status === 1 || exp.working_status === 2"
-                                            class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide"
+                                            class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-wide"
                                             :style="exp.working_status === 1
                                                 ? { color: '#34d399', backgroundColor: 'rgba(52, 211, 153, 0.10)', borderColor: 'rgba(52, 211, 153, 0.35)' }
                                                 : { color: '#fbbf24', backgroundColor: 'rgba(251, 191, 36, 0.10)', borderColor: 'rgba(251, 191, 36, 0.35)' }">
@@ -321,6 +327,16 @@
                                 </button>
                             </div>
                         </div>
+                    </div>
+                    <div v-if="experiences.length > 3" class="flex justify-center my-8">
+                        <button @click="toggleExperiences" :aria-expanded="showMoreExperience"
+                            class="px-6 py-2 text-white rounded-full font-bold transition-all flex items-center gap-2 cursor-pointer active:scale-95"
+                            :style="{ background: 'var(--cta-gradient)', boxShadow: '0 4px 15px var(--accent-shadow)' }"
+                            @mouseenter="e => e.currentTarget.style.filter = 'brightness(1.15)'"
+                            @mouseleave="e => e.currentTarget.style.filter = 'brightness(1)'">
+                            {{ showMoreExperience ? t('show_less') : t('click_to_see_more') }}
+                            <component :is="showMoreExperience ? ChevronUpIcon : ChevronDownIcon" class="w-5 h-5" />
+                        </button>
                     </div>
                 </div>
             </div>
@@ -424,9 +440,9 @@
                             }" @mouseenter="e => e.currentTarget.style.borderColor = 'var(--accent-border-hover)'"
                                 @mouseleave="e => e.currentTarget.style.borderColor = additionalSkill.useAccent2 ? 'var(--accent-border-2-soft)' : 'var(--section-border)'">
                                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
-                                    <h4 class="text-lg font-bold text-[var(--surface-text)]">{{ additionalSkill.position
+                                    <h4 class="min-w-0 text-lg font-bold text-[var(--surface-text)]">{{ additionalSkill.position
                                     }}</h4>
-                                    <span class="mt-1 sm:mt-0 text-sm font-semibold"
+                                    <span class="mt-1 sm:mt-0 sm:whitespace-nowrap text-sm font-semibold"
                                         :style="{ color: additionalSkill.useAccent2 ? 'var(--icon-accent-2)' : 'var(--icon-accent)' }">{{
                                             additionalSkill.period }}</span>
                                 </div>
@@ -459,7 +475,7 @@ import {
     ArrowUpTrayIcon,
     CursorArrowRippleIcon
 } from '@heroicons/vue/16/solid';
-import { ref, computed } from 'vue';
+import { ref, reactive, computed, onMounted, onUnmounted } from 'vue';
 import { t } from './../stores/languages.js';
 import Reveal from './Reveal.vue';
 import ExpandableText from './ExpandableText.vue';
@@ -467,12 +483,88 @@ import TechChip from './TechChip.vue';
 
 const showMore = ref(false);
 const showMoreEducation = ref(false);
+const showMoreExperience = ref(false);
+const progressValues = reactive({});
+const progressElements = new Set();
+const progressRafs = new Map();
+let progressObserver = null;
+
+const registerProgressTarget = (element) => {
+    if (element) progressElements.add(element);
+};
+
+const animatedPercent = (key) => progressValues[key] ?? 0;
+
+function animateProgress(element) {
+    const { progressKey, progressTarget } = element.dataset;
+    const target = Number(progressTarget);
+    if (!progressKey || !Number.isFinite(target)) return;
+
+    const previousRaf = progressRafs.get(element);
+    if (previousRaf !== undefined) cancelAnimationFrame(previousRaf);
+    progressRafs.delete(element);
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        progressValues[progressKey] = target;
+        return;
+    }
+
+    const duration = 1400;
+    const start = performance.now();
+    let rafId;
+    const step = (now) => {
+        if (progressRafs.get(element) === rafId) progressRafs.delete(element);
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        progressValues[progressKey] = Math.round(target * eased);
+
+        if (progress < 1) {
+            rafId = requestAnimationFrame(step);
+            progressRafs.set(element, rafId);
+        } else {
+            progressValues[progressKey] = target;
+        }
+    };
+
+    rafId = requestAnimationFrame(step);
+    progressRafs.set(element, rafId);
+}
+
+onMounted(() => {
+    if ('IntersectionObserver' in window) {
+        progressObserver = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                const element = entry.target;
+                if (entry.isIntersecting) {
+                    animateProgress(element);
+                } else {
+                    const { progressKey } = element.dataset;
+                    const rafId = progressRafs.get(element);
+                    if (rafId !== undefined) cancelAnimationFrame(rafId);
+                    progressRafs.delete(element);
+                    if (progressKey) progressValues[progressKey] = 0;
+                }
+            }
+        }, { threshold: 0.35 });
+
+        progressElements.forEach((element) => progressObserver.observe(element));
+    } else {
+        progressElements.forEach(animateProgress);
+    }
+});
+
+onUnmounted(() => {
+    progressObserver?.disconnect();
+    progressRafs.forEach((rafId) => cancelAnimationFrame(rafId));
+    progressRafs.clear();
+});
 
 /* ───────── See more / See less helpers ─────────
    Same behavior as Services.vue: the content slides open/closed, and on "See less"
    the page scrolls back to the top of that block if it is currently above the viewport. */
 const techRoot = ref(null);
 const educationRoot = ref(null);
+const experienceRoot = ref(null);
 
 const prefersReducedMotion = () =>
     typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -492,6 +584,12 @@ function toggleEducation() {
     const closing = showMoreEducation.value;
     showMoreEducation.value = !showMoreEducation.value;
     if (closing) scrollBackTo(educationRoot.value);
+}
+
+function toggleExperiences() {
+    const closing = showMoreExperience.value;
+    showMoreExperience.value = !showMoreExperience.value;
+    if (closing) scrollBackTo(experienceRoot.value);
 }
 
 // ── Technical Skills ────────────────────────────────────────
@@ -543,14 +641,57 @@ const hobbiesInterests = [
 // ── Experiences ─────────────────────────────────────────────
 const experiences = [
     {
+        id: 4,
+        useAccent2: false,
+        working_status: 1,
+        position: "Freelance Full-Stack Developer",
+        company: "Café ខ្មោច",
+        period: "Sep 2026 - Present",
+        desc: "Developing an ongoing café platform that combines point-of-sale (POS) and e-commerce features. I began this first freelance project on September 28, 2026.",
+        desc_groups: [
+            {
+                title: "Frontend",
+                points: ["HTML, CSS, JavaScript, React.js, Vite.js, and Tailwind CSS."],
+            },
+            {
+                title: "Backend & Database",
+                points: ["Node.js, Express.js, SQL, PostgreSQL, and NeonDB."],
+            },
+            {
+                title: "Tools, APIs & Deployment",
+                points: ["Git, GitHub, REST APIs, Postman, EmailJS, Telegram, PWA, Vercel, Render, Claude, Codex, and Gemini."],
+            },
+        ],
+    },
+    {
         id: 1,
         useAccent2: true,
         working_status: 1,
-        position: "System Rollouts & Data Support Specialist",
+        position: "Data Support Specialist",
+        company: "Unilever",
+        period: "Sep 2026 - Dec 2026",
+        desc: "Supporting data operations at Unilever from September 16 to December 15, 2026.",
+        desc_groups: [
+            {
+                title: "Data Support",
+                points: [
+                    "Data Entry: Updated and maintained records using Excel and internal systems.",
+                    "Data Checks: Reviewed information for missing or inconsistent entries and followed up when details needed clarification.",
+                    "Organization: Used Excel to organize, sort, and filter data for team reference.",
+                    "Team Support: Helped colleagues locate, update, and understand information in the system.",
+                    "Coordination: Worked with team members to collect and verify information needed for accurate records."
+                ]
+            }
+        ],
+    },
+    {
+        id: 5,
+        useAccent2: false,
+        working_status: 0,
+        position: "System Rollouts Support Specialist",
         company: "Unilever",
         period: "Jun 2026 - Dec 2026",
-        duration: "6 months",
-        desc: "Supported system rollouts and data operations at Unilever from 16 June to 15 December 2026.",
+        desc: "Supported system rollouts at Unilever from June 16 to December 15, 2026. This assignment ended before I moved into Data Support.",
         desc_groups: [
             {
                 title: "System Rollouts",
@@ -562,16 +703,6 @@ const experiences = [
                     "Adaptability: Adjusted explanations and support to suit each team's needs and level of technical experience."
                 ],
             },
-            {
-                title: "Data Support",
-                points: [
-                    "Data Entry: Updated and maintained records using Excel and internal systems.",
-                    "Data Checks: Reviewed information for missing or inconsistent entries and followed up when details needed clarification.",
-                    "Organization: Used Excel to organize, sort, and filter data for team reference.",
-                    "Team Support: Helped colleagues locate, update, and understand information in the system.",
-                    "Coordination: Worked with team members to collect and verify information needed for accurate records."
-                ]
-            }
         ],
     },
     {
@@ -640,9 +771,9 @@ const educationHistory = [
         id: 2, useAccent2: true,
         position: "Basic Web and PHP + Laravel Course", company: "Instinct Institute", period: "2023 - 2024",
         desc: `
-        A focused short course where I moved from basic web tools to full-stack logic. 
-        I mastered PHP and MySQL for database management, built complete CRUD applications, and 
-        learned to structure clean, professional code using the Laravel MVC framework.
+        A focused course covering front-end and back-end web development. I learned HTML, CSS, JavaScript,
+        Bootstrap, jQuery, Git, and GitHub, along with the basics of deployment and hosting. On the back end,
+        I studied PHP, SQL, MySQL, Laravel, Blade templates, and local development with WAMP.
         `,
     },
     {
@@ -673,8 +804,8 @@ const additionalSkills = [
     },
     {
         id: 2, useAccent2: true,
-        position: "Small Content Creator", company: "Independent Content Creator", period: "2022 - 2026 (Present)",
-        desc: "Create and share educational content on YouTube dedicated to language learning, with a primary focus on teaching the Lao language. Manage the channel independently, translating personal knowledge into clear, accessible video lessons for viewers looking to learn a new language.",
+        position: "Independent Lao Language Content Sharer", company: "Personal YouTube Channel", period: "Nov 2025 - Present",
+        desc: "Since November 2, 2025, I have independently created and shared content about the Lao language on YouTube. I draw on my personal knowledge and interest to make Lao language content approachable for people who want to explore it. This is a self-directed knowledge-sharing activity; I do not present myself as a professional teacher or tutor.",
     },
 ];
 
@@ -691,11 +822,12 @@ const devopsDeployments = ['Git', 'GitHub', 'GitLab', 'Netlify', 'Vercel', 'Rend
 const developmenttools = ['VS Code', 'WAMP', 'Ngrok', 'Navicat'];
 const designs = ['Figma', 'Photoshop', 'Canva', 'Responsive Design'];
 const productivities = [
-    'Microsoft Office', 'Microsoft Word', 'Microsoft Excel', 'Microsoft PowerPoint',
-    'Google Workspace', 'Google Docs', 'Google Sheets', 'Google Slides',
+    'Microsoft Word', 'Microsoft Excel', 'Microsoft PowerPoint',
+    'Google Docs', 'Google Sheets', 'Google Slides',
     'Notion', 'Basic Computer Fundamentals',
 ];
 const aiAssistants = ['Claude', 'Gemini', 'ChatGPT', 'Copilot'];
+const dataAnalytics = ['Power BI', 'Tableau'];
 
 const techStack = [
     { id: 1, title: "Front-end", icon: CodeBracketIcon, useAccent2: false, stack: frontends },
@@ -710,6 +842,7 @@ const techStack = [
     { id: 10, title: "Designs", icon: SwatchIcon, useAccent2: true, stack: designs },
     { id: 11, title: "Productivities", icon: ClipboardDocumentIcon, useAccent2: false, stack: productivities },
     { id: 12, title: "LLMs & AI Assistants", icon: SparklesIcon, useAccent2: true, stack: aiAssistants },
+    { id: 13, title: "Data Analytics & BI", icon: CircleStackIcon, useAccent2: false, stack: dataAnalytics },
 ];
 </script>
 

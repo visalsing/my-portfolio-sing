@@ -7,9 +7,10 @@
 
     <div class="flex items-center gap-2 relative z-[1100]">
       <img :src="logoSrc" alt="Logo" class="w-8 h-8 object-contain rounded-xl" />
-      <div class="text-xl sm:text-2xl font-bold bg-clip-text text-transparent"
-        :style="{ backgroundImage: 'var(--logo-gradient)' }">
-        Dev <span class="font-black">Portfolio</span>
+      <div class="flex flex-col leading-tight">
+        <span class="text-lg sm:text-xl font-bold bg-clip-text text-transparent"
+          :style="{ backgroundImage: 'var(--logo-gradient)' }">So Visalsing</span>
+        <span class="mt-0.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--surface-text-sub)]">Developer Portfolio</span>
       </div>
     </div>
 
@@ -47,7 +48,7 @@
           <template v-if="item.name !== 'more'">
             <a :href="item.href"
               class="relative inline-block transition-colors duration-300 text-lg sm:text-xl font-medium tracking-wide"
-              :style="{ color: activeSection === item.href ? 'var(--accent-text)' : '' }"
+              :style="{ color: activeSection === item.href ? 'color-mix(in srgb, var(--accent-text) 72%, #000 28%)' : '' }"
               :class="activeSection !== item.href ? 'text-gray-400' : ''"
               @mouseenter="e => { if (activeSection !== item.href) e.currentTarget.style.color = 'var(--accent-text)' }"
               @mouseleave="e => { if (activeSection !== item.href) e.currentTarget.style.color = '' }"
@@ -55,7 +56,7 @@
               {{ t(item.name) }}
               <span class="absolute -bottom-1 left-0 h-0.5 transition-all duration-300"
                 :class="activeSection === item.href ? 'w-full' : 'w-0 group-hover:w-full'"
-                :style="{ backgroundColor: 'var(--accent-text)' }"></span>
+                :style="{ backgroundColor: activeSection === item.href ? 'color-mix(in srgb, var(--accent-text) 72%, #000 28%)' : 'var(--accent-text)' }"></span>
             </a>
           </template>
 
@@ -104,7 +105,7 @@
           <template v-if="item.name !== 'more'">
             <a :href="item.href"
               class="relative block transition-colors duration-300 text-sm font-medium tracking-wide"
-              :style="{ color: activeSection === item.href ? 'var(--accent-text)' : '' }"
+              :style="{ color: activeSection === item.href ? 'color-mix(in srgb, var(--accent-text) 72%, #000 28%)' : '' }"
               :class="activeSection !== item.href ? 'text-gray-400' : ''"
               @mouseenter="e => { if (activeSection !== item.href) e.currentTarget.style.color = 'var(--accent-text)' }"
               @mouseleave="e => { if (activeSection !== item.href) e.currentTarget.style.color = '' }"
@@ -112,7 +113,7 @@
               {{ t(item.name) }}
               <span class="absolute -bottom-1 left-0 h-0.5 transition-all duration-300"
                 :class="activeSection === item.href ? 'w-full' : 'w-0 group-hover:w-full'"
-                :style="{ backgroundColor: 'var(--accent-text)' }"></span>
+                :style="{ backgroundColor: activeSection === item.href ? 'color-mix(in srgb, var(--accent-text) 72%, #000 28%)' : 'var(--accent-text)' }"></span>
             </a>
           </template>
 
@@ -165,9 +166,10 @@
 
     <div class="flex items-center gap-2">
       <img :src="logoSrc" alt="Logo" class="w-8 h-8 object-contain rounded-xl" />
-      <div class="text-3xl font-bold bg-clip-text text-transparent"
-        :style="{ backgroundImage: 'var(--logo-gradient)' }">
-        Dev <span class="font-black">Portfolio</span>
+      <div class="flex flex-col leading-tight">
+        <span class="text-xl 2xl:text-2xl font-bold bg-clip-text text-transparent"
+          :style="{ backgroundImage: 'var(--logo-gradient)' }">So Visalsing</span>
+        <span class="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[var(--surface-text-sub)]">Developer Portfolio</span>
       </div>
     </div>
 
@@ -178,7 +180,7 @@
           <template v-if="item.name !== 'more'">
             <a :href="item.href"
               class="relative block transition-colors duration-300 text-sm font-medium tracking-wide"
-              :style="{ color: activeSection === item.href ? 'var(--accent-text)' : '' }"
+              :style="{ color: activeSection === item.href ? 'color-mix(in srgb, var(--accent-text) 72%, #000 28%)' : '' }"
               :class="activeSection !== item.href ? 'text-gray-400' : ''"
               @mouseenter="e => { if (activeSection !== item.href) e.currentTarget.style.color = 'var(--accent-text)' }"
               @mouseleave="e => { if (activeSection !== item.href) e.currentTarget.style.color = '' }"
@@ -186,7 +188,7 @@
               {{ t(item.name) }}
               <span class="absolute -bottom-1 left-0 h-0.5 transition-all duration-300"
                 :class="activeSection === item.href ? 'w-full' : 'w-0 group-hover:w-full'"
-                :style="{ backgroundColor: 'var(--accent-text)' }"></span>
+                :style="{ backgroundColor: activeSection === item.href ? 'color-mix(in srgb, var(--accent-text) 72%, #000 28%)' : 'var(--accent-text)' }"></span>
             </a>
           </template>
 

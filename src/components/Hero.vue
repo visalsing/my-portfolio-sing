@@ -189,14 +189,6 @@
                                     <span class="scan-label">SCANNING</span>
                                 </div>
 
-                                <!-- Corner labels -->
-                                <span class="compare-chip" :style="{ left: '12px', opacity: split > 22 ? 1 : 0 }">
-                                    B&amp;W
-                                </span>
-                                <span class="compare-chip" :style="{ right: '12px', opacity: split < 78 ? 1 : 0 }">
-                                    Color
-                                </span>
-
                                 <!-- Divider bar + handle -->
                                 <div class="compare-bar" :style="{ left: split + '%' }">
                                     <span class="compare-line" aria-hidden="true"></span>
@@ -210,6 +202,14 @@
                                     </button>
                                 </div>
                             </div>
+
+                            <!-- Keep labels outside the clipped compare stage so rounded frames cannot cut them off. -->
+                            <span class="compare-chip compare-chip-left" :style="{ opacity: split > 22 ? 1 : 0 }">
+                                B&amp;W
+                            </span>
+                            <span class="compare-chip compare-chip-right" :style="{ opacity: split < 78 ? 1 : 0 }">
+                                Color
+                            </span>
                         </div>
 
                         <!-- Status panel toggle (sits below the photo): hides / shows the "Currently working" badge -->
@@ -421,7 +421,7 @@ function launchBot() {
 // ── Status badge (edit this!) ───────────────────────────────────────────────
 // You are currently employed → the badge says so, and shows you're still open to
 // freelance / collaboration. Put your workplace name in `company` (or leave '' to hide it).
-const WORK = { role: 'System Rollouts & Data Support', company: '' };
+const WORK = { role: 'Data Support Specialist', company: '' };
 
 const STATUSES = [
     {
@@ -989,7 +989,8 @@ h1 {
     --corner-len: 72px;
     position: absolute;
     pointer-events: none;
-    z-index: 20;
+    /* Decorative brackets sit behind the portrait and its compare labels. */
+    z-index: 5;
     transition: --corner-len 0.5s ease, border-radius 0.4s ease;
     /* only the wanted corners of the ring stay visible (--c-tl etc. are set to 0px for hidden ones) */
     -webkit-mask:
@@ -1786,8 +1787,8 @@ h1 {
 
 .compare-chip {
     position: absolute;
-    top: 12px;
-    z-index: 15;
+    top: clamp(22px, 7%, 32px);
+    z-index: 40;
     padding: 2px 10px;
     font: 600 10px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace;
     letter-spacing: 0.14em;
@@ -1800,6 +1801,14 @@ h1 {
     backdrop-filter: blur(6px);
     pointer-events: none;
     transition: opacity 0.3s ease;
+}
+
+.compare-chip-left {
+    left: clamp(18px, 7%, 28px);
+}
+
+.compare-chip-right {
+    right: clamp(18px, 7%, 28px);
 }
 
 .compare-bar {
